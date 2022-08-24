@@ -1,15 +1,20 @@
 #pragma once
 
 #include"stdafx.h"
-#include"GameState.h"
+#include"MainMenuState.h"
 
 class Game
 {
 private:
 	//Variables
 	sf::Event sfEvent;
+	std::vector<sf::VideoMode> videoModes;
+	sf::ContextSettings windowSettings;
+	bool fullscreen;
 
 	std::stack<State*> states;
+
+	std::map<std::string, int> supportedKeys;
 
 	//Delta Time
 	sf::Clock dtClock;
@@ -19,7 +24,10 @@ private:
 	sf::RenderWindow* window;
 
 	//Private functions
+	//Initialization
+	void initVariables();
 	void initWindow();
+	void initKeys();
 	void initStates();
 
 
@@ -29,12 +37,17 @@ public:
 	~Game();
 
 	//Functions
-	void run();
+	void endApplication();
 
+	//Update
 	void updateDt();
 	void updateSFMLEvents();
-
 	void update();
+
+	//Render
 	void render();
+
+	//Run
+	void run();
 };
 

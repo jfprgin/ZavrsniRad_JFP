@@ -1,0 +1,31 @@
+﻿  stdafx.cpp
+  Button.cpp
+  Entity.cpp
+  Game.cpp
+  GameState.cpp
+  main.cpp
+  MainMenuState.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\MainMenuState.cpp(49,78): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\MainMenuState.cpp(49,57): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  State.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 541 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Release\ZavrsniRad_JFP.exe

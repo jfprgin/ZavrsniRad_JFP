@@ -7,6 +7,7 @@
 #include<vector>
 #include<stack>
 #include<map>
+#include<fstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
