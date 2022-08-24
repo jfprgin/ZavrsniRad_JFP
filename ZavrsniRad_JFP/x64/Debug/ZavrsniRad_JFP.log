@@ -1,8 +1,2 @@
-﻿  Entity.cpp
-  Game.cpp
-  GameState.cpp
-  MainMenuState.cpp
-  State.cpp
-  main.cpp
-  Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+﻿  Player.cpp
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
