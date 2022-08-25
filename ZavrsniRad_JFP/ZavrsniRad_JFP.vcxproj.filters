@@ -54,6 +54,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -82,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

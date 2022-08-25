@@ -3,7 +3,9 @@
 
 void Entity::initVariables()
 {
+	this->hitboxComponent = NULL;
 	this->movementComponent = NULL;
+	this->animationComponent = NULL;
 }
 
 Entity::Entity()
@@ -13,7 +15,9 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	delete this->hitboxComponent;
 	delete this->movementComponent;
+	delete this->animationComponent;
 	//Texture deleted from outside
 }
 
@@ -21,6 +25,7 @@ Entity::~Entity()
 void Entity::setTexture(sf::Texture& texture)
 {
 	this->sprite.setTexture(texture);
+	this->sprite.setScale(0.05f, 0.05f);
 }
 
 void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float decelartion)

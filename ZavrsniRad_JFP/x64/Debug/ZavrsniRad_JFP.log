@@ -1,2 +1,7 @@
-﻿  Player.cpp
+﻿  Button.cpp
+  Game.cpp
+  MainMenuState.cpp
+  MovementComponent.cpp
+  main.cpp
+  Generating Code...
   ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe

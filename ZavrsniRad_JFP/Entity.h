@@ -1,6 +1,8 @@
 #pragma once
 
+#include"HitboxComponent.h"
 #include"MovementComponent.h"
+#include"AnimationComponent.h"
 
 class Entity
 {
@@ -11,7 +13,9 @@ protected:
 	sf::Texture texture;	//Not load a new texture in, but point to a texture that has already been loaded into a state
 	sf::Sprite sprite;
 	
+	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
+	AnimationComponent* animationComponent;
 
 public:
 	Entity();
