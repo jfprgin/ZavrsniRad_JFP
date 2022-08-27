@@ -13,13 +13,19 @@ private:
     sf::Font font;
 
     std::map<std::string, gui::Button*> buttons;
+    std::map<std::string, gui::DropDownList*> dropDownLists;
+
+    sf::Text optionsText;
+
+    std::vector<sf::VideoMode> modes;
 
     //Functions
     void initVariables();
     void initBackground();
     void initFonts();
     void initKeybinds();
-    void initButton();
+    void initGui();
+    void initText();
 
 public:
     SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
@@ -29,9 +35,9 @@ public:
 
     //Functions
     void updateInput(const float& dt);
-    void updateButtons();
+    void updateGui(const float& dt);
     void update(const float& dt);
-    void renderButtons(sf::RenderTarget& target);
+    void renderGui(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = nullptr);
 };
 
