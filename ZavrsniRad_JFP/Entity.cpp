@@ -31,9 +31,9 @@ void Entity::createMovementComponent(const float maxVelocity, const float accele
 	this->movementComponent = new MovementComponent(this->sprite, maxVelocity, acceleration, decelartion);
 }
 
-void Entity::createHitboxComponent(sf::Sprite & sprite, float offset_x, float offset_y, float wifth, float height)
+void Entity::createHitboxComponent(sf::Sprite & sprite, float offset_x, float offset_y, float width, float height)
 {
-	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, wifth, height);
+	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 
 //Functions

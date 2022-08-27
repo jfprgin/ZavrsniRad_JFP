@@ -2,6 +2,7 @@
 
 #include"stdafx.h"
 
+//Hitboxis not moving
 class HitboxComponent
 {
 private:
@@ -12,7 +13,7 @@ private:
 	float offsetY;
 
 public:
-	HitboxComponent(sf::Sprite sprite, float offset_x, float offset_y, float wifth, float height);
+	HitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float wifth, float height);
 	~HitboxComponent();
 
 	//Functions
