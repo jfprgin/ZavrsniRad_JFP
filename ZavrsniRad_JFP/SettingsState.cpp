@@ -45,7 +45,7 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initButton()
 {
-	this->buttons["EXIT_STATE"] = new Button(
+	this->buttons["EXIT_STATE"] = new gui::Button(
 		300.f, 780.f, 250.f, 50.f,
 		&this->font, "Quit", 50,
 		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//button color
