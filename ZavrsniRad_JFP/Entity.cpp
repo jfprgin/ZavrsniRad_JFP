@@ -16,6 +16,7 @@ Entity::~Entity()
 {
 	delete this->hitboxComponent;
 	delete this->movementComponent;
+	delete this->attributeComponent;
 	//Texture deleted from outside
 }
 
@@ -35,6 +36,12 @@ void Entity::createHitboxComponent(sf::Sprite & sprite, float offset_x, float of
 {
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
+
+void Entity::createAttributeComponent()
+{
+	this->attributeComponent = new AttributeComponent();
+}
+
 //Accessors
 const sf::Vector2f& Entity::getPosition() const
 {

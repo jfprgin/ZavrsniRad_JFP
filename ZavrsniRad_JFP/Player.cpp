@@ -21,6 +21,8 @@ Player::Player(float x, float y, sf::Texture& texture)
 	this->setTexture(texture);
 
 	this->createMovementComponent(300.f, 15.f, 5.f);
+
+	this->createAttributeComponent();
 }
 
 Player::~Player()
@@ -30,6 +32,8 @@ Player::~Player()
 //Functions
 void Player::update(const float & dt)
 {
+	this->attributeComponent->update();
+
 	this->movementComponent->update(dt);
 
 	this->hitboxComponent->update();
