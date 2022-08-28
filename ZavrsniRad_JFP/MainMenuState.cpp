@@ -63,8 +63,8 @@ void MainMenuState::initButton()
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+MainMenuState::MainMenuState(StateData* state_data)
+	: State(state_data)
 {
 	this->initVariables();
 	this->initBackground();
@@ -99,13 +99,13 @@ void MainMenuState::updateButtons()
 	//New game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		this->states->push(new GameState(this->stateData));
 	}
 
 	//Settings
 	if (this->buttons["SETTINGS_STATE"]->isPressed())
 	{
-		this->states->push(new SettingsState(this->window, this->supportedKeys, this->states));
+		this->states->push(new SettingsState(this->stateData));
 	}
 
 

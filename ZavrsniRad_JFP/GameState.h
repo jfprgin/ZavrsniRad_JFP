@@ -8,12 +8,17 @@ class GameState :
     public State
 {
 private:
+	sf::RenderTexture renderTexture;
+	sf::Sprite renderSprite;
+
+
     sf::Font font;
     PauseMenu* pMenu;
 
     Player* player;
 
     //Functions
+	void initDeferredRender();
     void initKeybinds();
     void initFonts();
 	void initTextures();
@@ -21,7 +26,7 @@ private:
 	void initPlayers();
 
 public:
-    GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+    GameState(StateData* state_data);
     ~GameState();
 
     //Functions

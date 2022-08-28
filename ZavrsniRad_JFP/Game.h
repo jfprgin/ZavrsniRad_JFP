@@ -7,10 +7,9 @@ class Game
 {
 private:
 	//Variables
+	GraphicsSettings gfxSettings;
+	StateData stateData;
 	sf::Event sfEvent;
-	std::vector<sf::VideoMode> videoModes;
-	sf::ContextSettings windowSettings;
-	bool fullscreen;
 
 	std::stack<State*> states;
 
@@ -26,8 +25,10 @@ private:
 	//Private functions
 	//Initialization
 	void initVariables();
+	void initGraphicsSettings();
 	void initWindow();
 	void initKeys();
+	void initStateData();
 	void initStates();
 
 

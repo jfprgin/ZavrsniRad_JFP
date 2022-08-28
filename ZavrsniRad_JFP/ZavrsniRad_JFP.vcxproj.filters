@@ -69,6 +69,9 @@
     <ClCompile Include="Gui.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -110,11 +113,14 @@
     <ClInclude Include="Gui.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\supported_keys.ini" />
     <None Include="Config\gamestate_keybinds.ini" />
     <None Include="Config\mainmenustate_keybinds.ini" />
-    <None Include="Config\window.ini" />
+    <None Include="Config\graphics.ini" />
   </ItemGroup>
 </Project>

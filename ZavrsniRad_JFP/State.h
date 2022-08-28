@@ -1,14 +1,35 @@
 #pragma once
 
-#include"stdafx.h"
 #include"Player.h"
+#include"GraphicsSettings.h"
+
+class Player;
+class GraphicsSettings;
+class State;
+
+/*Game (the engine) will only have one StateData object
+It has all the information we send to other states
+State will keep track of the original StateData with "StateData* stateData"*/
+class StateData 
+{
+public:
+	StateData() {};
+
+	//Variables
+	sf::RenderWindow* window;
+	GraphicsSettings* gfxSettings;
+	std::map<std::string, int>* supportedKeys;
+	std::stack<State*>* states;
+
+};
 
 class State
 {
 private:
 
 protected:
-	//Pointer to 
+	//Variables
+	StateData* stateData;
 	std::stack<State*>* states;
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportedKeys;
@@ -29,7 +50,7 @@ protected:
 	virtual void initKeybinds() = 0;
 
 public:
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	State(StateData* state_data);
 	virtual ~State();
 
 	//Accessors

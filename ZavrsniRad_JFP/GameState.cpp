@@ -2,6 +2,23 @@
 #include "GameState.h"
 
 //Private functions
+void GameState::initDeferredRender()
+{
+	this->renderTexture.create(
+		this->stateData->gfxSettings->resolution.width,
+		this->stateData->gfxSettings->resolution.height
+	);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(
+		sf::IntRect(
+			0, 0,
+			this->stateData->gfxSettings->resolution.width,
+			this->stateData->gfxSettings->resolution.height
+		)
+	);
+}
+
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -47,9 +64,10 @@ void GameState::initPlayers()
 	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
 }
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+GameState::GameState(StateData* state_data)
+	: State(state_data)
 {
+	this->initDeferredRender();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
@@ -139,10 +157,17 @@ void GameState::render(sf::RenderTarget* target)
 		target = this->window;
 	}
 
-	this->player->render(*target);
+	this->renderTexture.clear();
+
+	this->player->render(this->renderTexture);
 
 	if (this->paused)		//Pause menu render
 	{
-		this->pMenu->render(*target);
+		this->pMenu->render(this->renderTexture);
 	}
+
+	//Final render
+	this->renderTexture.display();
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	target->draw(this->renderSprite);
 }
