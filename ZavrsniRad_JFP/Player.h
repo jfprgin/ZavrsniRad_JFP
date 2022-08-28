@@ -19,5 +19,6 @@ public:
 
 	//Functions
 	void update(const float& dt);
+	void render(sf::RenderTarget& target);
 };
 

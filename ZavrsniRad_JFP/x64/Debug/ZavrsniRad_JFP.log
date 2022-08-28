@@ -1,9 +1,12 @@
-﻿  Game.cpp
+﻿  Entity.cpp
+  Game.cpp
   GameState.cpp
   MainMenuState.cpp
+  MovementComponent.cpp
+  Player.cpp
   SettingsState.cpp
-c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(66): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(66,120): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
   State.cpp
   main.cpp
   Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
