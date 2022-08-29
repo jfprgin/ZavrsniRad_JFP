@@ -12,14 +12,15 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
+	sf::RectangleShape btnBackground;
     std::map<std::string, gui::Button*> buttons;
 
     //Functions
     void initVariables();
-    void initBackground();
     void initFonts();
     void initKeybinds();
-    void initButton();
+    void initGui();
+	void resetGui();
 
 public:
     MainMenuState(StateData* state_data);

@@ -5,17 +5,6 @@ void MainMenuState::initVariables()
 {
 }
 
-void MainMenuState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)));
-	
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/bg1.jpg"))
-	{
-		throw "ERROR::MAIN_MENU_STATE::FAILED TO LOAD BACKGROUND TEXTURE";
-	}
-	this->background.setTexture(&this->backgroundTexture);
-}
-
 void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
@@ -42,35 +31,69 @@ void MainMenuState::initKeybinds()
 	ifs.close();
 }
 
-void MainMenuState::initButton()
+void MainMenuState::initGui()
 {
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+
+	//Background init
+	this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/bg1.jpg"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::FAILED TO LOAD BACKGROUND TEXTURE";
+	}
+	this->background.setTexture(&this->backgroundTexture);
+
+	//Button background
+	this->btnBackground.setSize(sf::Vector2f(static_cast<float>(vm.width / 5), static_cast<float>(vm.height)));
+	this->btnBackground.setPosition(gui::p2px(11.5f, vm), 0.f);
+	this->btnBackground.setFillColor(sf::Color(10, 10, 10, 220));
+
+	//Buttons init
 	this->buttons["GAME_STATE"] = new gui::Button(
-		300.f, 480.f, 250.f, 50.f,
-		&this->font, "New Game", 50,
-		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//text color
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
+		gui::p2px(15.6f, vm), gui::p2py(30.f, vm),
+		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
+		&this->font, "New Game", gui::calcCharSize(vm),
+		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
 
 	this->buttons["SETTINGS_STATE"] = new gui::Button(
-		300.f, 580.f, 250.f, 50.f,
-		&this->font, "Settings", 50,
-		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//text color
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
+		gui::p2px(15.6f, vm), gui::p2py(40.f, vm),
+		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
+		&this->font, "Settings", gui::calcCharSize(vm),
+		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));			//button color
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
-		300.f, 780.f, 250.f, 50.f,
-		&this->font, "Quit", 50,
-		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//text color
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
+		gui::p2px(15.6f, vm), gui::p2py(65.f, vm),
+		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
+		&this->font, "Quit", gui::calcCharSize(vm),
+		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));			//button color
+}
+
+void MainMenuState::resetGui()
+{
+	/*
+	* Clears the GUI elements and re-initialises the GUI
+	*/
+	auto it = this->buttons.begin();
+	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
+	this->buttons.clear();
+
+	this->initGui();
 }
 
 MainMenuState::MainMenuState(StateData* state_data)
 	: State(state_data)
 {
 	this->initVariables();
-	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-	this->initButton();
+	this->initGui();
 }
 
 MainMenuState::~MainMenuState()
@@ -140,6 +163,8 @@ void MainMenuState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->background);
+
+	target->draw(this->btnBackground);
 
 	this->renderButtons(*target);
 }

@@ -80,6 +80,36 @@ void gui::Button::setId(const short unsigned id)
 
 
 //Functions
+/*
+*Converts a percentage value to pixels relative to the current resolution in the x axis
+*Gets the current videomode of the window (resolution)
+*Returns the calculated pixel value
+*/
+const float gui::p2px(const float perc, const sf::VideoMode& vm)
+{
+	return std::floor(static_cast<float>(vm.width) * (perc / 100.f));
+}
+
+/*
+*Converts a percentage value to pixels relative to the current resolution in the y axis
+*Gets the current videomode of the window (resolution)
+*Returns the calculated pixel value
+*/
+const float gui::p2py(const float perc, const sf::VideoMode& vm)
+{
+	return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
+}
+
+/*
+*Calculates the character size for text using the current resolution and a constant
+*Gets the current videomode of the window (resolution) and unisgned used to modify character size
+*Returns the calculated character size value
+*/
+const unsigned gui::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
+{
+	return static_cast<unsigned>((vm.width + vm.height) / modifier);
+}
+
 void gui::Button::update(const sf::Vector2f& mousePos)
 {
 	/*Update the booleans for hover and pressed*/

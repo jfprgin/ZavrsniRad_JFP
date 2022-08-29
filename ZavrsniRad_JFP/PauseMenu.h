@@ -17,7 +17,7 @@ private:
 	//Private functions
 
 public:
-	PauseMenu(sf::RenderWindow& window, sf::Font& font);
+	PauseMenu(sf::VideoMode& vm, sf::Font& font);
 	~PauseMenu();
 
 	//Accessor
@@ -25,7 +25,9 @@ public:
 
 	//Functions
 	const bool isButtonPressed(const std::string key);
-	void addButton(const std::string key, float y, const std::string text);
+	void addButton(const std::string key, const float y,
+		const float width, const float height,
+		const unsigned char_size, const std::string text);
 	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 };

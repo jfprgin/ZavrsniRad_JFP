@@ -55,18 +55,22 @@ void GameState::initTextures()
 
 void GameState::initPauseMenu()
 {
-	this->pMenu = new PauseMenu(*this->window, this->font);
-	this->pMenu->addButton("QUIT", 800.f, "Quit");
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+
+	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
+	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+
+	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_IDLE"]);
 }
 
 void GameState::initPlayerGUI()
 {
-	this->playerGUI = new PlayerGUI(this->player);
+	this->playerGUI = new PlayerGUI(this->player, this->stateData->gfxSettings->resolution);
 }
 
 GameState::GameState(StateData* state_data)
@@ -176,7 +180,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.clear();
 
-	this->player->render(this->renderTexture);
+	//Render player
+	this->player->render(this->renderTexture, true);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);

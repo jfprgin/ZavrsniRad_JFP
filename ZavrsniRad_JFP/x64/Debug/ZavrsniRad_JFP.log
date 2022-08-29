@@ -1,2 +1,20 @@
-﻿  State.cpp
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+﻿  Enemy.cpp
+  Gui.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gui.cpp(194): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+  Game.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gamestate.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  GameState.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gamestate.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  main.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gamestate.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  MainMenuState.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gamestate.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  PauseMenu.cpp
+  Player.cpp
+  PlayerGUI.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\playergui.cpp(32): warning C4305: 'argument': truncation from 'double' to 'const float'
+  SettingsState.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(76): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  State.cpp
+  Generating Code...
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe

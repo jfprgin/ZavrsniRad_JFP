@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Player.h"
+#include "Player.h"
 #include "stdafx.h"
 
 class PlayerGUI
@@ -8,6 +8,7 @@ class PlayerGUI
 private:
 	Player* player;
 
+	sf::VideoMode& vm;
 	sf::Font font;
 
 	//HP bar
@@ -22,7 +23,7 @@ private:
 	void initHPBar();
 
 public:
-	PlayerGUI(Player* player);
+	PlayerGUI(Player* player, sf::VideoMode& vm);
 	~PlayerGUI();
 
 	//Functions

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Entity.h"
+#include "Gui.h"
+
+/*MAYBE PUT HP IN ENTITY*/
 
 class Player :
 	public Entity
@@ -12,7 +15,6 @@ private:
 
 	//Initializer functions
 	void initVariables();
-	void initComponents();
 
 public:
 	//Accessors
@@ -29,6 +31,6 @@ public:
 
 	//Functions
 	void update(const float& dt);
-	void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target, const bool show_hitbox = false);
 };
 

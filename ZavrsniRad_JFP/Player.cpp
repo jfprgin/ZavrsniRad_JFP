@@ -8,10 +8,6 @@ void Player::initVariables()
 	this->hp = this->hpMax;
 }
 
-void Player::initComponents()
-{
-}
-
 //Accessors
 const int& Player::getHP() const
 {
@@ -49,10 +45,10 @@ Player::Player(float x, float y, sf::Texture& texture)
 {
 	this->initVariables();
 
-	this->setPosition(x, y);
-
-	this->createHitboxComponent(this->sprite, 86.f, 81.f, 86.f, 111.f);
+	this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
 	this->setTexture(texture);
+
+	this->setPosition(x, y);
 
 	this->createMovementComponent(300.f, 15.f, 5.f);
 
@@ -70,11 +66,11 @@ void Player::update(const float & dt)
 	this->hitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target)
+void Player::render(sf::RenderTarget& target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
 
-	if (this->hitboxComponent)
+	if (show_hitbox)
 	{
 		this->hitboxComponent->render(target);
 	}

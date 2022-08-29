@@ -7,6 +7,11 @@ enum button_states {BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE
 
 namespace gui
 {
+
+	const float p2px(const float perc, const sf::VideoMode& vm);		//Percent to pixel x
+	const float p2py(const float perc, const sf::VideoMode& vm);		//Percent to pixel y
+	const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
+
 	class Button
 	{
 	private:
