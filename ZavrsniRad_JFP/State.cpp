@@ -29,12 +29,30 @@ const bool State::getKeyTime()
 	return false;
 }
 
+//Functions
+/*
+*Converts a percentage value to pixels relative to the current resolution in the x axis
+*Returns the calculated pixel value
+*/
+const float State::p2px(const float perc)
+{
+	return std::floor(static_cast<float>(this->stateData->gfxSettings->resolution.width) * (perc / 100.f));
+}
+
+/*
+*Converts a percentage value to pixels relative to the current resolution in the y axis
+*Returns the calculated pixel value
+*/
+const float State::p2py(const float perc)
+{
+	return std::floor(static_cast<float>(this->stateData->gfxSettings->resolution.height) * (perc / 100.f));
+}
+
 const bool& State::getQuit() const
 {
 	return this->quit;
 }
 
-//Functions
 void State::endState()
 {
 	this->quit = true;

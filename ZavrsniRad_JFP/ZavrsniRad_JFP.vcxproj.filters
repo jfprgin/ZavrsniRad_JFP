@@ -73,10 +73,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AttributeComponent.cpp">
-      <Filter>Components</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +120,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AttributeComponent.h">
-      <Filter>Components</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

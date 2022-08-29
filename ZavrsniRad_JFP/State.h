@@ -20,7 +20,6 @@ public:
 	GraphicsSettings* gfxSettings;
 	std::map<std::string, int>* supportedKeys;
 	std::stack<State*>* states;
-
 };
 
 class State
@@ -58,6 +57,9 @@ public:
 	const bool getKeyTime();
 	
 	//Functions
+	const float p2px(const float perc);		//Percent to pixel x
+	const float p2py(const float perc);		//Percent to pixel y
+
 	void endState();
 	void pauseState();
 	void unpauseState();

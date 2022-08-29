@@ -1,10 +1,35 @@
 #pragma once
 
+#include"Player.h"
 #include "stdafx.h"
 
 class PlayerGUI
 {
 private:
+	Player* player;
 
+	sf::Font font;
+
+	//HP bar
+	std::string hpBarString;
+	sf::Text hpBarText;
+	float hpBarMaxWidth;
+	sf::RectangleShape hpBarBack;
+	sf::RectangleShape hpBarInner;
+
+	//Private functions
+	void initFont();
+	void initHPBar();
+
+public:
+	PlayerGUI(Player* player);
+	~PlayerGUI();
+
+	//Functions
+	void updateHPBar();
+	void update(const float& dt);
+
+	void renderHPBar(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target);
 };
 

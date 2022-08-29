@@ -64,6 +64,11 @@ void GameState::initPlayers()
 	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
 }
 
+void GameState::initPlayerGUI()
+{
+	this->playerGUI = new PlayerGUI(this->player);
+}
+
 GameState::GameState(StateData* state_data)
 	: State(state_data)
 {
@@ -73,12 +78,14 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initPlayerGUI();
 }
 
 GameState::~GameState()
 {
-	delete this->player;
 	delete this->pMenu;
+	delete this->player;
+	delete this->playerGUI;
 }
 
 //Functions
@@ -111,16 +118,24 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 	{
 		this->player->move(0.f, -1.f, dt);
+		if (this->getKeyTime())
+		{
+			this->player->gainHP(1);
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
 		this->player->move(0.f, 1.f, dt);
+		if (this->getKeyTime())
+		{
+			this->player->loseHP(1);
+		}
 	}
+}
 
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-	{
-		this->endState();
-	}*/
+void GameState::updatePlayerGUI(const float& dt)
+{
+	this->playerGUI->update(dt);
 }
 
 void GameState::updatePauseMenuButtons()
@@ -142,6 +157,8 @@ void GameState::update(const float& dt)
 		this->updatePlayerInput(dt);
 
 		this->player->update(dt);
+
+		this->playerGUI->update(dt);
 	}
 	else			//Paused update
 	{
@@ -160,6 +177,9 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->player->render(this->renderTexture);
+
+	//Render GUI
+	this->playerGUI->render(this->renderTexture);
 
 	if (this->paused)		//Pause menu render
 	{

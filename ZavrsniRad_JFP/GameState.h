@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "PauseMenu.h"
+#include "PlayerGUI.h";
 
 
 class GameState :
@@ -16,6 +17,7 @@ private:
     PauseMenu* pMenu;
 
     Player* player;
+    PlayerGUI* playerGUI;
 
     //Functions
 	void initDeferredRender();
@@ -24,6 +26,7 @@ private:
 	void initTextures();
     void initPauseMenu();
 	void initPlayers();
+    void initPlayerGUI();
 
 public:
     GameState(StateData* state_data);
@@ -32,6 +35,7 @@ public:
     //Functions
     void updateInput(const float& dt);
     void updatePlayerInput(const float& dt);
+    void updatePlayerGUI(const float& dt);
     void updatePauseMenuButtons();
     void update(const float& dt);
     void render(sf::RenderTarget* target = nullptr);
