@@ -55,16 +55,12 @@ void GameState::initTextures()
 
 void GameState::initPauseMenu()
 {
-	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
-
 	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
 	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
 void GameState::initPlayers()
 {
-	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
-
 	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_IDLE"]);
 }
 
@@ -74,7 +70,7 @@ void GameState::initPlayerGUI()
 }
 
 GameState::GameState(StateData* state_data)
-	: State(state_data)
+	: State(state_data), vm(this->stateData->gfxSettings->resolution)
 {
 	this->initDeferredRender();
 	this->initKeybinds();
@@ -83,6 +79,8 @@ GameState::GameState(StateData* state_data)
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initPlayerGUI();
+
+	this->testEnemy = new Enemy(200.f, 200.f, this->textures["PLAYER_IDLE"]);
 }
 
 GameState::~GameState()
@@ -90,6 +88,8 @@ GameState::~GameState()
 	delete this->pMenu;
 	delete this->player;
 	delete this->playerGUI;
+
+	delete this->testEnemy;
 }
 
 //Functions
@@ -163,6 +163,9 @@ void GameState::update(const float& dt)
 		this->player->update(dt);
 
 		this->playerGUI->update(dt);
+
+		this->testEnemy->update(dt);
+		this->testEnemy->move(1.f, 0.f, dt);
 	}
 	else			//Paused update
 	{
@@ -182,6 +185,9 @@ void GameState::render(sf::RenderTarget* target)
 
 	//Render player
 	this->player->render(this->renderTexture, true);
+
+	//Render testEnemy
+	this->testEnemy->render(this->renderTexture, true);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "stdafx.h"
 
+//DONE
 class PlayerGUI
 {
 private:

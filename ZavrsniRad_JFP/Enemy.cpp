@@ -46,12 +46,10 @@ Enemy::Enemy(float x, float y, sf::Texture& texture)
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
+	this->createMovementComponent(300.f, 15.f, 5.f);
 	this->setTexture(texture);
 
 	this->setPosition(x, y);
-
-	this->createMovementComponent(300.f, 15.f, 5.f);
-
 }
 
 Enemy::~Enemy()

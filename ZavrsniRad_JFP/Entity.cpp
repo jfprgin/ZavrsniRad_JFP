@@ -23,7 +23,7 @@ Entity::~Entity()
 void Entity::setTexture(sf::Texture& texture)
 {
 	this->sprite.setTexture(texture);
-	this->sprite.setScale(0.05f, 0.05f);
+	//this->sprite.setScale(0.05f, 0.05f);
 }
 
 void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float decelartion)
@@ -47,6 +47,41 @@ const sf::Vector2f& Entity::getPosition() const
 	return this->sprite.getPosition();
 }
 
+const sf::Vector2f & Entity::getSpritePosition() const
+{
+	return this->sprite.getPosition();
+}
+
+const sf::Vector2f Entity::getCenter() const
+{
+	if (this->hitboxComponent)
+		return
+		this->hitboxComponent->getPosition() +
+		sf::Vector2f
+		(
+			this->hitboxComponent->getGlobalBounds().width / 2.f,
+			this->hitboxComponent->getGlobalBounds().height / 2.f
+		);
+
+	return
+		this->sprite.getPosition() +
+		sf::Vector2f
+		(
+			this->sprite.getGlobalBounds().width / 2.f,
+			this->sprite.getGlobalBounds().height / 2.f
+		);
+}
+
+const sf::Vector2f Entity::getSpriteCenter() const
+{
+	return this->sprite.getPosition() +
+		sf::Vector2f
+		(
+			this->sprite.getGlobalBounds().width / 2.f,
+			this->sprite.getGlobalBounds().height / 2.f
+		);
+}
+
 const sf::FloatRect Entity::getGlobalBouds() const
 {
 	if (this->hitboxComponent)
@@ -54,6 +89,12 @@ const sf::FloatRect Entity::getGlobalBouds() const
 		return this->hitboxComponent->getGlobalBounds();
 	}
 	return this->sprite.getGlobalBounds();
+}
+
+//MAYBE NEED IT
+MovementComponent * Entity::getMovementComponent()
+{
+	return this->movementComponent;
 }
 
 //Functions

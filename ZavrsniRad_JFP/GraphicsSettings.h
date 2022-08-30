@@ -2,6 +2,7 @@
 
 #include"stdafx.h"
 
+//DONE
 class GraphicsSettings
 {
 private:

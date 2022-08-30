@@ -2,7 +2,7 @@
 
 #include"stdafx.h"
 
-//Hitboxis not moving
+//DONE
 class HitboxComponent
 {
 private:

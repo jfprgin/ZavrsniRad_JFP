@@ -2,16 +2,21 @@
 
 #include "State.h"
 #include "PauseMenu.h"
-#include "PlayerGUI.h";
+#include "PlayerGUI.h"
+#include "Enemy.h"
 
-
+//Add Enemies
 class GameState :
     public State
 {
 private:
+	sf::VideoMode& vm;
+
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 
+	sf::Clock keyTimer;
+	float keyTimeMax;
 
     sf::Font font;
     PauseMenu* pMenu;
@@ -19,12 +24,15 @@ private:
     Player* player;
     PlayerGUI* playerGUI;
 
+	Enemy* testEnemy;
+
     //Functions
 	void initDeferredRender();
     void initKeybinds();
     void initFonts();
 	void initTextures();
     void initPauseMenu();
+
 	void initPlayers();
     void initPlayerGUI();
 
