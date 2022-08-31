@@ -10,6 +10,18 @@ class GameState :
     public State
 {
 private:
+    unsigned maxEnemy;
+    unsigned currentEnemyLimit;
+    float enemySpawnInterval;
+    float enemySpawnIntervalMin;
+    float difficultyIncreaseInterval;
+    bool gameOver;
+
+    //RandomNumberGenerator rng;
+
+    sf::Clock enemySpawnClock;
+    sf::Clock difficultyIncreaseClock;
+
 	sf::VideoMode& vm;
 
 	sf::RenderTexture renderTexture;
@@ -24,7 +36,8 @@ private:
     Player* player;
     PlayerGUI* playerGUI;
 
-	Enemy* testEnemy;
+    std::vector<Enemy> enemies;
+    std::vector<Enemy> enemyGCList;
 
     //Functions
 	void initDeferredRender();
@@ -41,6 +54,7 @@ public:
     ~GameState();
 
     //Functions
+    //void SpawnEnemy();
     void updateInput(const float& dt);
     void updatePlayerInput(const float& dt);
     void updatePlayerGUI(const float& dt);

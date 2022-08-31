@@ -3,7 +3,7 @@
 #include "SettingsState.h"
 #include"Gui.h"
 
-//DONE
+//ADD HIGHSCORE
 class MainMenuState :
     public State
 {

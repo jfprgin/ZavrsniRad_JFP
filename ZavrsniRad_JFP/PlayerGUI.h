@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "stdafx.h"
 
-//DONE
+//ADD POINTS AND HIGHSCORE
 class PlayerGUI
 {
 private:

@@ -7,9 +7,17 @@ class Player;
 class GraphicsSettings;
 class State;
 
-/*Game (the engine) will only have one StateData object
-It has all the information we send to other states
-State will keep track of the original StateData with "StateData* stateData"*/
+//DONE
+
+/*
+*Game (the engine) will only have one StateData object
+*StateData has all the information we send to other states
+*
+*State:	- used for puse, unpause, quit and endState
+*		- will keep track of the original StateData with "StateData* stateData"
+*		- updates mouse position
+*		- updates KeyTime
+*/
 class StateData 
 {
 public:

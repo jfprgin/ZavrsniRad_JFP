@@ -70,7 +70,9 @@ void GameState::initPlayerGUI()
 }
 
 GameState::GameState(StateData* state_data)
-	: State(state_data), vm(this->stateData->gfxSettings->resolution)
+	: State(state_data), vm(this->stateData->gfxSettings->resolution),
+	maxEnemy(50), currentEnemyLimit(4), enemySpawnInterval(4.f),
+	enemySpawnIntervalMin(1.5f), difficultyIncreaseInterval(25.f), gameOver(false)
 {
 	this->initDeferredRender();
 	this->initKeybinds();
@@ -80,7 +82,8 @@ GameState::GameState(StateData* state_data)
 	this->initPlayers();
 	this->initPlayerGUI();
 
-	this->testEnemy = new Enemy(200.f, 200.f, this->textures["PLAYER_IDLE"]);
+	this->enemySpawnClock.restart();
+	this->difficultyIncreaseClock.restart();
 }
 
 GameState::~GameState()
@@ -89,7 +92,7 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGUI;
 
-	delete this->testEnemy;
+	//delete this->testEnemy;
 }
 
 //Functions
@@ -164,8 +167,8 @@ void GameState::update(const float& dt)
 
 		this->playerGUI->update(dt);
 
-		this->testEnemy->update(dt);
-		this->testEnemy->move(1.f, 0.f, dt);
+		//this->testEnemy->update(dt);
+		//this->testEnemy->move(1.f, 0.f, dt);
 	}
 	else			//Paused update
 	{
@@ -187,7 +190,7 @@ void GameState::render(sf::RenderTarget* target)
 	this->player->render(this->renderTexture, true);
 
 	//Render testEnemy
-	this->testEnemy->render(this->renderTexture, true);
+	//this->testEnemy->render(this->renderTexture, true);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);

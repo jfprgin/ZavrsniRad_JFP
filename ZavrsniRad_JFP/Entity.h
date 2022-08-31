@@ -32,14 +32,6 @@ public:
 	virtual const sf::FloatRect getGlobalBouds() const;
 	
 	virtual MovementComponent* getMovementComponent();
-	
-	virtual const int& getHP() const = 0;
-	virtual const int& getHPMax() const = 0;
-
-
-	//Modifiers
-	virtual void loseHP(const int hp) = 0;
-	virtual void gainHP(const int hp) = 0;
 
 	//Functions
 	virtual void setPosition(const float x, const float y);

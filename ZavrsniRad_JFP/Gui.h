@@ -2,8 +2,8 @@
 
 #include"stdafx.h"
 
-enum button_states {BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE
-};
+//DONE
+enum button_states {BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
 
 namespace gui
 {
@@ -45,11 +45,11 @@ namespace gui
 		~Button();
 
 		//Accessors
+		const bool isPressed() const;
 		const std::string getText() const;
 		const short unsigned& getId() const;
 
 		//Modifiers
-		const bool isPressed() const;
 		void setText(const std::string text);
 		void setId(const short unsigned id);
 

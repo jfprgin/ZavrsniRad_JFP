@@ -47,6 +47,16 @@ gui::Button::~Button()
 }
 
 //Accessors
+const bool gui::Button::isPressed() const
+{
+	if (this->buttonState == BTN_ACTIVE)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 const std::string gui::Button::getText() const
 {
 	return this->text.getString();
@@ -58,16 +68,6 @@ const short unsigned& gui::Button::getId() const
 }
 
 //Modifiers
-const bool gui::Button::isPressed() const
-{
-	if (this->buttonState == BTN_ACTIVE)
-	{
-		return true;
-	}
-
-	return false;
-}
-
 void gui::Button::setText(const std::string text)
 {
 	this->text.setString(text);
