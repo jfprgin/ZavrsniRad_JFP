@@ -29,9 +29,7 @@ public:
 	virtual const sf::Vector2f& getSpritePosition() const;
 	virtual const sf::Vector2f getCenter() const;
 	virtual const sf::Vector2f getSpriteCenter() const;
-	virtual const sf::FloatRect getGlobalBouds() const;
-	
-	virtual MovementComponent* getMovementComponent();
+	virtual const sf::FloatRect getGlobalBounds() const;
 
 	//Functions
 	virtual void setPosition(const float x, const float y);

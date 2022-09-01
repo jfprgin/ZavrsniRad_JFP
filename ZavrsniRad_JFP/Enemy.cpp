@@ -1,14 +1,12 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
-//Initializer functions
-void Enemy::initVariables()
+//Accessors
+EnemySpawn & Enemy::getEnemySpawn()
 {
-	this->hpMax = 100;
-	this->hp = this->hpMax;
+	return this->enemySpawn;
 }
 
-//Accessors
 const int& Enemy::getHP() const
 {
 	return this->hp;
@@ -19,7 +17,37 @@ const int& Enemy::getHPMax() const
 	return this->hpMax;
 }
 
+const int & Enemy::getDamageMin() const
+{
+	return this->damageMin;
+}
+
+const int & Enemy::getDamageMax() const
+{
+	return this->damageMax;
+}
+
+bool Enemy::isDestoryComplete() const
+{
+	return this->exploding;
+}
+
+const bool Enemy::getDamageTimerDone() const
+{
+	return this->damageTimer.getElapsedTime().asMilliseconds() >= this->damageTimerMax;
+}
+
+const bool Enemy::getDespawnTimerDone() const
+{
+	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
+}
+
 //Modifiers
+void Enemy::resetDamageTimer()
+{
+	this->damageTimer.restart();
+}
+
 void Enemy::loseHP(const int hp)
 {
 	this->hp -= hp;
@@ -41,15 +69,15 @@ void Enemy::gainHP(const int hp)
 }
 
 //Constructor and Destructor
-Enemy::Enemy(float x, float y, sf::Texture& texture)
+Enemy::Enemy(EnemySpawn& enemy_spawn)
+	: enemySpawn(enemy_spawn), hpMax(100), hp(100), damageMin(5), damageMax(15),
+	damageTimerMax(1000), despawnTimerMax(1000), exploding(false)
 {
-	this->initVariables();
+	//this->createMovementComponent(300.f, 15.f, 5.f);
+	//this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
+	//this->setTexture(texture);
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
-	this->createMovementComponent(300.f, 15.f, 5.f);
-	this->setTexture(texture);
-
-	this->setPosition(x, y);
+	//this->setPosition(x, y);
 }
 
 Enemy::~Enemy()
@@ -57,11 +85,17 @@ Enemy::~Enemy()
 }
 
 //Functions
+bool Enemy::Destroy()
+{
+	return this->exploding = true;
+}
+
+//VIDI!!!
 void Enemy::update(const float & dt)
 {
-	this->movementComponent->update(dt);
+	//this->movementComponent->update(dt);
 
-	this->hitboxComponent->update();
+	//this->hitboxComponent->update();
 }
 
 void Enemy::render(sf::RenderTarget& target, const bool show_hitbox)
@@ -73,3 +107,4 @@ void Enemy::render(sf::RenderTarget& target, const bool show_hitbox)
 		this->hitboxComponent->render(target);
 	}
 }
+

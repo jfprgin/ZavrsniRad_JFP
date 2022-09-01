@@ -82,19 +82,13 @@ const sf::Vector2f Entity::getSpriteCenter() const
 		);
 }
 
-const sf::FloatRect Entity::getGlobalBouds() const
+const sf::FloatRect Entity::getGlobalBounds() const
 {
 	if (this->hitboxComponent)
 	{
 		return this->hitboxComponent->getGlobalBounds();
 	}
 	return this->sprite.getGlobalBounds();
-}
-
-//MAYBE NEED IT
-MovementComponent * Entity::getMovementComponent()
-{
-	return this->movementComponent;
 }
 
 //Functions

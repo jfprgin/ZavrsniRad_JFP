@@ -12,10 +12,10 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHPBar()
 {
-	float width = gui::p2px(10.4f, this->vm);
-	float height = gui::p2py(2.8f, this->vm);
+	float width = gui::p2px(15.f, this->vm);
+	float height = gui::p2py(3.f, this->vm);
 	float x = gui::p2px(1.f, this->vm);
-	float y = gui::p2py(4.3f, this->vm);
+	float y = gui::p2py(2.f, this->vm);
 
 	this->hpBarMaxWidth = width;
 
@@ -29,7 +29,14 @@ void PlayerGUI::initHPBar()
 
 	this->hpBarText.setFont(this->font);
 	this->hpBarText.setCharacterSize(gui::calcCharSize(this->vm, 150));
-	this->hpBarText.setPosition(this->hpBarInner.getPosition().x + gui::p2px(0.53, this->vm), this->hpBarInner.getPosition().y + gui::p2py(0.5f, this->vm));
+	this->hpBarText.setPosition(this->hpBarInner.getPosition().x + gui::p2px(0.53f, this->vm), this->hpBarInner.getPosition().y + gui::p2py(0.5f, this->vm));
+}
+
+void PlayerGUI::initScore()
+{
+	this->ScoreText.setFont(this->font);
+	this->ScoreText.setCharacterSize(gui::calcCharSize(this->vm, 70));
+	this->ScoreText.setPosition(gui::p2px(86.f, this->vm), gui::p2py(1.f, this->vm));
 }
 
 PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
@@ -39,6 +46,7 @@ PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
 
 	this->initFont();
 	this->initHPBar();
+	this->initScore();
 }
 
 PlayerGUI::~PlayerGUI()
@@ -56,9 +64,16 @@ void PlayerGUI::updateHPBar()
 	this->hpBarText.setString(this->hpBarString);
 }
 
+void PlayerGUI::updateScore()
+{
+	this->ScoreString = "SCORE: " + std::to_string(this->player->getScore());
+	this->ScoreText.setString(this->ScoreString);
+}
+
 void PlayerGUI::update(const float& dt)
 {
 	this->updateHPBar();
+	this->updateScore();
 }
 
 void PlayerGUI::renderHPBar(sf::RenderTarget& target)
@@ -71,4 +86,6 @@ void PlayerGUI::renderHPBar(sf::RenderTarget& target)
 void PlayerGUI::render(sf::RenderTarget& target)
 {
 	this->renderHPBar(target);
+
+	target.draw(this->ScoreText);
 }

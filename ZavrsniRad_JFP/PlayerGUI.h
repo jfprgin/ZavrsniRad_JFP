@@ -19,9 +19,14 @@ private:
 	sf::RectangleShape hpBarBack;
 	sf::RectangleShape hpBarInner;
 
+	//Score
+	std::string ScoreString;
+	sf::Text ScoreText;
+
 	//Private functions
 	void initFont();
 	void initHPBar();
+	void initScore();
 
 public:
 	PlayerGUI(Player* player, sf::VideoMode& vm);
@@ -29,6 +34,7 @@ public:
 
 	//Functions
 	void updateHPBar();
+	void updateScore();
 	void update(const float& dt);
 
 	void renderHPBar(sf::RenderTarget& target);
