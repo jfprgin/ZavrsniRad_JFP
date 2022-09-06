@@ -9,6 +9,7 @@ State::State(StateData* state_data)
 	this->states = state_data->states;
 	this->quit = false;
 	this->paused = false;
+	this->gameOver = false;
 	this->keyTime = 0.f;
 	this->keyTimeMax = 10.f;
 }

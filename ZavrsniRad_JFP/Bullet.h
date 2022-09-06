@@ -6,11 +6,12 @@ class Bullet :
 	public Entity
 {
 private:
-	sf::CircleShape bullet;
-	sf::Vector2f currVelocity;
-	float maxSpeed;
+	sf::Vector2f direction;
+	//sf::Vector2f currVelocity;
+	float speed;
+
 public:
-	Bullet(float x, float y, float radius = 5.f);
+	Bullet(sf::Texture& texture, float x, float y, float speed);
 	~Bullet();
 
 	//Functions

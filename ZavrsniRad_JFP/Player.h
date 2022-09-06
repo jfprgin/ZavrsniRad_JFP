@@ -20,30 +20,22 @@ private:
 	sf::Int32 damageTimerMax;
 
 	int score;
-	int shootTimer;
-	float shootTimerMax;
 
 	bool isDestroyed;
 
-	std::deque<Bullet> m_bullets;
 	Utils::RandomNumberGenerator rng;
 
 public:
 	//Accessors
-	//Returns true if player explosion sound is NOT playing.
 	bool isDestoryComplete() const;
 	
-	std::deque<Bullet>& getBullets();
 	const int& getHP() const;
 	const int& getHPMax() const;
 
-	float getShootTimer();
-	float getShootTimerMax();
-	void setShootTimer(float shootTimer);
 	const bool getDamageTimer();
 	int getDamage();
 
-	int getScore() const;
+	int getScore();
 
 	//Modifiers
 	void loseHP(const int hp);
@@ -56,8 +48,6 @@ public:
 
 	//Functions
 	void Destroy();
-	void SpawnBullet();
-	//void HandleInput();
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target, const bool show_hitbox = false);

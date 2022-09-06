@@ -43,6 +43,7 @@ protected:
 	std::map<std::string, int> keybinds;
 	bool quit;
 	bool paused;
+	bool gameOver;
 	float keyTime;
 	float keyTimeMax;
 

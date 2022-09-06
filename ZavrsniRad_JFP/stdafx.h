@@ -9,8 +9,9 @@
 #include<map>
 #include<fstream>
 #include<math.h>
-#include <deque>
-#include <queue>
+#include<deque>
+#include<queue>
+#include<string>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "SettingsState.h"
-#include"Gui.h"
+#include "Gui.h"
 
 //ADD HIGHSCORE
 class MainMenuState :

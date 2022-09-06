@@ -47,30 +47,32 @@ void GameState::initFonts()
 
 void GameState::initTextures()
 {
+	//Player
 	if (!this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/test.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}
 
-	//TEST!
+	//Enemies
 	std::string enemyTexturePath = "Resources/Images/Sprites/Enemy/enemy" + std::to_string(this->rng.getInt(1, 8)) + ".png";
-
-	if (!this->textures["ENEMY"].loadFromFile("Resources/Images/Sprites/Enemy/enemy.png"))
+	
+	if (!this->textures["ENEMY"].loadFromFile(enemyTexturePath))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}
+
+	//Bullets
+	if (!this->textures["BULLET"].loadFromFile("Resources/Images/Sprites/Bullet/bullet.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD NOT LOAD BULLET TEXTURE";
+	}
 }
 
+//ADD SCORE AND GET SCORE IN MAIN MENU
 void GameState::initPauseMenu()
 {
 	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
 	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
-}
-
-void GameState::initGameOver()
-{
-	this->gOver = new GameOver(this->stateData->gfxSettings->resolution, this->font, this->player->getScore());
-	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
 void GameState::initPlayers()
@@ -83,16 +85,18 @@ void GameState::initPlayerGUI()
 	this->playerGUI = new PlayerGUI(this->player, this->stateData->gfxSettings->resolution);
 }
 
-void GameState::initEnemySystem()
+void GameState::initGameOver()
 {
-	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
+	this->gOver = new GameOver(this->stateData->gfxSettings->resolution, this->font, this->player->getScore());
+	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
-//UREDITI
+
 GameState::GameState(StateData* state_data)
 	: State(state_data), vm(this->stateData->gfxSettings->resolution),
 	maxEnemy(50), currentEnemyLimit(4), enemySpawnInterval(4.f),
-	enemySpawnIntervalMin(1.5f), difficultyIncreaseInterval(25.f), gameOver(false)
+	enemySpawnIntervalMin(1.5f), difficultyIncreaseInterval(25.f),
+	shootTimerMax(8.f)
 {
 	this->initDeferredRender();
 	this->initKeybinds();
@@ -101,7 +105,7 @@ GameState::GameState(StateData* state_data)
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initPlayerGUI();
-	this->initEnemySystem();
+	this->initGameOver();
 
 	this->enemySpawnClock.restart();
 	this->difficultyIncreaseClock.restart();
@@ -110,18 +114,13 @@ GameState::GameState(StateData* state_data)
 GameState::~GameState()
 {
 	delete this->pMenu;
+	delete this->gOver;
 	delete this->player;
 	delete this->playerGUI;
-	delete this->enemySystem;
-
-	for (size_t i = 0; i < this->activeEnemies.size(); i++)
-	{
-		delete this->activeEnemies[i];
-	}
 }
 
 //Functions
-/*void GameState::SpawnEnemy()
+void GameState::SpawnEnemy()
 {
 	float minX = static_cast<float>(this->stateData->gfxSettings->resolution.width)  / 2.f;
 	float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width);
@@ -131,8 +130,13 @@ GameState::~GameState()
 	float yPos = this->rng.getFloat(55.f, maxY);
 	float speed = this->rng.getFloat(1.f, 5.f);
 
-	this->enemies.emplace_back(xPos, yPos, this->textures["ENEMY"], speed);
-}*/
+	this->enemies.emplace_back(this->textures["ENEMY"], xPos, yPos, speed);
+}
+
+void GameState::SpawnBullet()
+{
+	this->bullets.emplace_front(this->textures["BULLET"], this->player->getSpriteCenter().x, this->player->getSpriteCenter().y, 20.f);
+}
 
 void GameState::IncreaseDifficulty()
 {
@@ -151,16 +155,16 @@ void GameState::IncreaseDifficulty()
 void GameState::ClearObjects()
 {
 	//Player bullet GC
-	if (!this->player->getBullets().empty())
+	if (!this->bullets.empty())
 	{
-		for (auto bullet = this->player->getBullets().begin(); bullet != this->player->getBullets().end(); ++bullet)
+		for (auto bullet = this->bullets.begin(); bullet != this->bullets.end(); ++bullet)
 		{
 			if ((bullet->getPosition().x < 0 ||
 				bullet->getPosition().y < 0 ||
 				bullet->getPosition().x > window->getSize().x ||
 				bullet->getPosition().y > window->getSize().y) || this->gameOver)
 			{
-				this->player->getBullets().erase(bullet);
+				this->bullets.erase(bullet);
 				break;
 			}
 		}
@@ -169,7 +173,7 @@ void GameState::ClearObjects()
 	*	POGLEDAJ!!!!!!!!
 	*	POGLEDAJ!!!!!!!!
 	*/
-	/*
+	
 	//Enemy GC
 	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 	{
@@ -181,14 +185,11 @@ void GameState::ClearObjects()
 				this->player->loseHP(1);
 			}
 
-			//vector::erase kullanmiyoruz cunku erase() vector degerlerini kopyaliyor.
-			//kopyalanan enemy degerleri de o sirada her hangi bir enemy sound playing
-			//durumunda sesi erken kesiyor.
 			std::swap(*it, this->enemies.back());
 			this->enemies.pop_back();
 			break;
 		}
-	}*/
+	}
 }
 
 void GameState::updateCollision()
@@ -219,7 +220,7 @@ void GameState::updateCollision()
 		this->player->stopVelocityY();
 	}
 
-	/*//Player & enemy collision check
+	//Player & enemy collision check
 	auto playerBox = this->player->getGlobalBounds();
 	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 	{
@@ -230,21 +231,21 @@ void GameState::updateCollision()
 			(*it).loseHP((*it).getHP());
 			break;
 		}
-	}*/
+	}
 
 	//Bullet & enemy collision check
-	/*for (auto enemy = this->enemies.begin(); enemy != this->enemies.end(); ++enemy)
+	for (auto enemy = this->enemies.begin(); enemy != this->enemies.end(); ++enemy)
 	{
 		if (!(*enemy).isDestoryComplete())
 		{
-			if (!this->player->getBullets().empty())
+			if (!this->bullets.empty())
 			{
-				for (auto bullet = this->player->getBullets().begin(); bullet != this->player->getBullets().end(); ++bullet)
+				for (auto bullet = this->bullets.begin(); bullet != this->bullets.end(); ++bullet)
 				{
 					if ((*bullet).getGlobalBounds().intersects(enemy->getGlobalBounds()))
 					{
 						enemy->loseHP(this->player->getDamage());
-						this->player->getBullets().erase(bullet);
+						this->bullets.erase(bullet);
 
 						if (enemy->isDestoryComplete())
 							this->player->AddScore(5);
@@ -254,7 +255,7 @@ void GameState::updateCollision()
 				}
 			}
 		}
-	}*/
+	}
 }
 
 void GameState::updateInput(const float& dt)
@@ -291,6 +292,13 @@ void GameState::updatePlayerInput(const float& dt)
 	{
 		this->player->move(0.f, 1.f, dt);
 	}
+
+	//Shoot
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && (this->shootTimer >= this->shootTimerMax))
+	{
+		this->SpawnBullet();
+		this->shootTimer = 0.f;
+	}
 }
 
 void GameState::updatePlayerGUI(const float& dt)
@@ -314,73 +322,15 @@ void GameState::updateGameOverButtons()
 	}
 }
 
-/*void GameState::HandleCombat()
+void GameState::HandleCombat()
 {
 	if (this->player->getHP() <= 0)
 	{
 		this->player->Destroy();
 		this->gameOver = true;
 	}
-}*/
-
-void GameState::updateCombatAndEnemies(const float & dt)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))) && this->player->getShootTimer() >= this->player->getShootTimerMax())
-	{
-		this->player->SpawnBullet();
-		this->player->setShootTimer(0.f);
-	}
-
-	unsigned index = 0;
-	for (auto *enemy : this->activeEnemies)
-	{
-		enemy->update(dt);
-
-		this->updateCombat(enemy, index, dt);
-
-		if (enemy->isDestoryComplete())
-		{
-
-			this->enemySystem->removeEnemy(index);
-			continue;
-		}
-		else if (enemy->getDespawnTimerDone())
-		{
-			this->enemySystem->removeEnemy(index);
-			continue;
-		}
-
-		++index;
-	}
-
 }
 
-
-void GameState::updateCombat(Enemy* enemy, const int index, const float & dt)
-{
-	if (this->player->getHP() <= 0)
-	{
-		this->player->Destroy();
-		this->gameOver = true;
-	}
-	else
-	{
-		if (enemy->getDamageTimerDone())
-		{
-			//Get to this!!!!
-			int dmg = static_cast<int>(this->player->getDamage());
-			enemy->loseHP(dmg);
-			enemy->resetDamageTimer();
-		}
-
-		//Check for enemy damage
-		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
-		{
-			int dmg = enemy->getDamageMax();
-			this->player->loseHP(dmg);
-		}
-	}
-}
 //UREDITI UPDATE
 void GameState::update(const float& dt)
 {
@@ -393,6 +343,7 @@ void GameState::update(const float& dt)
 	{
 		this->gOver->update(this->mousePosView);
 		this->updateGameOverButtons();
+		this->playerGUI->update(dt);
 	}
 
 	if (!this->gameOver && !this->paused)	//Unpaused update
@@ -406,10 +357,17 @@ void GameState::update(const float& dt)
 
 		this->updateCollision();
 
-		//Update all enemies
-		this->updateCombatAndEnemies(dt);
+		//Shoot timer
+		if (this->shootTimer < this->shootTimerMax)
+			this->shootTimer += 1.f * dt * 60.f;
 
-		/*//Spawn an enemy every enemySpawnSeconds interval.
+		//Update bullets
+		for (auto it = this->bullets.begin(); it != this->bullets.end(); ++it)
+		{
+			(*it).update(dt);
+		}
+
+		//Spawn an enemy every enemySpawnSeconds interval.
 		if (this->enemySpawnClock.getElapsedTime().asSeconds() >= enemySpawnInterval && this->enemies.size() < this->currentEnemyLimit)
 		{
 			this->SpawnEnemy();
@@ -420,10 +378,10 @@ void GameState::update(const float& dt)
 		for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 		{
 			(*it).update(dt);
-		}*/
+		}
 
 		//Handle combat
-		//this->HandleCombat();
+		this->HandleCombat();
 
 		//Increase difficulty
 		this->IncreaseDifficulty();
@@ -435,7 +393,7 @@ void GameState::update(const float& dt)
 	}
 
 	//Clear objects
-	//this->ClearObjects();
+	this->ClearObjects();
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -450,23 +408,26 @@ void GameState::render(sf::RenderTarget* target)
 	//Render player
 	this->player->render(this->renderTexture, true);
 
-	/*//Draw enemies
+	//Draw bullets
+	if (!this->bullets.empty())
+	{
+		for (auto it = this->bullets.begin(); it != this->bullets.end(); ++it)
+		{
+			(*it).render(this->renderTexture);
+		}
+	}
+
+	//Draw enemies
 	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 	{
 		if (!(*it).isDestoryComplete())
 			(*it).render(this->renderTexture, true);
-	}*/
-
-	//Render enemies
-	for (auto *enemy : this->activeEnemies)
-	{
-		enemy->render(this->renderTexture, true);
 	}
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);
 
-	if (this->paused)		//Pause menu render
+	if (this->paused && !this->gameOver)		//Pause menu render
 	{
 		this->pMenu->render(this->renderTexture);
 	}

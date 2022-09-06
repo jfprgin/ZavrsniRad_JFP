@@ -4,6 +4,8 @@
 GameOver::GameOver(sf::VideoMode& vm, sf::Font& font, int playerScore)
 	: font(font)
 {
+	this->score = std::to_string(playerScore);
+
 	//Init background
 	this->background.setSize(
 		sf::Vector2f(
@@ -52,6 +54,19 @@ GameOver::~GameOver()
 	{
 		delete it->second;
 	}
+
+	std::ofstream myfile("Config/Scores.txt");
+
+	if (myfile.is_open())
+	 {
+		myfile << score << std::endl;
+	}
+	else
+	{
+		 throw "ERROR::GAME_OVER::FAILED TO OPEN SCORE.TXT";
+	}
+
+	myfile.close();
 }
 
 //Accessor

@@ -152,8 +152,6 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemySpawn.cpp" />
-    <ClCompile Include="EnemySystem.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
@@ -180,8 +178,6 @@
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemySpawn.h" />
-    <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Gui.h" />

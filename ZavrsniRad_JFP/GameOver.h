@@ -6,6 +6,8 @@
 class GameOver
 {
 private:
+	std::string score;
+
 	sf::Font& font;
 	sf::Text menuText;
 
@@ -15,7 +17,7 @@ private:
 	std::map<std::string, gui::Button*> buttons;
 
 public:
-	GameOver(sf::VideoMode& vm, sf::Font& font, int playerScore);
+	GameOver(sf::VideoMode& vm, sf::Font& font, int playerScore = 0);
 	~GameOver();
 
 	//Accessor
