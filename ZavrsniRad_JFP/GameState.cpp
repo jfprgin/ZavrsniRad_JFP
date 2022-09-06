@@ -105,7 +105,6 @@ GameState::GameState(StateData* state_data)
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initPlayerGUI();
-	this->initGameOver();
 
 	this->enemySpawnClock.restart();
 	this->difficultyIncreaseClock.restart();
@@ -433,6 +432,7 @@ void GameState::render(sf::RenderTarget* target)
 	}
 	if (this->gameOver)		//Game over render
 	{
+		this->initGameOver();
 		this->gOver->render(this->renderTexture);
 	}
 

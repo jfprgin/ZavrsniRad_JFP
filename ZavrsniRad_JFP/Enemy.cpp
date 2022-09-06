@@ -34,7 +34,7 @@ void Enemy::loseHP(const int hp)
 //Constructor and Destructor
 Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, float speed)
 	: hpMax(20),
-	hp(hpMax),
+	hp(20),
 	damageMin(1),
 	damageMax(2),
 	speed(speed),
