@@ -16,6 +16,8 @@ private:
 	sf::RectangleShape btnBackground;
     std::map<std::string, gui::Button*> buttons;
 
+	sf::Text scoreText;
+
     //Functions
     void initVariables();
     void initFonts();
@@ -30,6 +32,7 @@ public:
     //Functions
     void updateInput(const float& dt);
     void updateButtons();
+	void updateHighScore(const float& dt);
     void update(const float& dt);
     void renderButtons(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = nullptr);

@@ -37,6 +37,24 @@ void MovementComponent::stopVelocityY()
 }
 
 //Functions
+
+float MovementComponent::DegToRad(float degrees) {
+	return degrees * static_cast<float>(PI / 180);
+}
+
+void MovementComponent::rotate(const float dir, const float & dt)
+{
+	this->sprite.rotate(dir);
+}
+
+void MovementComponent::movement(const float& dt)
+{
+	this->directionX = /*velocity.x **/ sin(DegToRad(sprite.getRotation()));
+	this->directionY = /*velocity.y **/ -cos(DegToRad(sprite.getRotation()));
+	
+	move(directionX, directionY, dt);
+}
+
 void MovementComponent::move(const float dir_x, const float dir_y, const float& dt)
 {
 	/*Accelerating a sprite until it reaches the max velocity*/
@@ -44,6 +62,8 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float& 
 	this->velocity.x += this->acceleration * dir_x;
 	this->velocity.y += this->acceleration * dir_y;
 }
+
+
 
 void MovementComponent::update(const float & dt)
 {

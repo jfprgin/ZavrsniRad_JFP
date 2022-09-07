@@ -55,7 +55,7 @@ GameOver::~GameOver()
 		delete it->second;
 	}
 
-	std::ofstream myfile("Config/Scores.txt");
+	std::ofstream myfile("Config/Scores.txt", std::ofstream::app);
 
 	if (myfile.is_open())
 	 {

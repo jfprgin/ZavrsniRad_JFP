@@ -44,6 +44,7 @@ void MainMenuState::initGui()
 	}
 	this->background.setTexture(&this->backgroundTexture);
 
+
 	//Button background
 	this->btnBackground.setSize(sf::Vector2f(static_cast<float>(vm.width / 5), static_cast<float>(vm.height)));
 	this->btnBackground.setPosition(gui::p2px(11.5f, vm), 0.f);
@@ -51,25 +52,47 @@ void MainMenuState::initGui()
 
 	//Buttons init
 	this->buttons["GAME_STATE"] = new gui::Button(
-		gui::p2px(15.6f, vm), gui::p2py(30.f, vm),
+		gui::p2px(14.6f, vm), gui::p2py(30.f, vm),
 		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
 		&this->font, "New Game", gui::calcCharSize(vm),
 		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
 
 	this->buttons["SETTINGS_STATE"] = new gui::Button(
-		gui::p2px(15.6f, vm), gui::p2py(40.f, vm),
+		gui::p2px(14.6f, vm), gui::p2py(40.f, vm),
 		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
 		&this->font, "Settings", gui::calcCharSize(vm),
 		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));			//button color
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
-		gui::p2px(15.6f, vm), gui::p2py(65.f, vm),
+		gui::p2px(14.6f, vm), gui::p2py(65.f, vm),
 		gui::p2px(13.f, vm), gui::p2py(6.f, vm),
 		&this->font, "Quit", gui::calcCharSize(vm),
 		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),	//text color
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));			//button color
+
+	//Text init
+	this->scoreText.setFont(this->font);
+	this->scoreText.setPosition(sf::Vector2f(gui::p2px(14.f, vm), gui::p2py(15.f, vm)));
+	this->scoreText.setCharacterSize(gui::calcCharSize(vm));
+	this->scoreText.setFillColor(sf::Color(200, 200, 200, 200));
+
+	std::ifstream ifs("Config/Scores.txt");
+	int largest = 0;
+	int number = 0;
+	while (ifs >> number)
+	{
+		if (number > largest)
+		{
+			largest = number;
+		}
+	}
+	ifs.close();
+
+	std::string highScore = "HIGH SCORE: " + std::to_string(largest);
+
+	this->scoreText.setString(highScore);
 }
 
 void MainMenuState::resetGui()
@@ -108,7 +131,21 @@ MainMenuState::~MainMenuState()
 //Functions
 void MainMenuState::updateInput(const float& dt)
 {
-	
+	std::ifstream ifs("Config/Scores.txt");
+	int largest = 0;
+	int number = 0;
+	while (ifs >> number)
+	{
+		if (number > largest)
+		{
+			largest = number;
+		}
+	}
+	ifs.close();
+
+	std::string highScore = "HIGH SCORE: " + std::to_string(largest);
+
+	this->scoreText.setString(highScore);
 }
 
 void MainMenuState::updateButtons()
@@ -139,12 +176,18 @@ void MainMenuState::updateButtons()
 	}
 }
 
+void MainMenuState::updateHighScore(const float & dt)
+{
+}
+
 void MainMenuState::update(const float& dt)
 {
 	this->updateMousePositions();
 	this->updateInput(dt);
 
 	this->updateButtons();
+
+	this->updateHighScore(dt);
 }
 
 void MainMenuState::renderButtons(sf::RenderTarget& target)
@@ -167,4 +210,6 @@ void MainMenuState::render(sf::RenderTarget* target)
 	target->draw(this->btnBackground);
 
 	this->renderButtons(*target);
+
+	target->draw(this->scoreText);
 }

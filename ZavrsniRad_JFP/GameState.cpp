@@ -68,7 +68,6 @@ void GameState::initTextures()
 	}
 }
 
-//ADD SCORE AND GET SCORE IN MAIN MENU
 void GameState::initPauseMenu()
 {
 	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
@@ -168,22 +167,16 @@ void GameState::ClearObjects()
 			}
 		}
 	}
+	
 	/*
 	*	POGLEDAJ!!!!!!!!
 	*	POGLEDAJ!!!!!!!!
 	*/
-	
 	//Enemy GC
 	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 	{
 		if (it->getPosition().x < -100)
 		{
-			if (!it->isDestoryComplete())
-			{
-				//If player missed the enemy takes 1 damage
-				this->player->loseHP(1);
-			}
-
 			std::swap(*it, this->enemies.back());
 			this->enemies.pop_back();
 			break;
@@ -277,19 +270,21 @@ void GameState::updatePlayerInput(const float& dt)
 	//Update player input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 	{
-		this->player->move(-1.f, 0.f, dt);
+		this->player->rotate(-1.f, dt);
+		//this->player->move(-1.f, 0.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 	{
-		this->player->move(1.f, 0.f, dt);
+		this->player->rotate(1.f, dt);
+		//this->player->move(1.f, 0.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 	{
-		this->player->move(0.f, -1.f, dt);
+		this->player->movement(dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
-		this->player->move(0.f, 1.f, dt);
+		//this->player->move(0.f, 1.f, dt);
 	}
 
 	//Shoot
