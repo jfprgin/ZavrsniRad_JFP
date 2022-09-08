@@ -64,8 +64,8 @@ void PauseMenu::addButton(const std::string key, const float y,
 	this->buttons[key] = new gui::Button(
 		x, y, width, height,
 		&this->font, text, char_size,
-		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//button color
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//text color
+		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//text color
+		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
 }
 
 void PauseMenu::update(const sf::Vector2f& mousePos)

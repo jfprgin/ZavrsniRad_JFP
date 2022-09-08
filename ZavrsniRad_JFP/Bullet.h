@@ -1,17 +1,16 @@
 #pragma once
 
 #include "Entity.h"
-
+//DONE
 class Bullet :
 	public Entity
 {
 private:
 	sf::Vector2f direction;
-	//sf::Vector2f currVelocity;
 	float speed;
 
 public:
-	Bullet(sf::Texture& texture, float x, float y, float speed);
+	Bullet(sf::Texture& texture, float x, float y, float dir_x, float dir_y);
 	~Bullet();
 
 	//Functions

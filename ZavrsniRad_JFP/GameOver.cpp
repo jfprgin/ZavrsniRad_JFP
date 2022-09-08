@@ -27,23 +27,23 @@ GameOver::GameOver(sf::VideoMode& vm, sf::Font& font, int playerScore)
 
 	//Init text
 	//Game ove
-	this->menuText.setFont(font);
-	this->menuText.setFillColor(sf::Color(255, 255, 255, 200));
-	this->menuText.setCharacterSize(gui::calcCharSize(vm));
-	this->menuText.setString("GAME OVER");
-	this->menuText.setPosition(
-		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
-		this->container.getPosition().y + gui::p2py(4.f, vm)
+	this->gameOver.setFont(font);
+	this->gameOver.setFillColor(sf::Color(255, 255, 255, 200));
+	this->gameOver.setCharacterSize(gui::calcCharSize(vm, 50));
+	this->gameOver.setString("GAME OVER");
+	this->gameOver.setPosition(
+		this->container.getPosition().x + this->container.getSize().x / 2.f - this->gameOver.getGlobalBounds().width / 2.f,
+		this->container.getPosition().y + gui::p2py(5.f, vm)
 	);
 
 	//Player score
-	this->menuText.setFont(font);
-	this->menuText.setFillColor(sf::Color(255, 255, 255, 200));
-	this->menuText.setCharacterSize(gui::calcCharSize(vm, 80));
-	this->menuText.setString("SCORE: "+ std::to_string(playerScore));
-	this->menuText.setPosition(
-		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
-		this->container.getPosition().y + gui::p2py(5.f, vm)
+	this->menuScore.setFont(font);
+	this->menuScore.setFillColor(sf::Color(255, 255, 255, 200));
+	this->menuScore.setCharacterSize(gui::calcCharSize(vm, 80));
+	this->menuScore.setString("SCORE: "+ std::to_string(playerScore));
+	this->menuScore.setPosition(
+		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuScore.getGlobalBounds().width / 2.f,
+		this->container.getPosition().y + gui::p2py(15.f, vm)
 	);
 }
 
@@ -90,8 +90,8 @@ void GameOver::addButton(const std::string key, const float y,
 	this->buttons[key] = new gui::Button(
 		x, y, width, height,
 		&this->font, text, char_size,
-		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//button color
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//text color
+		sf::Color(100, 100, 100, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),	//text color
+		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		//button color
 }
 
 void GameOver::update(const sf::Vector2f& mousePos)
@@ -112,5 +112,6 @@ void GameOver::render(sf::RenderTarget& target)
 		i.second->render(target);
 	}
 
-	target.draw(this->menuText);
+	target.draw(this->gameOver);
+	target.draw(this->menuScore);
 }

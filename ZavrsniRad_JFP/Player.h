@@ -37,6 +37,9 @@ public:
 
 	int getScore();
 
+	const float getDirectionX() const;
+	const float getDirectionY() const;
+
 	//Modifiers
 	void loseHP(const int hp);
 	void gainHP(const int hp);

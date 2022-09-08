@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-//Private functions
+/*=========================Private functions===============================*/
 void GameState::initDeferredRender()
 {
 	this->renderTexture.create(
@@ -68,12 +68,6 @@ void GameState::initTextures()
 	}
 }
 
-void GameState::initPauseMenu()
-{
-	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
-	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
-}
-
 void GameState::initPlayers()
 {
 	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_IDLE"]);
@@ -84,27 +78,35 @@ void GameState::initPlayerGUI()
 	this->playerGUI = new PlayerGUI(this->player, this->stateData->gfxSettings->resolution);
 }
 
+void GameState::initPauseMenu()
+{
+	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
+	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
+}
+
 void GameState::initGameOver()
 {
 	this->gOver = new GameOver(this->stateData->gfxSettings->resolution, this->font, this->player->getScore());
-	//this->gOver->addButton("GAME_STATE", gui::p2py(24.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "New Game");
 	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
-
+/*======================================Constructorand Desturctor=====================================*/
 GameState::GameState(StateData* state_data)
 	: State(state_data), vm(this->stateData->gfxSettings->resolution),
 	maxEnemy(50), currentEnemyLimit(4), enemySpawnInterval(4.f),
-	enemySpawnIntervalMin(1.5f), difficultyIncreaseInterval(25.f),
+	enemySpawnIntervalMin(0.5f), difficultyIncreaseInterval(20.f),
 	shootTimerMax(8.f)
 {
 	this->initDeferredRender();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
-	this->initPauseMenu();
+
 	this->initPlayers();
 	this->initPlayerGUI();
+
+	this->initPauseMenu();
+	this->initGameOver();
 
 	this->enemySpawnClock.restart();
 	this->difficultyIncreaseClock.restart();
@@ -116,25 +118,35 @@ GameState::~GameState()
 	delete this->gOver;
 	delete this->player;
 	delete this->playerGUI;
+
+	//Delete bullets
+	for (auto& i : this->bullets)
+	{
+		delete i;
+	}
+
+	//Delete enemies
+	for (auto& i : this->enemies)
+	{
+		delete i;
+	}
 }
 
-//Functions
-void GameState::SpawnEnemy()
+/*===========================================Functions==============================================*/
+//General
+void GameState::updateInput(const float& dt)
 {
-	float minX = static_cast<float>(this->stateData->gfxSettings->resolution.width)  / 2.f;
-	float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width);
-	float maxY = static_cast<float>(this->stateData->gfxSettings->resolution.height) - 90.f;
-
-	float xPos = this->rng.getFloat(minX, maxX);
-	float yPos = this->rng.getFloat(55.f, maxY);
-	float speed = this->rng.getFloat(1.f, 5.f);
-
-	this->enemies.emplace_back(this->textures["ENEMY"], xPos, yPos, this->player, speed);
-}
-
-void GameState::SpawnBullet()
-{
-	this->bullets.emplace_front(this->textures["BULLET"], this->player->getSpriteCenter().x, this->player->getSpriteCenter().y, 20.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
+	{
+		if (!this->paused)
+		{
+			this->pauseState();
+		}
+		else
+		{
+			this->unpauseState();
+		}
+	}
 }
 
 void GameState::IncreaseDifficulty()
@@ -151,43 +163,57 @@ void GameState::IncreaseDifficulty()
 	}
 }
 
-void GameState::ClearObjects()
+void GameState::SetGameOver()
 {
-	//Player bullet GC
-	if (!this->bullets.empty())
+	if (this->player->getHP() <= 0)
 	{
-		for (auto bullet = this->bullets.begin(); bullet != this->bullets.end(); ++bullet)
-		{
-			if ((bullet->getPosition().x < 0 ||
-				bullet->getPosition().y < 0 ||
-				bullet->getPosition().x > window->getSize().x ||
-				bullet->getPosition().y > window->getSize().y) || this->gameOver)
-			{
-				this->bullets.erase(bullet);
-				break;
-			}
-		}
-	}
-	
-	/*
-	*	POGLEDAJ!!!!!!!!
-	*	POGLEDAJ!!!!!!!!
-	*/
-	//Enemy GC
-	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
-	{
-		if (it->getPosition().x < -100 || it->isDestoryComplete())
-		{
-			std::swap(*it, this->enemies.back());
-			this->enemies.pop_back();
-			break;
-		}
+		this->player->Destroy();
+		this->gameOver = true;
 	}
 }
 
-void GameState::updateCollision()
+//Update Player
+void GameState::updatePlayerInput(const float& dt)
 {
-	//Player world collision
+	//Update player input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("ROTATE_LEFT"))))
+	{
+		this->player->rotate(-2.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("ROTATE_RIGHT"))))
+	{
+		this->player->rotate(2.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE"))))
+	{
+		this->player->movement(dt);
+	}
+
+	//Shoot
+	//Spawns bullets and set shootTimer to 0
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))) && (this->shootTimer >= this->shootTimerMax))
+	{
+		this->bullets.push_back(
+			new Bullet(
+				this->textures["BULLET"],
+				this->player->getPosition().x + this->player->getGlobalBounds().width / 2.f,
+				this->player->getPosition().y + this->player->getGlobalBounds().height / 2.f,
+				this->player->getDirectionX(),
+				this->player->getDirectionY()
+			)
+		);
+
+		this->shootTimer = 0.f;
+	}
+}
+
+void GameState::updatePlayerGUI(const float& dt)
+{
+	this->playerGUI->update(dt);
+}
+
+void GameState::updatePlayerWorldCollision()
+{
 	//Left
 	if (this->player->getGlobalBounds().left < 0.f)
 	{
@@ -212,101 +238,150 @@ void GameState::updateCollision()
 		this->player->setPosition(this->player->getGlobalBounds().left, window->getSize().y - this->player->getGlobalBounds().height);
 		this->player->stopVelocityY();
 	}
+}
 
-	//Player & enemy collision check
-	auto playerBox = this->player->getGlobalBounds();
-	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
+//Update bullets and enemies
+void GameState::updateBullet(const float& dt)
+{
+	unsigned counter = 0;
+
+	bool bulletDeleted = false;
+	for (size_t i = 0; i < this->bullets.size() && bulletDeleted == false; i++)
 	{
-		auto enemyBox = (*it).getGlobalBounds();
-		if (enemyBox.intersects(playerBox) && (!(*it).isDestoryComplete()))
+		bullets[i]->update(dt);
+		
+		//Bullet culling with screen
+		//Left
+		if (bulletDeleted == false && bullets[i]->getGlobalBounds().left  + bullets[i]->getGlobalBounds().width < 0.f)
 		{
-			this->player->loseHP((*it).getHP());
-			(*it).loseHP((*it).getHP());
-			std::swap(*it, this->enemies.back());
-			this->enemies.pop_back();
-			break;
+			//Delete bullet
+			delete this->bullets.at(counter);
+			this->bullets.erase(this->bullets.begin() + counter);
+			bulletDeleted = true;
 		}
+		//Right
+		else if (bulletDeleted == false && bullets[i]->getGlobalBounds().left >= this->window->getSize().x)
+		{
+			//Delete bullet
+			delete this->bullets.at(counter);
+			this->bullets.erase(this->bullets.begin() + counter);
+			bulletDeleted = true;
+		}
+		//Top
+		if (bulletDeleted == false && bullets[i]->getGlobalBounds().top + bullets[i]->getGlobalBounds().height < 0.f)
+		{
+			//Delete bullet
+			delete this->bullets.at(counter);
+			this->bullets.erase(this->bullets.begin() + counter);
+			bulletDeleted = true;
+		}
+		//Bottom
+		else if (bulletDeleted == false && bullets[i]->getGlobalBounds().top >= this->window->getSize().y)
+		{
+			//Delete bullet
+			delete this->bullets.at(counter);
+			this->bullets.erase(this->bullets.begin() + counter);
+			bulletDeleted = true;
+		}
+
+		++counter;
+	}
+}
+
+void GameState::spawnAndUpdateEnemies(const float& dt)
+{
+	//Spawn an enemy every enemySpawnSeconds interval.
+	if (this->enemySpawnClock.getElapsedTime().asSeconds() >= enemySpawnInterval && this->enemies.size() < this->currentEnemyLimit)
+	{
+		float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width) + 200.f;
+		float minX = -200.f;
+		float maxY = static_cast<float>(this->stateData->gfxSettings->resolution.height) + 200.f;
+		float minY = -200.f;
+
+		float xPos = 0.f;
+		float yPos = 0.f;
+
+		do
+		{
+			xPos = this->rng.getFloat(minX, maxX);
+		} while (xPos > 0.f && xPos < static_cast<float>(this->stateData->gfxSettings->resolution.width));
+		
+		do
+		{
+			yPos = this->rng.getFloat(minY, maxY);
+		} while (xPos > 0.f && xPos < static_cast<float>(this->stateData->gfxSettings->resolution.height));
+
+		this->enemies.push_back(new Enemy(this->textures["ENEMY"], xPos, yPos, this->player));
+		
+		this->enemySpawnClock.restart();
 	}
 
-	//Bullet & enemy collision check
-	for (auto enemy = this->enemies.begin(); enemy != this->enemies.end(); ++enemy)
-	{
-		if (!(*enemy).isDestoryComplete())
-		{
-			if (!this->bullets.empty())
-			{
-				bool enemyDeleted = false;
-				for (auto bullet = this->bullets.begin(); bullet != this->bullets.end() && enemyDeleted == false; ++bullet)
-				{
-					if ((*bullet).getGlobalBounds().intersects(enemy->getGlobalBounds()))
-					{
-						enemy->loseHP(this->player->getDamage());
-						this->bullets.erase(bullet);
+	//Update
+	unsigned counter = 0;
 
-						if (enemy->isDestoryComplete())
-						{
-							this->player->AddScore(5);
-							std::swap(*enemy, this->enemies.back());
-							this->enemies.pop_back();
-							enemyDeleted = true;
-						}
-					}
+	for (auto* enemy : this->enemies)
+	{
+		enemy->update(dt);
+
+		//Enemy player collision
+		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()))
+		{
+			//Delete enemy
+			this->player->loseHP(this->enemies.at(counter)->getHP());
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
+		}
+
+		++counter;
+	}
+}
+
+void GameState::updateCombat()
+{
+	for (size_t i = 0; i < this->enemies.size(); i++)
+	{
+		bool enemyDeleted = false;
+		for (size_t k = 0; k < this->bullets.size() && enemyDeleted == false; k++)
+		{
+			if (this->enemies[i]->getGlobalBounds().intersects(this->bullets[k]->getGlobalBounds()))
+			{
+				this->player->AddScore(1);
+
+				delete this->enemies[i];
+				this->enemies.erase(this->enemies.begin() + i);
+
+				delete this->bullets[k];
+				this->bullets.erase(this->bullets.begin() + k);
+
+				enemyDeleted = true;
+			}
+		}
+	}
+}
+
+void GameState::updateEnemyCollision()
+{
+	bool enemyDeleted = false;
+	
+	if (this->enemies.size() > 0)
+	{
+		for (size_t i = 0; i < (this->enemies.size() - 1) && enemyDeleted == false; i++)
+		{
+			for (size_t k = i + 1; k < this->enemies.size() && enemyDeleted == false; k++)
+			{
+				if (this->enemies[i]->getGlobalBounds().intersects(this->enemies[k]->getGlobalBounds()))
+				{
+					delete this->enemies[k];
+					this->enemies.erase(this->enemies.begin() + k);
+
+					enemyDeleted = true;
 				}
 			}
 		}
 	}
 }
 
-void GameState::updateInput(const float& dt)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
-	{
-		if (!this->paused)
-		{
-			this->pauseState();
-		}
-		else
-		{
-			this->unpauseState();
-		}
-	}
-}
-
-void GameState::updatePlayerInput(const float& dt)
-{
-	//Update player input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
-	{
-		this->player->rotate(-2.f, dt);
-		//this->player->move(-1.f, 0.f, dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-	{
-		this->player->rotate(2.f, dt);
-		//this->player->move(1.f, 0.f, dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-	{
-		this->player->movement(dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-	{
-		//this->player->move(0.f, 1.f, dt);
-	}
-
-	//Shoot
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && (this->shootTimer >= this->shootTimerMax))
-	{
-		this->SpawnBullet();
-		this->shootTimer = 0.f;
-	}
-}
-
-void GameState::updatePlayerGUI(const float& dt)
-{
-	this->playerGUI->update(dt);
-}
-
+//Update Menus
 void GameState::updatePauseMenuButtons()
 {
 	if (this->pMenu->isButtonPressed("QUIT"))
@@ -323,16 +398,7 @@ void GameState::updateGameOverButtons()
 	}
 }
 
-void GameState::HandleCombat()
-{
-	if (this->player->getHP() <= 0)
-	{
-		this->player->Destroy();
-		this->gameOver = true;
-	}
-}
-
-//UREDITI UPDATE
+//Main functions
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions();
@@ -347,7 +413,8 @@ void GameState::update(const float& dt)
 		this->playerGUI->update(dt);
 	}
 
-	if (!this->gameOver && !this->paused)	//Unpaused update
+	//Unpaused update
+	if (!this->gameOver && !this->paused)
 	{
 		//Player
 		this->updatePlayerInput(dt);
@@ -356,46 +423,36 @@ void GameState::update(const float& dt)
 
 		this->playerGUI->update(dt);
 
-		this->updateCollision();
+		this->updatePlayerWorldCollision();
 
-		//Shoot timer
+		///Shoot timer
 		if (this->shootTimer < this->shootTimerMax)
 			this->shootTimer += 1.f * dt * 60.f;
 
-		//Update bullets
-		for (auto it = this->bullets.begin(); it != this->bullets.end(); ++it)
-		{
-			(*it).update(dt);
-		}
-
-		std::cout << this->enemies.size() << std::endl;
-		//Spawn an enemy every enemySpawnSeconds interval.
-		if (this->enemySpawnClock.getElapsedTime().asSeconds() >= enemySpawnInterval && this->enemies.size() < this->currentEnemyLimit)
-		{
-			this->SpawnEnemy();
-			this->enemySpawnClock.restart();
-		}
-
-		//Enemy update cycle
-		for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
-		{
-			(*it).update(dt);
-		}
+		//Testing
+		//std::cout << "Enemies: " << this->enemies.size() << std::endl;
+		//std::cout << "Bullets: " << this->bullets.size() << std::endl;
 
 		//Handle combat
-		this->HandleCombat();
+		this->updateBullet(dt);
+
+		this->spawnAndUpdateEnemies(dt);
+
+		this->updateCombat();
+		
+		this->updateEnemyCollision();
+
+		this->SetGameOver();
 
 		//Increase difficulty
 		this->IncreaseDifficulty();
 	}
-	else			//Paused update
+	//Paused update
+	else
 	{
 		this->pMenu->update(this->mousePosView);
 		this->updatePauseMenuButtons();
 	}
-
-	//Clear objects
-	this->ClearObjects();
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -407,35 +464,33 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.clear();
 
+	//Render bullets
+	for (auto* bullet : this->bullets)
+	{
+		bullet->render(this->renderTexture, true);
+	}
+
+	//Render enemies
+	for (auto* enemy : this->enemies)
+	{
+		enemy->render(this->renderTexture, true);
+	}
+
 	//Render player
 	this->player->render(this->renderTexture, true);
-
-	//Draw bullets
-	if (!this->bullets.empty())
-	{
-		for (auto it = this->bullets.begin(); it != this->bullets.end(); ++it)
-		{
-			(*it).render(this->renderTexture);
-		}
-	}
-
-	//Draw enemies
-	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
-	{
-		if (!(*it).isDestoryComplete())
-			(*it).render(this->renderTexture, true);
-	}
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);
 
-	if (this->paused && !this->gameOver)		//Pause menu render
+	//Pause menu render
+	if (this->paused && !this->gameOver)
 	{
 		this->pMenu->render(this->renderTexture);
 	}
-	if (this->gameOver)		//Game over render
+
+	//Game over render
+	if (this->gameOver)
 	{
-		this->initGameOver();
 		this->gOver->render(this->renderTexture);
 	}
 

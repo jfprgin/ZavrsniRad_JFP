@@ -39,6 +39,16 @@ int Player::getScore()
 	return this->score;
 }
 
+const float Player::getDirectionX() const
+{
+	return this->movementComponent->getDirectionX();
+}
+
+const float Player::getDirectionY() const
+{
+	return this->movementComponent->getDirectionY();
+}
+
 //Modifiers
 void Player::loseHP(const int hp)
 {

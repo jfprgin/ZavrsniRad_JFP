@@ -5,7 +5,6 @@
 #include "GameOver.h"
 #include "PlayerGUI.h"
 #include "Enemy.h"
-#include "Random.h"
 
 class GameState :
     public State
@@ -17,9 +16,10 @@ private:
     unsigned currentEnemyLimit;
     float enemySpawnInterval;
     float enemySpawnIntervalMin;
-    float difficultyIncreaseInterval;
-
 	sf::Clock enemySpawnClock;
+
+	//Difficulty increase
+	float difficultyIncreaseInterval;
 	sf::Clock difficultyIncreaseClock;
 
 	//Shooting
@@ -27,6 +27,7 @@ private:
 	float shootTimerMax;
 
 	sf::VideoMode& vm;
+	sf::Font font;
 	
 	//Background
 	sf::Texture backgroundTexture;
@@ -41,7 +42,7 @@ private:
 	sf::Clock keyTimer;
 	float keyTimeMax;
 
-    sf::Font font;
+	//Pause and Game Over
     PauseMenu* pMenu;
 	GameOver* gOver;
 
@@ -50,40 +51,51 @@ private:
     PlayerGUI* playerGUI;
 
 	//Enemies
-	std::vector<Enemy> enemies;
-	std::vector<Enemy> enemyGCList;
+	std::vector<Enemy*> enemies;
 
 	//Bullets
-	std::deque<Bullet> bullets;
+	std::deque<Bullet*> bullets;
 
-    //Functions
+    //Private functions
 	void initDeferredRender();
     void initKeybinds();
     void initFonts();
 	void initTextures();
-	void initPauseMenu();
+
 	void initPlayers();
     void initPlayerGUI();
+
+	void initPauseMenu();
 	void initGameOver();
 
 public:
+	//Constructor and Desturctor
     GameState(StateData* state_data);
     ~GameState();
 
     //Functions
-	void SpawnBullet();
-    void SpawnEnemy();
+	//General
+	void updateInput(const float& dt);
 	void IncreaseDifficulty();
-	void HandleCombat();
-	void ClearObjects();
+	void SetGameOver();
 
-	void updateCollision();
-    void updateInput(const float& dt);
-    void updatePlayerInput(const float& dt);
-    void updatePlayerGUI(const float& dt);
+	//Update player
+	void updatePlayerInput(const float& dt);
+	void updatePlayerGUI(const float& dt);
+	void updatePlayerWorldCollision();
+   
+	//Update bullets and enemies
+	void updateBullet(const float& dt);
+	void spawnAndUpdateEnemies(const float& dt);
+	void updateCombat();
+	void updateEnemyCollision();
+
+	//Update Menus
     void updatePauseMenuButtons();
 	void updateGameOverButtons();
-    void update(const float& dt);
+    
+	//Main functions
+	void update(const float& dt);
     void render(sf::RenderTarget* target = nullptr);
 };
 

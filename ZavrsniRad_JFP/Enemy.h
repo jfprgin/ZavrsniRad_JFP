@@ -21,6 +21,8 @@ private:
 	sf::Vector2f direction;
 	Player* player;
 
+	Utils::RandomNumberGenerator rng;
+
 public:
 	//Accessors
 	const int& getHP() const;
@@ -36,7 +38,7 @@ public:
 	void loseHP(const int hp);
 
 	//Constructor and Destructor
-	Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player, float speed = 15.f);
+	Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player);
 	~Enemy();
 
 	//Functions

@@ -9,7 +9,8 @@ private:
 	std::string score;
 
 	sf::Font& font;
-	sf::Text menuText;
+	sf::Text gameOver;
+	sf::Text menuScore;
 
 	sf::RectangleShape background;
 	sf::RectangleShape container;

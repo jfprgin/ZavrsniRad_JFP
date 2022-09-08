@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Texture& texture, float x, float y, float speed)
-	: speed(speed),
-	direction(sf::Vector2f(1.f, 0.f))
+Bullet::Bullet(sf::Texture& texture, float x, float y, float dir_x, float dir_y)
+	: direction(sf::Vector2f(dir_x, dir_y))
 {
-	//this->createMovementComponent(300.f, 15.f, 5.f);
-	//this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
+	this->speed = 20.f;
 
+	this->createHitboxComponent(this->sprite, -8.f, -8.f, 16.f, 16.f);
 	this->setTexture(texture);
 
 	this->setPosition(x, y);
@@ -20,12 +19,18 @@ Bullet::~Bullet()
 //Functions
 void Bullet::update(const float & dt)
 {
-	//this->movementComponent->update(dt);
+	//Update movement and hitbox
 	sf::Vector2f pos(this->direction.x * this->speed * dt * 60.f, this->direction.y * this->speed * dt * 60.f);
 	this->sprite.move(pos);
+	this->hitboxComponent->update();
 }
 
 void Bullet::render(sf::RenderTarget & target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
+
+	if (show_hitbox)
+	{
+		this->hitboxComponent->render(target);
+	}
 }

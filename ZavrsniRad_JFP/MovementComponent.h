@@ -28,6 +28,8 @@ public:
 
 	//Accessors
 	const sf::Vector2f& getVelocity() const;
+	const float getDirectionX() const;
+	const float getDirectionY() const;
 
 	//Functions
 	void stopVelocity();
@@ -38,6 +40,7 @@ public:
 	void movement(const float& dt);
 	void rotate(const float dir, const float& dt);
 	void move(const float dir_x, const float dir_y, const float& dt);
+	void move(sf::Vector2f pos, float speed, const float& dt);
 	void update(const float& dt);
 };
 

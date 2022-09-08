@@ -114,9 +114,9 @@ void Entity::movement(const float& dt)
 	}
 }
 
-void Entity::move(sf::Vector2f pos)
+void Entity::move(const float dir_x, const float dir_y, const float& dt)
 {
-	this->sprite.move(pos);
+	this->movementComponent->move(dir_x, dir_y, dt);
 }
 
 
