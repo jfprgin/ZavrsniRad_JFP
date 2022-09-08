@@ -35,6 +35,7 @@ public:
 	virtual void setPosition(const float x, const float y);
 	virtual void rotate(const float dir, const float& dt);
 	virtual void movement(const float& dt);
+	virtual void move(sf::Vector2f pos);
 	virtual void stopVelocity();
 	virtual void stopVelocityX();
 	virtual void stopVelocityY();

@@ -12,6 +12,11 @@ const int& Enemy::getHPMax() const
 	return this->hpMax;
 }
 
+const float Enemy::getSpeed() const
+{
+	return this->speed;
+}
+
 bool Enemy::isDestoryComplete() const
 {
 	return this->exploding;
@@ -32,17 +37,16 @@ void Enemy::loseHP(const int hp)
 }
 
 //Constructor and Destructor
-Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, float speed)
+Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player, float speed)
 	: hpMax(20),
 	hp(20),
 	damageMin(1),
 	damageMax(2),
 	speed(speed),
 	exploding(false),
-	direction(sf::Vector2f(-1.f, 0.f))
+	direction(sf::Vector2f(-1.f, 0.f)),
+	player(player)
 {
-	//this->createMovementComponent(300.f, 15.f, 5.f);
-	//this->createHitboxComponent(this->sprite, 0.f, 0.f, 48.f, 52.f);
 	this->setTexture(texture);
 
 	this->setPosition(pos_x, pos_y);
@@ -53,28 +57,33 @@ Enemy::~Enemy()
 }
 
 //Functions
-bool Enemy::Destroy()
+void Enemy::Destroy()
 {
-	return this->exploding = true;
+	this->exploding = true;
 }
 
 //VIDI!!!
 void Enemy::update(const float & dt)
 {
-	//this->movementComponent->update(dt);
+	sf::Vector2f moveVec;
+	moveVec.x = this->player->getPosition().x - this->getPosition().x;
+	moveVec.y = this->player->getPosition().y - this->getPosition().y;
 
-	//this->hitboxComponent->update();
-	sf::Vector2f pos(this->direction.x * this->speed * dt * 60.f, this->direction.y * this->speed * dt * 60.f);
-	this->sprite.move(pos);
+	float vecLength = sqrt(pow(moveVec.x, 2) + pow(moveVec.y, 2));
+
+	moveVec /= vecLength;
+
+	if ((this->getPosition().x != this->player->getPosition().x))
+	{
+		sf::Vector2f pos(moveVec.x * dt * 60.f, moveVec.y * this->speed * dt * 60.f);
+		this->move(pos);
+	}
+	//sf::Vector2f pos(this->direction.x * this->speed * dt * 60.f, this->direction.y * this->speed * dt * 60.f);
+	//this->sprite.move(pos);
 }
 
 void Enemy::render(sf::RenderTarget& target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
-
-	/*if (show_hitbox)
-	{
-		this->hitboxComponent->render(target);
-	}*/
 }
 

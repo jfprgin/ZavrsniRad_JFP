@@ -87,6 +87,7 @@ void GameState::initPlayerGUI()
 void GameState::initGameOver()
 {
 	this->gOver = new GameOver(this->stateData->gfxSettings->resolution, this->font, this->player->getScore());
+	//this->gOver->addButton("GAME_STATE", gui::p2py(24.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "New Game");
 	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
@@ -128,7 +129,7 @@ void GameState::SpawnEnemy()
 	float yPos = this->rng.getFloat(55.f, maxY);
 	float speed = this->rng.getFloat(1.f, 5.f);
 
-	this->enemies.emplace_back(this->textures["ENEMY"], xPos, yPos, speed);
+	this->enemies.emplace_back(this->textures["ENEMY"], xPos, yPos, this->player, speed);
 }
 
 void GameState::SpawnBullet()
@@ -175,7 +176,7 @@ void GameState::ClearObjects()
 	//Enemy GC
 	for (auto it = this->enemies.begin(); it != this->enemies.end(); ++it)
 	{
-		if (it->getPosition().x < -100)
+		if (it->getPosition().x < -100 || it->isDestoryComplete())
 		{
 			std::swap(*it, this->enemies.back());
 			this->enemies.pop_back();
@@ -221,6 +222,8 @@ void GameState::updateCollision()
 		{
 			this->player->loseHP((*it).getHP());
 			(*it).loseHP((*it).getHP());
+			std::swap(*it, this->enemies.back());
+			this->enemies.pop_back();
 			break;
 		}
 	}
@@ -232,7 +235,8 @@ void GameState::updateCollision()
 		{
 			if (!this->bullets.empty())
 			{
-				for (auto bullet = this->bullets.begin(); bullet != this->bullets.end(); ++bullet)
+				bool enemyDeleted = false;
+				for (auto bullet = this->bullets.begin(); bullet != this->bullets.end() && enemyDeleted == false; ++bullet)
 				{
 					if ((*bullet).getGlobalBounds().intersects(enemy->getGlobalBounds()))
 					{
@@ -240,9 +244,12 @@ void GameState::updateCollision()
 						this->bullets.erase(bullet);
 
 						if (enemy->isDestoryComplete())
+						{
 							this->player->AddScore(5);
-
-						break;
+							std::swap(*enemy, this->enemies.back());
+							this->enemies.pop_back();
+							enemyDeleted = true;
+						}
 					}
 				}
 			}
@@ -270,12 +277,12 @@ void GameState::updatePlayerInput(const float& dt)
 	//Update player input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 	{
-		this->player->rotate(-1.f, dt);
+		this->player->rotate(-2.f, dt);
 		//this->player->move(-1.f, 0.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 	{
-		this->player->rotate(1.f, dt);
+		this->player->rotate(2.f, dt);
 		//this->player->move(1.f, 0.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
@@ -361,6 +368,7 @@ void GameState::update(const float& dt)
 			(*it).update(dt);
 		}
 
+		std::cout << this->enemies.size() << std::endl;
 		//Spawn an enemy every enemySpawnSeconds interval.
 		if (this->enemySpawnClock.getElapsedTime().asSeconds() >= enemySpawnInterval && this->enemies.size() < this->currentEnemyLimit)
 		{

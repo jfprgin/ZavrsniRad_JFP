@@ -114,6 +114,12 @@ void Entity::movement(const float& dt)
 	}
 }
 
+void Entity::move(sf::Vector2f pos)
+{
+	this->sprite.move(pos);
+}
+
+
 void Entity::rotate(const float dir, const float& dt)
 {
 	if (this->movementComponent)
