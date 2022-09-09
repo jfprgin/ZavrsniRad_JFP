@@ -217,26 +217,26 @@ void GameState::updatePlayerWorldCollision()
 	//Left
 	if (this->player->getGlobalBounds().left < 0.f)
 	{
-		this->player->setPosition(0.f, this->player->getGlobalBounds().top);
 		this->player->stopVelocityX();
+		this->player->setPosition(0.f, this->player->getGlobalBounds().top);
 	}
 	//Right
 	else if (this->player->getGlobalBounds().left + this->player->getGlobalBounds().width >= this->window->getSize().x)
 	{
-		this->player->setPosition(window->getSize().x - this->player->getGlobalBounds().width, this->player->getGlobalBounds().top);
 		this->player->stopVelocityX();
+		this->player->setPosition(window->getSize().x - this->player->getGlobalBounds().width, this->player->getGlobalBounds().top);
 	}
 	//Top
 	if (this->player->getGlobalBounds().top < 0.f)
 	{
-		this->player->setPosition(this->player->getGlobalBounds().left, 0.f);
 		this->player->stopVelocityY();
+		this->player->setPosition(this->player->getGlobalBounds().left, 0.f);
 	}
 	//Bottom
 	else if (this->player->getGlobalBounds().top + this->player->getGlobalBounds().height >= this->window->getSize().y)
 	{
-		this->player->setPosition(this->player->getGlobalBounds().left, window->getSize().y - this->player->getGlobalBounds().height);
 		this->player->stopVelocityY();
+		this->player->setPosition(this->player->getGlobalBounds().left, window->getSize().y - this->player->getGlobalBounds().height);
 	}
 }
 
@@ -499,4 +499,8 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.display();
 	this->renderSprite.setTexture(this->renderTexture.getTexture());
 	target->draw(this->renderSprite);
+}
+
+void GameState::resetGui()
+{
 }

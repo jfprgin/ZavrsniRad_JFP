@@ -23,12 +23,12 @@ void GraphicsSettings::saveToFile(const std::string path)
 
 	if (ofs.is_open())
 	{
-		ofs << this->title;
-		ofs << this->resolution.width << " " << this->resolution.height;
-		ofs << this->fullscreen;
-		ofs << this->framerateLimit;
-		ofs << this->verticalSync;
-		ofs << this->contextSettings.antialiasingLevel;
+		ofs << this->title << "\n";
+		ofs << std::to_string(this->resolution.width) << " " << std::to_string(this->resolution.height) << "\n";
+		ofs << std::to_string(this->fullscreen) << "\n";
+		ofs << std::to_string(this->framerateLimit) << "\n";
+		ofs << std::to_string(this->verticalSync) << "\n";
+		ofs << std::to_string(this->contextSettings.antialiasingLevel) << "\n";
 	}
 
 	ofs.close();

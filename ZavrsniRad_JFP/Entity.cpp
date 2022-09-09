@@ -23,7 +23,6 @@ Entity::~Entity()
 void Entity::setTexture(sf::Texture& texture)
 {
 	this->sprite.setTexture(texture);
-	//this->sprite.setScale(0.05f, 0.05f);
 }
 
 void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float decelartion)
@@ -94,7 +93,7 @@ const sf::FloatRect Entity::getGlobalBounds() const
 //Functions
 void Entity::setPosition(const float x, const float y)
 {
-	this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 2, this->sprite.getGlobalBounds().height / 2);
+	this->sprite.setOrigin(this->hitboxComponent->getGlobalBounds().width / 2, this->hitboxComponent->getGlobalBounds().height / 2);
 
 	if (this->hitboxComponent)
 	{
@@ -124,7 +123,7 @@ void Entity::rotate(const float dir, const float& dt)
 {
 	if (this->movementComponent)
 	{
-		this->movementComponent->rotate(dir, dt);	//Sets velocity
+		this->movementComponent->rotate(dir, dt);
 	}
 }
 

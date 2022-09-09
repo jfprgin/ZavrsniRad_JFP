@@ -21,12 +21,18 @@ void Game::initWindow()
 	/*Create SFML Window*/
 	if (this->gfxSettings.fullscreen)
 	{
-		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Fullscreen, this->gfxSettings.contextSettings);
+		this->window = new sf::RenderWindow(
+			this->gfxSettings.resolution,
+			this->gfxSettings.title,
+			sf::Style::Fullscreen,
+			this->gfxSettings.contextSettings);
 	}
 	else
 	{
-		this->window = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
-		
+		this->window = new sf::RenderWindow(this->gfxSettings.resolution,
+			this->gfxSettings.title,
+			sf::Style::Titlebar | sf::Style::Close,
+			this->gfxSettings.contextSettings);
 	}
 	
 	this->window->setFramerateLimit(this->gfxSettings.framerateLimit);
@@ -62,6 +68,7 @@ void Game::initStateData()
 
 void Game::initStates()
 {
+	//Initialize Main menu state
 	this->states.push(new MainMenuState(&this->stateData));
 }
 
@@ -95,6 +102,7 @@ void Game::endApplication()
 
 void Game::run()
 {
+	/*Game loop -> update dt, update and render game*/
 	while (this->window->isOpen())
 	{
 		this->updateDt();
@@ -105,11 +113,13 @@ void Game::run()
 
 void Game::updateDt()
 {
+	/*Updates the dt variable with the time it takes to update and render one frame so that we move framerate independently.*/
 	this->dt = this->dtClock.restart().asSeconds();
 }
 
 void Game::updateSFMLEvents()
 {
+	//Checks if close is pressed
 	while (this->window->pollEvent(this->sfEvent))
 	{
 		if (this->sfEvent.type == sf::Event::Closed)
@@ -121,6 +131,10 @@ void Game::updateSFMLEvents()
 
 void Game::update()
 {
+	/*Check if states stack is empty
+	*	- If it is -> end application
+	*	- If it isn't -> check if player has exited state and pop the state on top of stack
+	*/
 	this->updateSFMLEvents();
 
 	if (!this->states.empty() && this->window->hasFocus())
@@ -132,6 +146,13 @@ void Game::update()
 			this->states.top()->endState();
 			delete this->states.top();
 			this->states.pop();
+
+			if (this->states.size() > 0)
+			{
+				this->states.top()->resetGui();
+				//this->initStateData();
+			}
+			
 		}
 	}
 	//Application end
@@ -144,6 +165,7 @@ void Game::update()
 
 void Game::render()
 {
+	// First clear window and then render the state on top of stack
 	this->window->clear();
 
 	//Render items

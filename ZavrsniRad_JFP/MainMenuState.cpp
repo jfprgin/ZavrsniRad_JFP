@@ -117,6 +117,7 @@ MainMenuState::MainMenuState(StateData* state_data)
 	this->initFonts();
 	this->initKeybinds();
 	this->initGui();
+	this->resetGui();
 }
 
 MainMenuState::~MainMenuState()

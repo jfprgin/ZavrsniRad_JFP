@@ -69,6 +69,7 @@ public:
 	void endState();
 	void pauseState();
 	void unpauseState();
+	virtual void resetGui() = 0;
 
 	virtual void updateMousePositions();
 	virtual void updateKeyTime(const float& dt);

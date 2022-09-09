@@ -50,7 +50,7 @@ Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player)
 	this->speed = this->rng.getFloat(200.f, 400.f);
 
 	this->createMovementComponent(this->speed, 15.f, 5.f);
-	this->createHitboxComponent(this->sprite, -32.f, -32.f, 64.f, 64.f);
+	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
 
 	this->setTexture(texture);
 

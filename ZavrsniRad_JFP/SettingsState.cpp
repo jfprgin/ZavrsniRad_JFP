@@ -75,6 +75,12 @@ void SettingsState::initGui()
 		font, modes_str.data(), modes_str.size()
 	);
 
+	this->dropDownLists["FULLSCREEN"] = new gui::DropDownList(
+		gui::p2px(42.f, vm), gui::p2py(52.f, vm),
+		gui::p2px(10.4f, vm), gui::p2py(4.5f, vm),
+		font, this->modes2.data(), this->modes2.size()
+	);
+
 	//Text init
 	this->optionsText.setFont(this->font);
 	this->optionsText.setPosition(sf::Vector2f(gui::p2px(5.2f, vm), gui::p2py(41.7f, vm)));
@@ -148,19 +154,37 @@ void SettingsState::updateGui(const float& dt)
 	}
 
 	//Buttons functionality
-	//Quit the game
 	if (this->buttons["BACK"]->isPressed())
 	{
 		this->endState();
 	}
 
 	//Apply selected state
-	if(this->buttons["APPLY"]->isPressed())
+	if (this->buttons["APPLY"]->isPressed())
 	{
 		//TEST REMOVE LATER
+		this->gfxSettings.loadFromFile("Config/graphics.ini");
+
 		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
 
-		this->window->create(this->stateData->gfxSettings->resolution, this->stateData->gfxSettings->title, sf::Style::Default);
+		if (this->modes2[this->dropDownLists["FULLSCREEN"]->getActiveElementId()] == "Yes")
+		{
+			this->window->create(this->stateData->gfxSettings->resolution, this->stateData->gfxSettings->title, sf::Style::Fullscreen);
+			this->gfxSettings.title = "SFML C++";
+			this->gfxSettings.resolution.width = this->stateData->gfxSettings->resolution.width;
+			this->gfxSettings.resolution.height = this->stateData->gfxSettings->resolution.height;
+			this->gfxSettings.fullscreen = true;
+			this->gfxSettings.saveToFile("Config/graphics.ini");
+		}
+		else
+		{
+			this->window->create(this->stateData->gfxSettings->resolution, this->stateData->gfxSettings->title, sf::Style::Default);
+			this->gfxSettings.title = "SFML C++";
+			this->gfxSettings.resolution.width = this->stateData->gfxSettings->resolution.width;
+			this->gfxSettings.resolution.height = this->stateData->gfxSettings->resolution.height;
+			this->gfxSettings.fullscreen = false;
+			this->gfxSettings.saveToFile("Config/graphics.ini");
+		}
 
 		this->resetGui();
 	}

@@ -3,7 +3,6 @@
 #include"stdafx.h"
 
 //NOT FINNISHED
-//MAYBE UNNECESSARY
 class AnimationComponent
 {
 private:

@@ -3,6 +3,20 @@
 #include"stdafx.h"
 #include"MainMenuState.h"
 
+/*=========================The Engine=============================*/
+/*
+*Creates the window
+*Runs the game loop (update and render)
+*Initializes keys
+*Updates dt variable
+*Manages states:
+*	- Initializes StateData and State stack
+*	- Initializes Main menu
+*	- Pop State from stack when quit is called
+*	- Renders State on the top of the stack
+*	- Clears stack
+*/
+
 class Game
 {
 private:

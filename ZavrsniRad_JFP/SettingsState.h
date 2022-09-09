@@ -17,7 +17,9 @@ private:
 
     sf::Text optionsText;
 
+	std::vector<std::string> modes2{ "No", "Yes" };
     std::vector<sf::VideoMode> modes;
+	GraphicsSettings gfxSettings;
 
     //Functions
     void initVariables();

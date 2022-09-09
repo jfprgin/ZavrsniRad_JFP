@@ -97,5 +97,7 @@ public:
 	//Main functions
 	void update(const float& dt);
     void render(sf::RenderTarget* target = nullptr);
+
+	void resetGui();
 };
 
