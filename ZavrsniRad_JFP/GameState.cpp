@@ -410,6 +410,7 @@ void GameState::update(const float& dt)
 	{
 		this->gOver->update(this->mousePosView);
 		this->updateGameOverButtons();
+		this->gOver->updateScore(player->getScore());
 		this->playerGUI->update(dt);
 	}
 

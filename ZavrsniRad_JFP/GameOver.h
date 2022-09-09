@@ -29,6 +29,7 @@ public:
 	void addButton(const std::string key, const float y,
 		const float width, const float height,
 		const unsigned char_size, const std::string text);
+	void updateScore(const int playerScore);
 	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 };

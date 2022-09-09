@@ -1,10 +1,1 @@
-﻿  Game.cpp
-  GameOver.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(66,1): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(66,1): message : destructor or deallocator has a (possibly implicit) non-throwing exception specification
-  GameState.cpp
-  MainMenuState.cpp
-  PauseMenu.cpp
-  main.cpp
-  Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+﻿  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
