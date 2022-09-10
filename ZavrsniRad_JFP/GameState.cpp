@@ -93,7 +93,7 @@ void GameState::initGameOver()
 /*======================================Constructorand Desturctor=====================================*/
 GameState::GameState(StateData* state_data)
 	: State(state_data), vm(this->stateData->gfxSettings->resolution),
-	maxEnemy(50), currentEnemyLimit(4), enemySpawnInterval(4.f),
+	maxEnemy(40), currentEnemyLimit(10), enemySpawnInterval(3.f),
 	enemySpawnIntervalMin(0.5f), difficultyIncreaseInterval(20.f),
 	shootTimerMax(8.f)
 {
@@ -426,7 +426,7 @@ void GameState::update(const float& dt)
 
 		this->updatePlayerWorldCollision();
 
-		///Shoot timer
+		//Shoot timer
 		if (this->shootTimer < this->shootTimerMax)
 			this->shootTimer += 1.f * dt * 60.f;
 

@@ -17,8 +17,8 @@ private:
 
     sf::Text optionsText;
 
-	std::vector<std::string> modes2{ "No", "Yes" };
-    std::vector<sf::VideoMode> modes;
+	std::vector<std::string> fModes{ "No", "Yes" };
+    std::vector<sf::VideoMode> rModes;
 	GraphicsSettings gfxSettings;
 
     //Functions

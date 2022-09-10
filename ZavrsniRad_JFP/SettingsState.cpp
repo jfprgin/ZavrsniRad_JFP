@@ -4,7 +4,7 @@
 //Private functions
 void SettingsState::initVariables()
 {
-	this->modes = sf::VideoMode::getFullscreenModes();
+	this->rModes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initFonts()
@@ -63,7 +63,7 @@ void SettingsState::initGui()
 	
 	//Modes init
 	std::vector<std::string> modes_str;
-	for (auto &i : this->modes)
+	for (auto &i : this->rModes)
 	{
 		modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
 	}
@@ -78,7 +78,7 @@ void SettingsState::initGui()
 	this->dropDownLists["FULLSCREEN"] = new gui::DropDownList(
 		gui::p2px(42.f, vm), gui::p2py(52.f, vm),
 		gui::p2px(10.4f, vm), gui::p2py(4.5f, vm),
-		font, this->modes2.data(), this->modes2.size()
+		font, this->fModes.data(), this->fModes.size()
 	);
 
 	//Text init
@@ -87,7 +87,7 @@ void SettingsState::initGui()
 	this->optionsText.setCharacterSize(gui::calcCharSize(vm, 70));
 	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
 
-	this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n");
+	this->optionsText.setString("Resolution \n\nFullscreen \n\n");
 }
 
 void SettingsState::resetGui()
@@ -165,9 +165,9 @@ void SettingsState::updateGui(const float& dt)
 		//TEST REMOVE LATER
 		this->gfxSettings.loadFromFile("Config/graphics.ini");
 
-		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+		this->stateData->gfxSettings->resolution = this->rModes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
 
-		if (this->modes2[this->dropDownLists["FULLSCREEN"]->getActiveElementId()] == "Yes")
+		if (this->fModes[this->dropDownLists["FULLSCREEN"]->getActiveElementId()] == "Yes")
 		{
 			this->window->create(this->stateData->gfxSettings->resolution, this->stateData->gfxSettings->title, sf::Style::Fullscreen);
 			this->gfxSettings.title = "SFML C++";

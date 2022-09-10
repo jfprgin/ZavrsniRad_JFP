@@ -55,18 +55,21 @@ GameOver::~GameOver()
 		delete it->second;
 	}
 
-	std::ofstream myfile("Config/Scores.txt", std::ofstream::app);
-
-	if (myfile.is_open())
-	 {
-		myfile << score << std::endl;
-	}
-	else
+	if (this->score != "0")
 	{
-		 throw "ERROR::GAME_OVER::FAILED TO OPEN SCORE.TXT";
-	}
+		std::ofstream myfile("Config/Scores.txt", std::ofstream::app);
 
-	myfile.close();
+		if (myfile.is_open())
+		{
+			myfile << this->score << std::endl;
+		}
+		else
+		{
+			throw "ERROR::GAME_OVER::FAILED TO OPEN SCORE.TXT";
+		}
+
+		myfile.close();
+	}
 }
 
 //Accessor

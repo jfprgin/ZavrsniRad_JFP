@@ -12,6 +12,7 @@ namespace gui
 	const float p2py(const float perc, const sf::VideoMode& vm);		//Percent to pixel y
 	const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
 
+	/*============================================BUTTON=======================================================*/
 	class Button
 	{
 	private:
@@ -58,6 +59,8 @@ namespace gui
 		void render(sf::RenderTarget& target);
 	};
 
+	/*===============================================DROPDOWN LIST===============================================================*/
+	/*Dropdown list is a vector of Button pointers*/
 	class DropDownList
 	{
 	private:

@@ -81,7 +81,7 @@ Player::Player(float x, float y, sf::Texture& texture)
 	score(0), isDestroyed(false)
 {
 	this->createHitboxComponent(this->sprite, -32.f, -32.f, 64.f, 64.f);
-	this->createMovementComponent(300.f, 15.f, 5.f);
+	this->createMovementComponent(500.f, 15.f, 5.f);
 	this->setTexture(texture);
 
 	this->setPosition(x, y);

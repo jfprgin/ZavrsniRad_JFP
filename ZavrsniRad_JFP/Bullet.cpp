@@ -4,7 +4,7 @@
 Bullet::Bullet(sf::Texture& texture, float x, float y, float dir_x, float dir_y)
 	: direction(sf::Vector2f(dir_x, dir_y))
 {
-	this->speed = 20.f;
+	this->speed = 30.f;
 
 	this->createHitboxComponent(this->sprite, -8.f, -8.f, 16.f, 16.f);
 	this->setTexture(texture);
