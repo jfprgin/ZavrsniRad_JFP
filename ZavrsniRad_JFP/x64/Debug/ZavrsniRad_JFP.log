@@ -1,4 +1,1 @@
-﻿  GameOver.cpp
-c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
-  c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): note: destructor or deallocator has a (possibly implicit) non-throwing exception specification
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+﻿  GameState.cpp

@@ -86,9 +86,9 @@ public:
    
 	//Update bullets and enemies
 	void updateBullet(const float& dt);
-	void spawnAndUpdateEnemies(const float& dt);
+	void spawnEnemies();
 	void updateCombat();
-	void updateEnemyCollision();
+	void updateEnemyCollision(const float& dt);
 
 	//Update Menus
     void updatePauseMenuButtons();

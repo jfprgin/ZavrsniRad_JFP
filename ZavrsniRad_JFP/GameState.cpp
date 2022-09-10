@@ -288,7 +288,7 @@ void GameState::updateBullet(const float& dt)
 	}
 }
 
-void GameState::spawnAndUpdateEnemies(const float& dt)
+void GameState::spawnEnemies()
 {
 	//Spawn an enemy every enemySpawnSeconds interval.
 	if (this->enemySpawnClock.getElapsedTime().asSeconds() >= enemySpawnInterval && this->enemies.size() < this->currentEnemyLimit)
@@ -315,25 +315,6 @@ void GameState::spawnAndUpdateEnemies(const float& dt)
 		
 		this->enemySpawnClock.restart();
 	}
-
-	//Update
-	unsigned counter = 0;
-
-	for (auto* enemy : this->enemies)
-	{
-		enemy->update(dt);
-
-		//Enemy player collision
-		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()))
-		{
-			//Delete enemy
-			this->player->loseHP(this->enemies.at(counter)->getHP());
-			delete this->enemies.at(counter);
-			this->enemies.erase(this->enemies.begin() + counter);
-		}
-
-		++counter;
-	}
 }
 
 void GameState::updateCombat()
@@ -359,8 +340,28 @@ void GameState::updateCombat()
 	}
 }
 
-void GameState::updateEnemyCollision()
+void GameState::updateEnemyCollision(const float& dt)
 {
+
+	//Update
+	unsigned counter = 0;
+
+	for (auto* enemy : this->enemies)
+	{
+		enemy->update(dt);
+
+		//Enemy player collision
+		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()))
+		{
+			//Delete enemy
+			this->player->loseHP(this->enemies.at(counter)->getHP());
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
+		}
+
+		++counter;
+	}
+
 	bool enemyDeleted = false;
 	
 	if (this->enemies.size() > 0)
@@ -430,18 +431,14 @@ void GameState::update(const float& dt)
 		if (this->shootTimer < this->shootTimerMax)
 			this->shootTimer += 1.f * dt * 60.f;
 
-		//Testing
-		//std::cout << "Enemies: " << this->enemies.size() << std::endl;
-		//std::cout << "Bullets: " << this->bullets.size() << std::endl;
-
 		//Handle combat
 		this->updateBullet(dt);
 
-		this->spawnAndUpdateEnemies(dt);
+		this->spawnEnemies();
 
 		this->updateCombat();
 		
-		this->updateEnemyCollision();
+		this->updateEnemyCollision(dt);
 
 		this->SetGameOver();
 
@@ -468,17 +465,17 @@ void GameState::render(sf::RenderTarget* target)
 	//Render bullets
 	for (auto* bullet : this->bullets)
 	{
-		bullet->render(this->renderTexture, true);
+		bullet->render(this->renderTexture, false);
 	}
 
 	//Render enemies
 	for (auto* enemy : this->enemies)
 	{
-		enemy->render(this->renderTexture, true);
+		enemy->render(this->renderTexture, false);
 	}
 
 	//Render player
-	this->player->render(this->renderTexture, true);
+	this->player->render(this->renderTexture, false);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);
