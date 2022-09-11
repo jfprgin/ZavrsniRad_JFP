@@ -77,7 +77,7 @@ void Player::AddScore(int modifier)
 
 //Constructor and Destructor
 Player::Player(float x, float y, sf::Texture& texture)
-	: hpMax(100), hp(100), damageMin(5), damageMax(15), damageTimerMax(500), damageTimer(damageTimer),
+	: hpMax(100), hp(100), damageMin(5), damageMax(20), damageTimerMax(500), damageTimer(damageTimer),
 	score(0), isDestroyed(false)
 {
 	this->createHitboxComponent(this->sprite, -32.f, -32.f, 64.f, 64.f);
