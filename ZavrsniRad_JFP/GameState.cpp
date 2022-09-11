@@ -326,15 +326,19 @@ void GameState::updateCombat()
 		{
 			if (this->enemies[i]->getGlobalBounds().intersects(this->bullets[k]->getGlobalBounds()))
 			{
-				this->player->AddScore(1);
+				this->enemies[i]->loseHP(this->player->getDamage());
+				if (this->enemies[i]->isDestoryComplete())
+				{
+					this->player->AddScore(1);
 
-				delete this->enemies[i];
-				this->enemies.erase(this->enemies.begin() + i);
+					delete this->enemies[i];
+					this->enemies.erase(this->enemies.begin() + i);
 
+					enemyDeleted = true;
+				}
+				
 				delete this->bullets[k];
 				this->bullets.erase(this->bullets.begin() + k);
-
-				enemyDeleted = true;
 			}
 		}
 	}

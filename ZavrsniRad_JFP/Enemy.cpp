@@ -40,11 +40,7 @@ void Enemy::loseHP(const int hp)
 Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player)
 	: hpMax(20),
 	hp(20),
-	damageMin(1),
-	damageMax(2),
-	speed(300.f),
 	exploding(false),
-	direction(sf::Vector2f(-1.f, 0.f)),
 	player(player)
 {
 	this->speed = this->rng.getFloat(200.f, 400.f);
@@ -67,26 +63,26 @@ void Enemy::Destroy()
 	this->exploding = true;
 }
 
-//VIDI!!!
+void Enemy::follow(const float& dt)
+{
+	this->moveVec.x = this->player->getPosition().x - this->getPosition().x;
+	this->moveVec.y = this->player->getPosition().y - this->getPosition().y;
+
+	float vecLength = sqrt(pow(this->moveVec.x, 2) + pow(this->moveVec.y, 2));
+
+	this->moveVec /= vecLength;
+
+	if ((this->getPosition().x != this->player->getPosition().x))
+	{
+		this->move(this->moveVec.x, this->moveVec.y, dt);
+	}
+}
+
 void Enemy::update(const float & dt)
 {
 	this->movementComponent->update(dt);
 
-	sf::Vector2f moveVec;
-	moveVec.x = this->player->getPosition().x - this->getPosition().x;
-	moveVec.y = this->player->getPosition().y - this->getPosition().y;
-
-	float vecLength = sqrt(pow(moveVec.x, 2) + pow(moveVec.y, 2));
-
-	moveVec /= vecLength;
-
-	if ((this->getPosition().x != this->player->getPosition().x))
-	{
-		//sf::Vector2f pos(moveVec.x * dt * 60.f, moveVec.y * this->speed * dt * 60.f);
-		this->move(moveVec.x, moveVec.y, dt);
-	}
-	//sf::Vector2f pos(this->direction.x * this->speed * dt * 60.f, this->direction.y * this->speed * dt * 60.f);
-	//this->sprite.move(pos);
+	this->follow(dt);
 
 	this->hitboxComponent->update();
 }

@@ -12,13 +12,11 @@ private:
 	int hp;
 	int hpMax;
 
-	int damageMin;
-	int damageMax;
-
-	float speed;
 	bool exploding;
 
-	sf::Vector2f direction;
+	sf::Vector2f moveVec;
+	float speed;
+
 	Player* player;
 
 	Utils::RandomNumberGenerator rng;
@@ -43,6 +41,7 @@ public:
 
 	//Functions
 	void Destroy();
+	void follow(const float& dt);
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target, const bool show_hitbox = false);
