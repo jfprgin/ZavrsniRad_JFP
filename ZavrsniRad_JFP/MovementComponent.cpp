@@ -2,7 +2,7 @@
 #include "MovementComponent.h"
 
 MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity, float acceleration, float deceleration)
-	: sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration), directionX(0.f), directionY(0.f)
+	: sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration), directionX(0.f), directionY(-1.f)
 {
 	this->maxVelocity = maxVelocity;
 }
@@ -56,16 +56,14 @@ void MovementComponent::rotate(const float dir, const float & dt)
 {
 	this->sprite.rotate(dir);
 
-	this->directionX = sin(DegToRad(sprite.getRotation()));
-	this->directionY = -cos(DegToRad(sprite.getRotation()));
+	this->updateDirection();
 }
 
 void MovementComponent::movement(const float& dt)
 {
-	this->directionX = sin(DegToRad(sprite.getRotation()));
-	this->directionY = -cos(DegToRad(sprite.getRotation()));
+	this->updateDirection();
 	
-	move(directionX, directionY, dt);
+	move(this->directionX, this->directionY, dt);
 }
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float& dt)
@@ -74,6 +72,12 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float& 
 
 	this->velocity.x += this->acceleration * dir_x * dt * 100;
 	this->velocity.y += this->acceleration * dir_y * dt * 100;
+}
+
+void MovementComponent::updateDirection()
+{
+	this->directionX = sin(DegToRad(sprite.getRotation()));
+	this->directionY = -cos(DegToRad(sprite.getRotation()));
 }
 
 void MovementComponent::update(const float & dt)

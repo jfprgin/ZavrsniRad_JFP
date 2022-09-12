@@ -4,7 +4,7 @@
 Bullet::Bullet(sf::Texture& texture, float x, float y, float dir_x, float dir_y)
 	: direction(sf::Vector2f(dir_x, dir_y))
 {
-	this->speed = 30.f;
+	this->speed = 1200.f;
 
 	this->createHitboxComponent(this->sprite, -8.f, -8.f, 16.f, 16.f);
 	this->setTexture(texture);
@@ -20,8 +20,8 @@ Bullet::~Bullet()
 void Bullet::update(const float & dt)
 {
 	//Update movement and hitbox
-	sf::Vector2f pos(this->direction.x * this->speed * dt * 60.f, this->direction.y * this->speed * dt * 60.f);
-	this->sprite.move(pos);
+	sf::Vector2f pos(this->direction.x * this->speed * dt * 100.f, this->direction.y * this->speed * dt * 100.f);
+	this->sprite.move(pos * (dt));
 	this->hitboxComponent->update();
 }
 

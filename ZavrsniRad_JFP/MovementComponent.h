@@ -40,6 +40,7 @@ public:
 	void movement(const float& dt);
 	void rotate(const float dir, const float& dt);
 	void move(const float dir_x, const float dir_y, const float& dt);
+	void updateDirection();
 	void update(const float& dt);
 };
 

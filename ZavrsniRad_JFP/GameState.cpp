@@ -469,17 +469,17 @@ void GameState::render(sf::RenderTarget* target)
 	//Render bullets
 	for (auto* bullet : this->bullets)
 	{
-		bullet->render(this->renderTexture, false);
+		bullet->render(this->renderTexture, true);
 	}
 
 	//Render enemies
 	for (auto* enemy : this->enemies)
 	{
-		enemy->render(this->renderTexture, false);
+		enemy->render(this->renderTexture, true);
 	}
 
 	//Render player
-	this->player->render(this->renderTexture, false);
+	this->player->render(this->renderTexture, true);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);
