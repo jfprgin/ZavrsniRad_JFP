@@ -25,6 +25,9 @@ private:
 
 	Utils::RandomNumberGenerator rng;
 
+	//Initializer functions
+	void initAnimations();
+
 public:
 	//Accessors
 	bool isDestoryComplete() const;
@@ -46,13 +49,15 @@ public:
 	void AddScore(int modifier);
 
 	//Constructor and Destructor
-	Player(float x, float y, sf::Texture& texture);
+	Player(float x, float y, sf::Texture& texture_sheet);
 	~Player();
 
 	//Functions
 	void Destroy();
 
+	void updateAnimation(const float& dt);
 	void update(const float& dt);
+
 	void render(sf::RenderTarget& target, const bool show_hitbox = false);
 };
 

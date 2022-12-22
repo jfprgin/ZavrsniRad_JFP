@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-//DONE
+
 class Bullet :
 	public Entity
 {

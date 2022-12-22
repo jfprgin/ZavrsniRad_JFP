@@ -149,7 +149,10 @@ void Game::update()
 
 			if (this->states.size() > 0)
 			{
+				this->initGraphicsSettings();
+				this->initStateData();
 				this->states.top()->resetGui();
+				//this->states.top()->resetGui(this->gfxSettings);
 				//this->initStateData();
 			}
 			

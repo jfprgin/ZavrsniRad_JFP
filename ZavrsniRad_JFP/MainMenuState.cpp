@@ -33,6 +33,8 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initGui()
 {
+	this->stateData->gfxSettings->loadFromFile("Config/graphics.ini");
+
 	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
 
 	//Background init

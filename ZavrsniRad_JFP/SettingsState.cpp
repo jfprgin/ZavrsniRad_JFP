@@ -138,6 +138,7 @@ SettingsState::~SettingsState()
 	}
 }
 
+
 //Functions
 void SettingsState::updateInput(const float& dt)
 {

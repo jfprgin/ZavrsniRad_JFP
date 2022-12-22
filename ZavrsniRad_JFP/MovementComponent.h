@@ -4,6 +4,8 @@
 
 #define PI 3.14159265358979323846
 
+enum movement_states { IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN };
+
 class MovementComponent
 {
 private:
@@ -30,6 +32,7 @@ public:
 	const sf::Vector2f& getVelocity() const;
 	const float getDirectionX() const;
 	const float getDirectionY() const;
+	const bool getState(const short unsigned state) const;
 
 	//Functions
 	void stopVelocity();

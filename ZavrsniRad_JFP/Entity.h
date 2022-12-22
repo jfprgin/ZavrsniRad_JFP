@@ -2,6 +2,7 @@
 
 #include"HitboxComponent.h"
 #include"MovementComponent.h"
+#include "AnimationComponent.h"
 
 class Entity
 {
@@ -14,6 +15,7 @@ protected:
 	
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
+	AnimationComponent* animationComponent;
 
 public:
 	Entity();
@@ -23,8 +25,12 @@ public:
 	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float decelartion);
 	void createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
+	void createAnimationComponent(sf::Texture& texture_sheet);
 
 	//Accessors
+	virtual MovementComponent* getMovementComponent();
+	virtual AnimationComponent* getAnimationComponent();
+
 	const sf::Vector2f& getPosition() const;
 	virtual const sf::Vector2f& getSpritePosition() const;
 	virtual const sf::Vector2f getCenter() const;

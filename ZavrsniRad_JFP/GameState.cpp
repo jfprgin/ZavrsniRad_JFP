@@ -48,7 +48,7 @@ void GameState::initFonts()
 void GameState::initTextures()
 {
 	//Player
-	if (!this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/test.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/test.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}
@@ -70,7 +70,7 @@ void GameState::initTextures()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_IDLE"]);
+	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_SHEET"]);
 }
 
 void GameState::initPlayerGUI()
@@ -92,11 +92,12 @@ void GameState::initGameOver()
 
 /*======================================Constructorand Desturctor=====================================*/
 GameState::GameState(StateData* state_data)
-	: State(state_data), vm(this->stateData->gfxSettings->resolution),
+	: State(state_data), vm(state_data->gfxSettings->resolution),
 	maxEnemy(40), currentEnemyLimit(10), enemySpawnInterval(3.f),
 	enemySpawnIntervalMin(0.5f), difficultyIncreaseInterval(20.f),
 	shootTimerMax(8.f)
 {
+	this->gfxSettings = state_data->gfxSettings;
 	this->initDeferredRender();
 	this->initKeybinds();
 	this->initFonts();
@@ -110,6 +111,8 @@ GameState::GameState(StateData* state_data)
 
 	this->enemySpawnClock.restart();
 	this->difficultyIncreaseClock.restart();
+
+	this->resetGui();
 }
 
 GameState::~GameState()
@@ -505,3 +508,4 @@ void GameState::render(sf::RenderTarget* target)
 void GameState::resetGui()
 {
 }
+

@@ -32,8 +32,6 @@ public:
     SettingsState(StateData* state_data);
     ~SettingsState();
 
-    //Accessors
-
     //Functions
     void updateInput(const float& dt);
     void updateGui(const float& dt);

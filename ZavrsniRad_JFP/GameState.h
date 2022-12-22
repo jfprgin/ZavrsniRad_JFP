@@ -36,6 +36,7 @@ private:
 	//Textures
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
+	GraphicsSettings* gfxSettings;
 
 	//Random number and clock
 	Utils::RandomNumberGenerator rng;
