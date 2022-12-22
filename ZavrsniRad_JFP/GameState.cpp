@@ -54,7 +54,7 @@ void GameState::initTextures()
 	}
 
 	//Enemies
-	if (!this->textures["ENEMY"].loadFromFile("Resources/Images/Sprites/Enemy/enemy1.png"))
+	if (!this->textures["ENEMY"].loadFromFile("Resources/Images/Sprites/Enemy/enemy.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}

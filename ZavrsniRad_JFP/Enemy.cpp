@@ -1,6 +1,37 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
+//Initializer functions
+void Enemy::initAnimations(const short unsigned enemyType)
+{
+	//this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
+}
+
+const short unsigned Enemy::initEnemyTextures(const short unsigned enemyType)
+{
+	switch (enemyType)
+	{
+	case ENEMY1:
+		this->animationComponent->addAnimation("ENEMY1", 0.f, 0, 0, 0, 0, 100, 100);
+		return ENEMY1;
+
+	case ENEMY2:
+		this->animationComponent->addAnimation("ENEMY2", 0.f, 0, 1, 0, 0, 100, 100);
+		return ENEMY2;
+
+	case ENEMY3:
+		this->animationComponent->addAnimation("ENEMY3", 0.f, 0, 2, 0, 0, 100, 100);
+		return ENEMY3;
+
+	case ENEMY4:
+		this->animationComponent->addAnimation("ENEMY4", 0.f, 0, 3, 0, 0, 100, 100);
+		return ENEMY4;
+
+	default:
+		break;
+	}
+}
+
 //Accessors
 const int& Enemy::getHP() const
 {
@@ -37,7 +68,7 @@ void Enemy::loseHP(const int hp)
 }
 
 //Constructor and Destructor
-Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player)
+Enemy::Enemy(sf::Texture& texture_sheet, float pos_x, float pos_y, Player* player)
 	: hpMax(20),
 	hp(20),
 	exploding(false),
@@ -47,8 +78,11 @@ Enemy::Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player)
 
 	this->createMovementComponent(this->speed, 15.f, 5.f);
 	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
+	this->createAnimationComponent(texture_sheet);
 
-	this->setTexture(texture);
+	this->initEnemyTextures(this->rng.getInt(0, 3));
+	//this->setTexture(texture);
+	//this->initAnimations();
 
 	this->setPosition(pos_x, pos_y);
 }

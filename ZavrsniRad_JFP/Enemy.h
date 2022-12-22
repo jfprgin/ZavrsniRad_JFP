@@ -25,12 +25,12 @@ private:
 
 	//Enemies textures
 	std::map<std::string, sf::Texture> textures;
+	
+	//Initializer functions
+	const short unsigned initEnemyTextures(const short unsigned enemyType);
+	void initAnimations(const short unsigned enemyType);
 
 public:
-	//Initializer functions
-	void initEnemyTextures();
-	void initAnimations();
-
 	//Accessors
 	const int& getHP() const;
 	const int& getHPMax() const;

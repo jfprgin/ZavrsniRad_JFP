@@ -1,8 +1,6 @@
 ﻿  Enemy.cpp
-  Game.cpp
-  GameState.cpp
-  MainMenuState.cpp
-  Player.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(105,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   main.cpp
   Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(33): warning C4715: 'Enemy::initEnemyTextures': not all control paths return a value
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe

@@ -84,6 +84,9 @@
     <ClCompile Include="GraphicsSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HealthPack.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthPack.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
