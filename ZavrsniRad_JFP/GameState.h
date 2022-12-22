@@ -26,7 +26,7 @@ private:
 	float shootTimer;
 	float shootTimerMax;
 
-	sf::VideoMode& vm;
+	sf::VideoMode vm;
 	sf::Font font;
 	
 	//Background

@@ -146,6 +146,7 @@ void Game::update()
 			this->states.top()->endState();
 			delete this->states.top();
 			this->states.pop();
+			this->dt = 0.f;
 
 			if (this->states.size() > 0)
 			{

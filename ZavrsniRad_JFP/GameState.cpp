@@ -70,7 +70,7 @@ void GameState::initTextures()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(gui::p2px(50.f, vm), gui::p2py(50.f, vm), this->textures["PLAYER_SHEET"]);
+	this->player = new Player(gui::p2px(50.f, this->vm), gui::p2py(50.f, this->vm), this->textures["PLAYER_SHEET"]);
 }
 
 void GameState::initPlayerGUI()
@@ -92,11 +92,12 @@ void GameState::initGameOver()
 
 /*======================================Constructorand Desturctor=====================================*/
 GameState::GameState(StateData* state_data)
-	: State(state_data), vm(state_data->gfxSettings->resolution),
+	: State(state_data), vm(this->stateData->gfxSettings->resolution),
 	maxEnemy(40), currentEnemyLimit(10), enemySpawnInterval(3.f),
 	enemySpawnIntervalMin(0.5f), difficultyIncreaseInterval(20.f),
 	shootTimerMax(8.f)
 {
+	this->vm = state_data->gfxSettings->resolution;
 	this->gfxSettings = state_data->gfxSettings;
 	this->initDeferredRender();
 	this->initKeybinds();
