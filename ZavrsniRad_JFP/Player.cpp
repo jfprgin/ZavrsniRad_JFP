@@ -111,8 +111,8 @@ void Player::updateAnimation(const float & dt)
 	/*if (this->movementComponent->getState(IDLE))
 	{
 		this->animationComponent->play("IDLE", dt);
-	}*/
-	/*else if (this->movementComponent->getState(MOVING_LEFT))
+	}
+	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity()); //zadnje vjerojatno ne treba
 	}

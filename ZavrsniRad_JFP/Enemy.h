@@ -4,6 +4,8 @@
 #include "Random.h"
 #include "Player.h"
 
+enum enemies {ENEMY1 = 0, ENEMY2, ENEMY3, ENEMY4};
+
 class Enemy :
 	public Entity
 {
@@ -21,7 +23,14 @@ private:
 
 	Utils::RandomNumberGenerator rng;
 
+	//Enemies textures
+	std::map<std::string, sf::Texture> textures;
+
 public:
+	//Initializer functions
+	void initEnemyTextures();
+	void initAnimations();
+
 	//Accessors
 	const int& getHP() const;
 	const int& getHPMax() const;

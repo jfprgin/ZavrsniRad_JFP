@@ -54,9 +54,7 @@ void GameState::initTextures()
 	}
 
 	//Enemies
-	std::string enemyTexturePath = "Resources/Images/Sprites/Enemy/enemy" + std::to_string(this->rng.getInt(1, 8)) + ".png";
-	
-	if (!this->textures["ENEMY"].loadFromFile(enemyTexturePath))
+	if (!this->textures["ENEMY"].loadFromFile("Resources/Images/Sprites/Enemy/enemy1.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}
