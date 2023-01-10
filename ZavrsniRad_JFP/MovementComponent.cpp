@@ -2,7 +2,9 @@
 #include "MovementComponent.h"
 
 MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity, float acceleration, float deceleration)
-	: sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration), directionX(0.f), directionY(-1.f)
+	: sprite(sprite), directionX(0.f), directionY(-1.f),
+	maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration),
+	maxVelocityTemp(maxVelocity), accelerationTemp(acceleration), decelerationTemp(deceleration)
 {
 	this->maxVelocity = maxVelocity;
 }
@@ -27,7 +29,7 @@ const float MovementComponent::getDirectionY() const
 	return this->directionY;
 }
 
-const bool MovementComponent::getState(const short unsigned state) const
+/*const bool MovementComponent::getState(const short unsigned state) const
 {
 	switch (state)
 	{
@@ -75,7 +77,7 @@ const bool MovementComponent::getState(const short unsigned state) const
 	}
 
 	return false;
-}
+}*/
 
 //Functions
 void MovementComponent::stopVelocity()
@@ -98,6 +100,19 @@ void MovementComponent::stopVelocityY()
 }
 
 //Functions
+void MovementComponent::setNormalMovement()
+{
+	this->maxVelocity = this->maxVelocityTemp;
+	this->acceleration = this->accelerationTemp;
+	this->deceleration = this->decelerationTemp;
+}
+
+void MovementComponent::setBoostMovement()
+{
+	this->maxVelocity = 2 * this->maxVelocityTemp;
+	this->acceleration = 4 * this->accelerationTemp;
+	this->deceleration = 2 * this->decelerationTemp;
+}
 
 float MovementComponent::DegToRad(float degrees) {
 	return degrees * static_cast<float>(PI / 180);
@@ -173,7 +188,7 @@ void MovementComponent::update(const float & dt)
 		//Max velocity check
 		if (this->velocity.y > this->maxVelocity)
 		{
-			this->velocity.y = this->maxVelocity;
+			this->velocity.y -= acceleration;
 		}
 
 		//Deceleration
@@ -188,7 +203,7 @@ void MovementComponent::update(const float & dt)
 		//Max velocity check
 		if (this->velocity.y < -this->maxVelocity)
 		{
-			this->velocity.y = -this->maxVelocity;
+			this->velocity.y += acceleration;
 		}
 
 		// Deceleration

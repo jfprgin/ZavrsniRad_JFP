@@ -22,6 +22,7 @@ void Bullet::update(const float & dt)
 	//Update movement and hitbox
 	sf::Vector2f pos(this->direction.x * this->speed * dt * 100.f, this->direction.y * this->speed * dt * 100.f);
 	this->sprite.move(pos * (dt));
+
 	this->hitboxComponent->update();
 }
 

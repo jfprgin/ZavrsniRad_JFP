@@ -45,6 +45,8 @@ public:
 	virtual void stopVelocity();
 	virtual void stopVelocityX();
 	virtual void stopVelocityY();
+	void setNormalMovement();
+	void setBoostMovement();
 
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget& target, const bool show_hitbox) = 0;

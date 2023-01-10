@@ -4,7 +4,7 @@
 
 #define PI 3.14159265358979323846
 
-enum movement_states { IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN };
+//enum movement_states { IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN };
 
 class MovementComponent
 {
@@ -19,6 +19,10 @@ private:
 	float acceleration;
 	float deceleration;
 
+	float maxVelocityTemp;
+	float accelerationTemp;
+	float decelerationTemp;
+
 	sf::Vector2f velocity;
 
 	//Initializer functions
@@ -32,12 +36,15 @@ public:
 	const sf::Vector2f& getVelocity() const;
 	const float getDirectionX() const;
 	const float getDirectionY() const;
-	const bool getState(const short unsigned state) const;
+	//const bool getState(const short unsigned state) const;
 
 	//Functions
 	void stopVelocity();
 	void stopVelocityX();
 	void stopVelocityY();
+
+	void setNormalMovement();
+	void setBoostMovement();
 
 	float DegToRad(float degrees);
 	void movement(const float& dt);

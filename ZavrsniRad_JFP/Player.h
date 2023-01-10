@@ -5,21 +5,35 @@
 #include "Gui.h"
 #include "Random.h"
 
+//enum player { IDLE = 0, DAMAGE, HEALING, BOOST };
+
 class Player :
 	public Entity
 {
 private:
 	//Variables
+
+	//HP and Damage
 	int hp;
 	int hpMax;
 
-	int damageMin;
-	int damageMax;
+	int bulletDamage;
 
-	sf::Clock damageTimer;
-	sf::Int32 damageTimerMax;
+	//sf::Clock damageTimer;
+	//sf::Int32 damageTimerMax;
 
+	//Score
 	int score;
+
+	//Boost
+	float boostTimer;
+	float boostTimerMax;
+
+	//Timer for taking damage and healing animation because it won't work properly
+	float damageAnimationTimer;
+	float damageAnimationTimerMax;
+	float healingAnimationTimer;
+	float healingAnimationTimerMax;
 
 	bool isDestroyed;
 
@@ -35,7 +49,7 @@ public:
 	const int& getHP() const;
 	const int& getHPMax() const;
 
-	const bool getDamageTimer();
+	//const bool getDamageTimer();
 	int getDamage();
 
 	int getScore();
@@ -43,13 +57,22 @@ public:
 	const float getDirectionX() const;
 	const float getDirectionY() const;
 
+	const float getBoost() const;
+	const float getBoostMax() const;
+
 	//Modifiers
 	void loseHP(const int hp);
 	void gainHP(const int hp);
+
 	void AddScore(int modifier);
 
+	void setDamageAnimation(const float& dt);
+	void setHealingAnimation(const float& dt);
+
+	void setBoostTimer(const float boost_timer);
+
 	//Constructor and Destructor
-	Player(float x, float y, sf::Texture& texture_sheet);
+	Player(float x, float y, sf::Texture& texture_sheet, float boost_timer, float boost_timer_max);
 	~Player();
 
 	//Functions

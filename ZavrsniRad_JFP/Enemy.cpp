@@ -2,34 +2,10 @@
 #include "Enemy.h"
 
 //Initializer functions
-void Enemy::initAnimations(const short unsigned enemyType)
+void Enemy::initEnemyTextures()
 {
-	//this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
-}
-
-const short unsigned Enemy::initEnemyTextures(const short unsigned enemyType)
-{
-	switch (enemyType)
-	{
-	case ENEMY1:
-		this->animationComponent->addAnimation("ENEMY1", 0.f, 0, 0, 0, 0, 100, 100);
-		return ENEMY1;
-
-	case ENEMY2:
-		this->animationComponent->addAnimation("ENEMY2", 0.f, 0, 1, 0, 0, 100, 100);
-		return ENEMY2;
-
-	case ENEMY3:
-		this->animationComponent->addAnimation("ENEMY3", 0.f, 0, 2, 0, 0, 100, 100);
-		return ENEMY3;
-
-	case ENEMY4:
-		this->animationComponent->addAnimation("ENEMY4", 0.f, 0, 3, 0, 0, 100, 100);
-		return ENEMY4;
-
-	default:
-		break;
-	}
+	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
+	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", 0.f, 0, enemyType + 5, 0, 0, 100, 100);
 }
 
 //Accessors
@@ -53,9 +29,12 @@ bool Enemy::isDestoryComplete() const
 	return this->exploding;
 }
 
+
 //Modifiers
-void Enemy::loseHP(const int hp)
+void Enemy::loseHP(const int hp, const float& dt)
 {
+	this->takeDamage = 0.f;
+
 	this->hp -= hp;
 
 	if (this->hp < 0)
@@ -64,7 +43,15 @@ void Enemy::loseHP(const int hp)
 	}
 
 	if (this->hp == 0)
+	{
 		this->Destroy();
+	}
+}
+
+void Enemy::setDamageAnimation(const float& dt)
+{
+ 	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", 5.f, 0, enemyType + 5, 0, 0, 100, 100);
+	this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", dt);
 }
 
 //Constructor and Destructor
@@ -72,18 +59,20 @@ Enemy::Enemy(sf::Texture& texture_sheet, float pos_x, float pos_y, Player* playe
 	: hpMax(20),
 	hp(20),
 	exploding(false),
+	takeDamageMax(5.f),
+	takeDamage(5.f),
 	player(player)
 {
 	this->speed = this->rng.getFloat(200.f, 400.f);
+
+	this->enemyType = this->rng.getInt(0, 3);
 
 	this->createMovementComponent(this->speed, 15.f, 5.f);
 	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
 	this->createAnimationComponent(texture_sheet);
 
-	this->initEnemyTextures(this->rng.getInt(0, 3));
-	//this->setTexture(texture);
-	//this->initAnimations();
-
+	this->initEnemyTextures();
+	
 	this->setPosition(pos_x, pos_y);
 }
 
@@ -112,8 +101,39 @@ void Enemy::follow(const float& dt)
 	}
 }
 
+void Enemy::updateAnimations(const float& dt)
+{
+	if (this->takeDamage < takeDamageMax)
+	{
+		this->takeDamage += 100 * dt;
+	}
+	else
+	{
+		this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
+		this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1), dt);
+	}
+
+		/*if (this->animationComponent->isDone("ENEMY" + std::to_string(enemy_type + 1) + "DAMAGE"))
+		{
+			this->take_damage = false;
+		}
+
+		if (this->take_damage)
+		{
+			this->animationComponent->play("ENEMY" + std::to_string(enemy_type + 1) + "DAMAGE", dt);
+		}
+		else
+		{
+			this->animationComponent->addAnimation("ENEMY" + std::to_string(enemy_type + 1), 1.f, 0, enemy_type, 0, 0, 100, 100);
+			this->animationComponent->play("ENEMY" + std::to_string(enemy_type + 1), dt);
+		}*/
+}
+	
+
 void Enemy::update(const float & dt)
 {
+	this->updateAnimations(dt);
+
 	this->movementComponent->update(dt);
 
 	this->follow(dt);

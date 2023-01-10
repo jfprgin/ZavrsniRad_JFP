@@ -19,6 +19,11 @@ private:
 	sf::RectangleShape hpBarBack;
 	sf::RectangleShape hpBarInner;
 
+	//Boost bar
+	float boostBarMaxWidth;
+	sf::RectangleShape boostBarBack;
+	sf::RectangleShape boostBarInner;
+
 	//Score
 	std::string ScoreString;
 	sf::Text ScoreText;
@@ -26,6 +31,7 @@ private:
 	//Private functions
 	void initFont();
 	void initHPBar();
+	void initBoostBar();
 	void initScore();
 
 public:
@@ -34,10 +40,12 @@ public:
 
 	//Functions
 	void updateHPBar();
+	void updateBoostBar();
 	void updateScore();
 	void update(const float& dt);
 
 	void renderHPBar(sf::RenderTarget& target);
+	void renderBoostBar(sf::RenderTarget& target);
 	void render(sf::RenderTarget& target);
 };
 

@@ -5,18 +5,25 @@
 #include "GameOver.h"
 #include "PlayerGUI.h"
 #include "Enemy.h"
+#include "HealthPack.h"
 
 class GameState :
     public State
 {
 private:
 	//Variables
+	
 	//Enemy spawning
     unsigned maxEnemy;
     unsigned currentEnemyLimit;
     float enemySpawnInterval;
     float enemySpawnIntervalMin;
 	sf::Clock enemySpawnClock;
+
+	//Health Pack spawning
+	unsigned maxHealthPack;
+	float healthPackSpawnInterval;
+	sf::Clock healthPackSpawnClock;
 
 	//Difficulty increase
 	float difficultyIncreaseInterval;
@@ -25,6 +32,11 @@ private:
 	//Shooting
 	float shootTimer;
 	float shootTimerMax;
+
+	//Boosting
+	float boostTimer;
+	float boostTimerMax;
+	bool insideBoostLoop;
 
 	sf::VideoMode vm;
 	sf::Font font;
@@ -57,6 +69,12 @@ private:
 	//Bullets
 	std::deque<Bullet*> bullets;
 
+	//Explode Animations
+	std::vector<Explode*> explodeAnimation;
+
+	//Health Packs
+	std::vector<HealthPack*> healthPacks;
+
     //Private functions
 	void initDeferredRender();
     void initKeybinds();
@@ -88,8 +106,11 @@ public:
 	//Update bullets and enemies
 	void updateBullet(const float& dt);
 	void spawnEnemies();
-	void updateCombat();
+	void spawnHealthPacks();
+	void updateCombat(const float& dt);
 	void updateEnemyCollision(const float& dt);
+	void updateExplosions(const float& dt);
+	void updateHealthPacks(const float& dt);
 
 	//Update Menus
     void updatePauseMenuButtons();

@@ -48,7 +48,7 @@ void GameState::initFonts()
 void GameState::initTextures()
 {
 	//Player
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/test.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/player.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD PLAYER IDLE TEXTURE";
 	}
@@ -64,11 +64,23 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD BULLET TEXTURE";
 	}
+
+	//Explode Animation
+	if (!this->textures["EXPLODE"].loadFromFile("Resources/Images/Sprites/ExplodeAnimation/explode.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD NOT LOAD EXPLODE TEXTURE";
+	}
+
+	//Explode Animation
+	if (!this->textures["HEALTH"].loadFromFile("Resources/Images/Sprites/HEALTHPACK/health.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD NOT LOAD HEALTH PACK TEXTURE";
+	}
 }
 
 void GameState::initPlayers()
 {
-	this->player = new Player(gui::p2px(50.f, this->vm), gui::p2py(50.f, this->vm), this->textures["PLAYER_SHEET"]);
+	this->player = new Player(gui::p2px(50.f, this->vm), gui::p2py(50.f, this->vm), this->textures["PLAYER_SHEET"], this->boostTimer, this->boostTimerMax);
 }
 
 void GameState::initPlayerGUI()
@@ -91,12 +103,13 @@ void GameState::initGameOver()
 /*======================================Constructorand Desturctor=====================================*/
 GameState::GameState(StateData* state_data)
 	: State(state_data), vm(this->stateData->gfxSettings->resolution),
-	maxEnemy(40), currentEnemyLimit(10), enemySpawnInterval(3.f),
-	enemySpawnIntervalMin(0.5f), difficultyIncreaseInterval(20.f),
-	shootTimerMax(8.f)
+	maxEnemy(40), currentEnemyLimit(10),
+	enemySpawnInterval(3.f), enemySpawnIntervalMin(0.5f),
+	difficultyIncreaseInterval(20.f),
+	shootTimer(0.f), shootTimerMax(8.f),
+	boostTimer(0.f), boostTimerMax(100.f), insideBoostLoop(false),
+	maxHealthPack(2), healthPackSpawnInterval(15.f)
 {
-	this->vm = state_data->gfxSettings->resolution;
-	this->gfxSettings = state_data->gfxSettings;
 	this->initDeferredRender();
 	this->initKeybinds();
 	this->initFonts();
@@ -110,6 +123,8 @@ GameState::GameState(StateData* state_data)
 
 	this->enemySpawnClock.restart();
 	this->difficultyIncreaseClock.restart();
+
+	this->healthPackSpawnClock.restart();
 
 	this->resetGui();
 }
@@ -169,6 +184,9 @@ void GameState::SetGameOver()
 {
 	if (this->player->getHP() <= 0)
 	{
+		//Initializes explode animation
+		this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->player->getPosition().x, this->player->getPosition().y));
+
 		this->player->Destroy();
 		this->gameOver = true;
 	}
@@ -188,7 +206,25 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE"))))
 	{
+		this->player->setNormalMovement();
 		this->player->movement(dt);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("BOOST"))) && ((this->boostTimer >= this->boostTimerMax) || insideBoostLoop == true))
+	{
+		if (this->boostTimer > 1.f)
+		{
+			this->player->setBoostMovement();
+			this->player->movement(dt);
+
+			this->boostTimer -= 1.f * dt * 180;
+
+			this->insideBoostLoop = true;
+		}
+		else
+		{
+			this->insideBoostLoop = false;
+		}
 	}
 
 	//Shoot
@@ -319,26 +355,61 @@ void GameState::spawnEnemies()
 	}
 }
 
-void GameState::updateCombat()
+void GameState::spawnHealthPacks()
+{
+	//Spawn a Health Pack every healthPackSpawnSeconds interval.
+	if (this->healthPackSpawnClock.getElapsedTime().asSeconds() >= healthPackSpawnInterval && this->healthPacks.size() < this->maxHealthPack)
+	{
+		float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width) - 32.f;
+		float minX = 32.f;
+		float maxY = static_cast<float>(this->stateData->gfxSettings->resolution.height) - 32.f;
+		float minY = 32.f;
+
+		float xPos = 0.f;
+		float yPos = 0.f;
+
+		xPos = this->rng.getFloat(minX, maxX);
+		yPos = this->rng.getFloat(minY, maxY);
+
+		this->healthPacks.push_back(new HealthPack(this->textures["HEALTH"], xPos, yPos));
+
+		this->healthPackSpawnClock.restart();
+	}
+
+	if (this->healthPacks.size() == this->maxHealthPack)
+	{
+		this->healthPackSpawnClock.restart();
+	}
+}
+
+void GameState::updateCombat(const float& dt)
 {
 	for (size_t i = 0; i < this->enemies.size(); i++)
 	{
 		bool enemyDeleted = false;
+
 		for (size_t k = 0; k < this->bullets.size() && enemyDeleted == false; k++)
 		{
 			if (this->enemies[i]->getGlobalBounds().intersects(this->bullets[k]->getGlobalBounds()))
 			{
-				this->enemies[i]->loseHP(this->player->getDamage());
+				this->enemies[i]->setDamageAnimation(dt);
+				this->enemies[i]->loseHP(this->player->getDamage(), dt);
+
 				if (this->enemies[i]->isDestoryComplete())
 				{
+					//Adds score to player
 					this->player->AddScore(1);
 
+					//Initializes explode animation
+					this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->enemies[i]->getPosition().x, this->enemies[i]->getPosition().y));
+
+					//Delete Enemy
 					delete this->enemies[i];
 					this->enemies.erase(this->enemies.begin() + i);
 
 					enemyDeleted = true;
 				}
-				
+
 				delete this->bullets[k];
 				this->bullets.erase(this->bullets.begin() + k);
 			}
@@ -348,7 +419,6 @@ void GameState::updateCombat()
 
 void GameState::updateEnemyCollision(const float& dt)
 {
-
 	//Update
 	unsigned counter = 0;
 
@@ -359,8 +429,14 @@ void GameState::updateEnemyCollision(const float& dt)
 		//Enemy player collision
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()))
 		{
-			//Delete enemy
+			//Initializes explode animation
+			this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->enemies.at(counter)->getPosition().x, this->enemies.at(counter)->getPosition().y));
+
+			//Player take damage and animation
 			this->player->loseHP(this->enemies.at(counter)->getHP());
+			this->player->setDamageAnimation(dt);
+
+			//Delete enemy
 			delete this->enemies.at(counter);
 			this->enemies.erase(this->enemies.begin() + counter);
 		}
@@ -378,6 +454,10 @@ void GameState::updateEnemyCollision(const float& dt)
 			{
 				if (this->enemies[i]->getGlobalBounds().intersects(this->enemies[k]->getGlobalBounds()))
 				{
+					//Initializes explode animation
+					this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->enemies[k]->getPosition().x, this->enemies[k]->getPosition().y));
+
+					//Delete enemy
 					delete this->enemies[k];
 					this->enemies.erase(this->enemies.begin() + k);
 
@@ -385,6 +465,49 @@ void GameState::updateEnemyCollision(const float& dt)
 				}
 			}
 		}
+	}
+}
+
+//STVARA PROBLEME
+void GameState::updateExplosions(const float& dt)
+{
+	unsigned counter = 0;
+
+	for (auto* explosion : this->explodeAnimation)
+	{
+		explosion->update(dt);
+
+		if (explosion->isExplodeAnimationComplete())
+		{
+			delete this->explodeAnimation.at(counter);
+			this->explodeAnimation.erase(this->explodeAnimation.begin() + counter);
+			--counter;
+		}
+
+		++counter;
+	}
+}
+
+void GameState::updateHealthPacks(const float& dt)
+{
+	unsigned counter = 0;
+
+	for (auto* healthPack : this->healthPacks)
+	{
+		healthPack->update(dt);
+
+		if (healthPack->getGlobalBounds().intersects(this->player->getGlobalBounds()))
+		{
+			//Player healing and animation
+			this->player->gainHP(this->healthPacks.at(counter)->getHP());
+			this->player->setHealingAnimation(dt);
+
+			//Delete Health Pack
+			delete this->healthPacks.at(counter);
+			this->healthPacks.erase(this->healthPacks.begin() + counter);
+		}
+
+		++counter;
 	}
 }
 
@@ -419,6 +542,9 @@ void GameState::update(const float& dt)
 		this->updateGameOverButtons();
 		this->gOver->updateScore(player->getScore());
 		this->playerGUI->update(dt);
+
+		//Update explosions
+		this->updateExplosions(dt);
 	}
 
 	//Unpaused update
@@ -433,16 +559,31 @@ void GameState::update(const float& dt)
 
 		this->updatePlayerWorldCollision();
 
+		//Update explosions
+		this->updateExplosions(dt);
+
+		//Update Health Packs
+		this->updateHealthPacks(dt);
+
 		//Shoot timer
 		if (this->shootTimer < this->shootTimerMax)
 			this->shootTimer += 1.f * dt * 60.f;
+
+		//Boost timer
+		if (this->boostTimer < this->boostTimerMax)
+		{
+			this->boostTimer += 1.f * dt * 10.f;
+			this->player->setBoostTimer(this->boostTimer);
+		}
 
 		//Handle combat
 		this->updateBullet(dt);
 
 		this->spawnEnemies();
 
-		this->updateCombat();
+		this->spawnHealthPacks();
+
+		this->updateCombat(dt);
 		
 		this->updateEnemyCollision(dt);
 
@@ -480,8 +621,21 @@ void GameState::render(sf::RenderTarget* target)
 		enemy->render(this->renderTexture, false);
 	}
 
+	//Render enemies
+	for (auto* healthPack : this->healthPacks)
+	{
+		healthPack->render(this->renderTexture, false);
+	}
+
+	//Render explosions
+	for (auto* explosion : this->explodeAnimation)
+	{
+		explosion->render(this->renderTexture, false);
+	}
+
 	//Render player
-	this->player->render(this->renderTexture, false);
+	if(!this->gameOver)
+		this->player->render(this->renderTexture, false);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);
@@ -507,4 +661,3 @@ void GameState::render(sf::RenderTarget* target)
 void GameState::resetGui()
 {
 }
-

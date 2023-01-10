@@ -87,6 +87,9 @@
     <ClCompile Include="HealthPack.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Explode.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HealthPack.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Explode.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

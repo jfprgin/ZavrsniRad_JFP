@@ -110,14 +110,15 @@ const sf::FloatRect Entity::getGlobalBounds() const
 //Functions
 void Entity::setPosition(const float x, const float y)
 {
-	this->sprite.setOrigin(this->hitboxComponent->getGlobalBounds().width / 2, this->hitboxComponent->getGlobalBounds().height / 2);
-
+	//setOrigin was here before this->sprite.setOrigin(this->hitboxComponent->getGlobalBounds().width / 2, this->hitboxComponent->getGlobalBounds().height / 2);
 	if (this->hitboxComponent)
 	{
+		this->sprite.setOrigin(this->hitboxComponent->getGlobalBounds().width / 2, this->hitboxComponent->getGlobalBounds().height / 2);
 		this->hitboxComponent->setPosition(x, y);
 	}
 	else
 	{
+		this->sprite.setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 		this->sprite.setPosition(x, y);
 	}
 }
@@ -165,6 +166,22 @@ void Entity::stopVelocityY()
 	if (this->movementComponent)
 	{
 		this->movementComponent->stopVelocityY();
+	}
+}
+
+void Entity::setNormalMovement()
+{
+	if (this->movementComponent)
+	{
+		this->movementComponent->setNormalMovement();
+	}
+}
+
+void Entity::setBoostMovement()
+{
+	if (this->movementComponent)
+	{
+		this->movementComponent->setBoostMovement();
 	}
 }
 

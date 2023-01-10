@@ -3,8 +3,9 @@
 #include "Entity.h"
 #include "Random.h"
 #include "Player.h"
+#include "Explode.h"
 
-enum enemies {ENEMY1 = 0, ENEMY2, ENEMY3, ENEMY4};
+enum enemies {ENEMY1 = 0, ENEMY2, ENEMY3, ENEMY4, ENEMY5};
 
 class Enemy :
 	public Entity
@@ -14,10 +15,19 @@ private:
 	int hp;
 	int hpMax;
 
+	//Is Enemy destroyed
 	bool exploding;
 
+	//Movement
 	sf::Vector2f moveVec;
 	float speed;
+
+	//Timer for taking damage animation because it won't work properly
+	float takeDamage;
+	float takeDamageMax;
+
+	//Type of Enemy texture
+	short unsigned enemyType;
 
 	Player* player;
 
@@ -27,8 +37,7 @@ private:
 	std::map<std::string, sf::Texture> textures;
 	
 	//Initializer functions
-	const short unsigned initEnemyTextures(const short unsigned enemyType);
-	void initAnimations(const short unsigned enemyType);
+	void initEnemyTextures();
 
 public:
 	//Accessors
@@ -42,7 +51,8 @@ public:
 	sf::FloatRect getBoundingBox() const { return this->sprite.getGlobalBounds(); }
 
 	//Modifiers
-	void loseHP(const int hp);
+	void loseHP(const int hp, const float& dt);
+	void setDamageAnimation(const float& dt);
 
 	//Constructor and Destructor
 	Enemy(sf::Texture& texture, float pos_x, float pos_y, Player* player);
@@ -51,6 +61,8 @@ public:
 	//Functions
 	void Destroy();
 	void follow(const float& dt);
+
+	void updateAnimations(const float& dt);
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target, const bool show_hitbox = false);
