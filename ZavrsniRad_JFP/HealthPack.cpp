@@ -2,7 +2,7 @@
 #include "HealthPack.h"
 
 //Initializer functions
-void HealthPack::initTextures()
+void HealthPack::initAnimations()
 {
 	this->animationComponent->addAnimation("HEALTH", 10.f, 0, 0, 4, 0, 64, 64);
 }
@@ -15,7 +15,7 @@ HealthPack::HealthPack(sf::Texture& texture_sheet, float pos_x, float pos_y)
 	this->createAnimationComponent(texture_sheet);
 	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
 
-	this->initTextures();
+	this->initAnimations();
 
 	this->setPosition(pos_x, pos_y);
 }

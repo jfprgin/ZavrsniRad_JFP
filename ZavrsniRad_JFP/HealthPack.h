@@ -13,7 +13,7 @@ private:
 	Utils::RandomNumberGenerator rng;
 
 	//Initializer functions
-	void initTextures();
+	void initAnimations();
 
 public:
 	//Accessors

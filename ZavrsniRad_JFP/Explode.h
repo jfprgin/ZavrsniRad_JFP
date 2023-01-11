@@ -12,7 +12,7 @@ private:
 	Utils::RandomNumberGenerator rng;
 
 	//Initializer functions
-	void initExplodeTextures();
+	void initAnimations();
 
 public:
 	//Accessors

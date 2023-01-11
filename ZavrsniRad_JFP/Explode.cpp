@@ -2,7 +2,7 @@
 #include "Explode.h"
 
 //Initializer functions
-void Explode::initExplodeTextures()
+void Explode::initAnimations()
 {
 	this->animationComponent->addAnimation("EXPLODE", 5.f, 0, 0, 5, 0, 100, 100);
 }
@@ -20,7 +20,7 @@ Explode::Explode(sf::Texture& texture_sheet, float pos_x, float pos_y)
 {
 	this->createAnimationComponent(texture_sheet);
 
-	this->initExplodeTextures();
+	this->initAnimations();
 
 	this->setPosition(pos_x, pos_y);
 }

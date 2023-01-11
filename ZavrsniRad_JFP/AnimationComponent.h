@@ -49,37 +49,7 @@ private:
 			this->timer += 100.f * dt;
 			if (this->timer >= this->animationTimer)
 			{
-				//reset timer
-				this->timer = 0.f;
-
-				//Animate
-				if (this->currentRect != this->endRect)
-				{
-					this->currentRect.left += this->width;
-				}
-				else //Reset
-				{
-					this->currentRect.left = this->startRect.left;
-					this->done = true;
-				}
-
-				this->sprite.setTextureRect(this->currentRect);
-			}
-
-			return this->done;
-		}
-
-		const bool& play(const float& dt, float mod_percent)
-		{
-			//Update timer
-			if (mod_percent < 0.5f)
-				mod_percent = 0.5f;
-
-			this->done = false;
-			this->timer += mod_percent * 100.f * dt;
-			if (this->timer >= this->animationTimer)
-			{
-				//reset timer
+				//Reset timer
 				this->timer = 0.f;
 
 				//Animate

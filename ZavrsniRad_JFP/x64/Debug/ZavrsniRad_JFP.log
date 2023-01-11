@@ -1,16 +1,9 @@
 ﻿  Enemy.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(94,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Explode.cpp
   Game.cpp
   GameState.cpp
   HealthPack.cpp
   MainMenuState.cpp
-  Player.cpp
-  PlayerGUI.cpp
-  SettingsState.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(76,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(82,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-  State.cpp
   main.cpp
   Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
