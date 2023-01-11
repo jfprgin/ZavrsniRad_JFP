@@ -29,11 +29,13 @@ private:
 	float boostTimer;
 	float boostTimerMax;
 
-	//Timer for taking damage and healing animation because it won't work properly
+	//Timer for taking damage, healing and boost animation because it won't work properly
 	float damageAnimationTimer;
 	float damageAnimationTimerMax;
 	float healingAnimationTimer;
 	float healingAnimationTimerMax;
+	float boostAnimationTimer;
+	float boostAnimationTimerMax;
 
 	bool isDestroyed;
 
@@ -66,8 +68,10 @@ public:
 
 	void AddScore(int modifier);
 
+	//Animations
 	void setDamageAnimation(const float& dt);
 	void setHealingAnimation(const float& dt);
+	void setBoostAnimation(const float& dt);
 
 	void setBoostTimer(const float boost_timer);
 

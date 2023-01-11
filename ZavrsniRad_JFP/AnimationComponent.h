@@ -33,6 +33,8 @@ private:
 
 			this->sprite.setTexture(this->textureSheet, true);
 			this->sprite.setTextureRect(this->startRect);
+
+			//this->sprite.setScale(0.25f, 0.25f);
 		}
 
 		//Accessor
@@ -97,5 +99,3 @@ public:
 	const bool& play(const std::string key, const float& dt, const bool priority = false);
 	const bool& play(const std::string key, const float& dt, const float& modifier, const float& modifier_max, const bool priority = false);
 };
-
-

@@ -107,7 +107,7 @@ GameState::GameState(StateData* state_data)
 	enemySpawnInterval(3.f), enemySpawnIntervalMin(0.5f),
 	difficultyIncreaseInterval(20.f),
 	shootTimer(0.f), shootTimerMax(8.f),
-	boostTimer(0.f), boostTimerMax(100.f), insideBoostLoop(false),
+	boostTimer(100.f), boostTimerMax(100.f), insideBoostLoop(false),
 	maxHealthPack(2), healthPackSpawnInterval(15.f)
 {
 	this->initDeferredRender();
@@ -214,6 +214,7 @@ void GameState::updatePlayerInput(const float& dt)
 	{
 		if (this->boostTimer > 1.f)
 		{
+			this->player->setBoostAnimation(dt);
 			this->player->setBoostMovement();
 			this->player->movement(dt);
 

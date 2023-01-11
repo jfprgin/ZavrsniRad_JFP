@@ -4,9 +4,12 @@
 //Initializer functions
 void Player::initAnimations()
 {
-	this->animationComponent->addAnimation("IDLE", 2.f, 0, 0, 1, 0, 64, 64);
-	this->animationComponent->addAnimation("DAMAGE", 2.f, 0, 1, 1, 0, 64, 64);
-	this->animationComponent->addAnimation("HEALING", 2.f, 0, 2, 1, 0, 64, 64);
+	this->animationComponent->addAnimation("IDLE", 2.f, 2, 0, 3, 0, 64, 100);
+	this->animationComponent->addAnimation("HEALING", 2.f, 2, 1, 3, 0, 64, 100);
+	this->animationComponent->addAnimation("DAMAGE", 2.f, 2, 2, 3, 0, 64, 100);
+	this->animationComponent->addAnimation("BOOST_IDLE", 2.f, 0, 0, 1, 0, 64, 100);
+	this->animationComponent->addAnimation("BOOST_HEALING", 2.f, 0, 1, 1, 0, 64, 100);
+	this->animationComponent->addAnimation("BOOST_DAMAGE", 2.f, 0, 2, 1, 0, 64, 100);
 }
 
 //Accessors
@@ -99,14 +102,36 @@ void Player::AddScore(int modifier)
 
 void Player::setDamageAnimation(const float& dt)
 {
-	this->animationComponent->addAnimation("DAMAGE", 2.f, 0, 1, 1, 0, 64, 64);
-	this->animationComponent->play("DAMAGE", dt);
+	if (this->boostAnimationTimer < this->boostAnimationTimerMax)
+	{
+		this->animationComponent->addAnimation("BOOST_DAMAGE", 2.f, 0, 2, 2, 0, 64, 100);
+		this->animationComponent->play("BOOST_DAMAGE", dt);
+	}
+	else
+	{
+		this->animationComponent->addAnimation("DAMAGE", 2.f, 2, 2, 3, 0, 64, 100);
+		this->animationComponent->play("DAMAGE", dt);
+	}
+	
 }
 
 void Player::setHealingAnimation(const float& dt)
 {
-	this->animationComponent->addAnimation("HEALING", 2.f, 0, 2, 1, 0, 64, 64);
-	this->animationComponent->play("HEALING", dt);
+	if (this->boostAnimationTimer < this->boostAnimationTimerMax)
+	{
+		this->animationComponent->addAnimation("BOOST_HEALING", 2.f, 0, 1, 2, 0, 64, 100);
+		this->animationComponent->play("BOOST_HEALING", dt);
+	}
+	else
+	{
+		this->animationComponent->addAnimation("HEALING", 2.f, 2, 1, 3, 0, 64, 100);
+		this->animationComponent->play("HEALING", dt);
+	}
+}
+
+void Player::setBoostAnimation(const float& dt)
+{
+	this->boostAnimationTimer = 0.f;
 }
 
 void Player::setBoostTimer(const float boost_timer)
@@ -120,6 +145,7 @@ Player::Player(float x, float y, sf::Texture&  texture_sheet, float boost_timer,
 	score(0), isDestroyed(false),
 	damageAnimationTimer(5.f), damageAnimationTimerMax(5.f),
 	healingAnimationTimer(5.f), healingAnimationTimerMax(5.f),
+	boostAnimationTimer(2.f), boostAnimationTimerMax(2.f),
 	boostTimer(boost_timer), boostTimerMax(boost_timer_max)
 {
 	this->createHitboxComponent(this->sprite, -32.f, -32.f, 64.f, 64.f);
@@ -149,6 +175,13 @@ void Player::updateAnimation(const float & dt)
 	else if (this->healingAnimationTimer < this->healingAnimationTimerMax)
 	{
 		this->healingAnimationTimer += 100 * dt;
+	}
+	else if (this->boostAnimationTimer < this->boostAnimationTimerMax)
+	{
+		this->boostAnimationTimer += 100 * dt;
+
+		this->animationComponent->addAnimation("BOOST_IDLE", 2.f, 0, 0, 2, 0, 64, 100);
+		this->animationComponent->play("BOOST_IDLE", dt);
 	}
 	else
 	{

@@ -1,5 +1,3 @@
-c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc141.pdb
-c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc141.idb
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\zavrsnirad_jfp.pch
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc142.pdb
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc142.idb
@@ -13,23 +11,32 @@ c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\movementc
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\mainmenustate.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\main.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\hitboxcomponent.obj
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\healthpack.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\game.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\entity.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\gui.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\graphicssettings.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\gamestate.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\gameover.obj
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\explode.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\enemy.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\bullet.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\animationcomponent.obj
 c:\users\korisnik\source\repos\zavrsnirad_jfp\x64\debug\zavrsnirad_jfp.exe
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\zavrsnirad_jfp.ilk
 c:\users\korisnik\source\repos\zavrsnirad_jfp\x64\debug\zavrsnirad_jfp.pdb
-c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\aicomponent.obj
-c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\aifollow.obj
-c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\aioption.obj
-c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\attributecomponent.obj
-c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\button.obj
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\animationcomponent.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\bullet.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\entity.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\game.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\gamestate.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\healthpack.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\main.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\mainmenustate.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\player.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\playergui.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\settingsstate.obj.enc
+c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\state.obj.enc
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc141.idb
 c:\users\korisnik\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\x64\debug\vc141.pdb
 c:\users\korisnik\source\repos\zavrsnirad_jfp\x64\debug\zavrsnirad_jfp.ilk

@@ -28,6 +28,7 @@ private:
 
 	//Type of Enemy texture
 	short unsigned enemyType;
+	short unsigned enemyColour;
 
 	Player* player;
 

@@ -4,7 +4,7 @@
 //Initializer functions
 void Explode::initAnimations()
 {
-	this->animationComponent->addAnimation("EXPLODE", 5.f, 0, 0, 5, 0, 100, 100);
+	this->animationComponent->addAnimation("EXPLODE", 5.f, 0, 0, 6, 0, 100, 100);
 }
 
 //Accessors

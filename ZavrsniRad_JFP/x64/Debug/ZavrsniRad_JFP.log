@@ -1,9 +1,2 @@
-﻿  Enemy.cpp
-  Explode.cpp
-  Game.cpp
-  GameState.cpp
-  HealthPack.cpp
-  MainMenuState.cpp
-  main.cpp
-  Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+﻿  GameState.cpp
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe

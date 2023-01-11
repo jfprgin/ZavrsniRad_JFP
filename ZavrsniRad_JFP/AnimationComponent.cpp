@@ -9,14 +9,14 @@ AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_
 
 AnimationComponent::~AnimationComponent()
 {
-	for (auto &i : this->animations)
+	for (auto& i : this->animations)
 	{
 		delete i.second;
 	}
 }
 
 //Accessors
-const bool & AnimationComponent::isDone(const std::string key)
+const bool& AnimationComponent::isDone(const std::string key)
 {
 	return this->animations[key]->isDone();
 }
@@ -35,7 +35,7 @@ void AnimationComponent::addAnimation(
 	);
 }
 
-const bool& AnimationComponent::play(const std::string key, const float & dt, const bool priority)
+const bool& AnimationComponent::play(const std::string key, const float& dt, const bool priority)
 {
 	if (this->priorityAnimation) //If there is a priority animation
 	{

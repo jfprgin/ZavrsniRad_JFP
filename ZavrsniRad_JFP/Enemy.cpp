@@ -4,7 +4,7 @@
 //Initializer functions
 void Enemy::initEnemyTextures()
 {
-	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
+	this->animationComponent->addAnimation("ENEMY" + std::to_string(this->enemyType + 1) + "_" + std::to_string(this->enemyColour + 1), 1.f, this->enemyType, this->enemyColour + 1, this->enemyType, this->enemyColour + 1, 100, 100);
 	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", 0.f, 0, enemyType + 5, 0, 0, 100, 100);
 }
 
@@ -50,7 +50,7 @@ void Enemy::loseHP(const int hp, const float& dt)
 
 void Enemy::setDamageAnimation(const float& dt)
 {
- 	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", 5.f, 0, enemyType + 5, 0, 0, 100, 100);
+ 	this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", 5.f, enemyType, 0, 0, 0, 100, 100);
 	this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1) + "DAMAGE", dt);
 }
 
@@ -65,7 +65,8 @@ Enemy::Enemy(sf::Texture& texture_sheet, float pos_x, float pos_y, Player* playe
 {
 	this->speed = this->rng.getFloat(200.f, 400.f);
 
-	this->enemyType = this->rng.getInt(0, 3);
+	this->enemyType = this->rng.getInt(0, 2);
+	this->enemyColour = this->rng.getInt(0, 1);
 
 	this->createMovementComponent(this->speed, 15.f, 5.f);
 	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
@@ -109,8 +110,8 @@ void Enemy::updateAnimations(const float& dt)
 	}
 	else
 	{
-		this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
-		this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1), dt);
+		//this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
+		this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1) + "_" + std::to_string(enemyColour + 1), dt);
 	}
 
 		/*if (this->animationComponent->isDone("ENEMY" + std::to_string(enemy_type + 1) + "DAMAGE"))
