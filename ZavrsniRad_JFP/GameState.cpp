@@ -632,13 +632,13 @@ void GameState::render(sf::RenderTarget* target)
 	//Render enemies
 	for (auto* enemy : this->enemies)
 	{
-		enemy->render(this->renderTexture, true);
+		enemy->render(this->renderTexture, false);
 	}
 
 	//Render enemies
 	for (auto* healthPack : this->healthPacks)
 	{
-		healthPack->render(this->renderTexture, true);
+		healthPack->render(this->renderTexture, false);
 	}
 
 	//Render explosions
@@ -649,7 +649,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	//Render player
 	if(!this->gameOver)
-		this->player->render(this->renderTexture, true);
+		this->player->render(this->renderTexture, false);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);

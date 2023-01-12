@@ -43,7 +43,7 @@ public:
 
 	//Functions
 	void updateHPBar();
-	void updateBoostBar(const float& dt);
+	void updateBoostBar();
 	void updateScore();
 	void update(const float& dt);
 

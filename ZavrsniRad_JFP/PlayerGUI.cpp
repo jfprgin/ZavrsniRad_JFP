@@ -96,7 +96,7 @@ void PlayerGUI::updateHPBar()
 	this->hpBarText.setString(this->hpBarString);
 }
 
-void PlayerGUI::updateBoostBar(const float& dt)
+void PlayerGUI::updateBoostBar()
 {
 	float percent = static_cast<float>(this->player->getBoost()) / static_cast<float>(this->player->getBoostMax());
 
@@ -112,7 +112,7 @@ void PlayerGUI::updateScore()
 void PlayerGUI::update(const float& dt)
 {
 	this->updateHPBar();
-	this->updateBoostBar(dt);
+	this->updateBoostBar();
 	this->updateScore();
 }
 
