@@ -38,9 +38,12 @@ public:
 	PlayerGUI(Player* player, sf::VideoMode& vm);
 	~PlayerGUI();
 
+	//Modifiers
+	void setBoostColour(bool isBoostActive);
+
 	//Functions
 	void updateHPBar();
-	void updateBoostBar();
+	void updateBoostBar(const float& dt);
 	void updateScore();
 	void update(const float& dt);
 

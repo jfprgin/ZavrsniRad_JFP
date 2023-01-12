@@ -1,2 +1,29 @@
-﻿  GameState.cpp
+﻿  stdafx.cpp
+  AnimationComponent.cpp
+  Bullet.cpp
+  Enemy.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(95,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Explode.cpp
+  GameOver.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(68,1): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(68,1): message : destructor or deallocator has a (possibly implicit) non-throwing exception specification
+  GameState.cpp
+  GraphicsSettings.cpp
+  Gui.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Gui.cpp(194,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+  Entity.cpp
+  Game.cpp
+  HealthPack.cpp
+  HitboxComponent.cpp
+  main.cpp
+  MainMenuState.cpp
+  MovementComponent.cpp
+  PauseMenu.cpp
+  Player.cpp
+  PlayerGUI.cpp
+  SettingsState.cpp
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(76,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(82,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  State.cpp
+  Generating Code...
   ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe

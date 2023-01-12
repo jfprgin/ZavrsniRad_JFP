@@ -76,6 +76,15 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD NOT LOAD HEALTH PACK TEXTURE";
 	}
+
+	//Background init
+	this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/bg3.jpg"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::FAILED TO LOAD BACKGROUND TEXTURE";
+	}
+	this->background.setTexture(&this->backgroundTexture);
 }
 
 void GameState::initPlayers()
@@ -219,7 +228,6 @@ void GameState::updatePlayerInput(const float& dt)
 			this->player->movement(dt);
 
 			this->boostTimer -= 1.f * dt * 180;
-
 			this->insideBoostLoop = true;
 		}
 		else
@@ -361,9 +369,11 @@ void GameState::spawnHealthPacks()
 	//Spawn a Health Pack every healthPackSpawnSeconds interval.
 	if (this->healthPackSpawnClock.getElapsedTime().asSeconds() >= healthPackSpawnInterval && this->healthPacks.size() < this->maxHealthPack)
 	{
-		float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width) - 32.f;
+		float maxX = static_cast<float>(this->stateData->gfxSettings->resolution.width) - 
+			(50.f + 0.01f * static_cast<float>(this->stateData->gfxSettings->resolution.width));
 		float minX = 32.f;
-		float maxY = static_cast<float>(this->stateData->gfxSettings->resolution.height) - 32.f;
+		float maxY = static_cast<float>(this->stateData->gfxSettings->resolution.height) - 
+			(50.f + 0.01f * static_cast<float>(this->stateData->gfxSettings->resolution.height));
 		float minY = 32.f;
 
 		float xPos = 0.f;
@@ -557,6 +567,7 @@ void GameState::update(const float& dt)
 		this->player->update(dt);
 
 		this->playerGUI->update(dt);
+		this->playerGUI->setBoostColour(this->insideBoostLoop || this->boostTimer >= this->boostTimerMax);
 
 		this->updatePlayerWorldCollision();
 
@@ -610,6 +621,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.clear();
 
+	this->renderTexture.draw(this->background);
+
 	//Render bullets
 	for (auto* bullet : this->bullets)
 	{
@@ -619,13 +632,13 @@ void GameState::render(sf::RenderTarget* target)
 	//Render enemies
 	for (auto* enemy : this->enemies)
 	{
-		enemy->render(this->renderTexture, false);
+		enemy->render(this->renderTexture, true);
 	}
 
 	//Render enemies
 	for (auto* healthPack : this->healthPacks)
 	{
-		healthPack->render(this->renderTexture, false);
+		healthPack->render(this->renderTexture, true);
 	}
 
 	//Render explosions
@@ -636,7 +649,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	//Render player
 	if(!this->gameOver)
-		this->player->render(this->renderTexture, false);
+		this->player->render(this->renderTexture, true);
 
 	//Render GUI
 	this->playerGUI->render(this->renderTexture);

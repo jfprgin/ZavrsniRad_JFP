@@ -13,7 +13,7 @@ HealthPack::HealthPack(sf::Texture& texture_sheet, float pos_x, float pos_y)
 	: hp(20), exploding(false)
 {
 	this->createAnimationComponent(texture_sheet);
-	this->createHitboxComponent(this->sprite, -16.f, -16.f, 100.f, 100.f);
+	this->createHitboxComponent(this->sprite, -50.f, -50.f, 100.f, 100.f);
 
 	this->initAnimations();
 
@@ -50,4 +50,9 @@ void HealthPack::update(const float& dt)
 void HealthPack::render(sf::RenderTarget& target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
+
+	if (show_hitbox)
+	{
+		this->hitboxComponent->render(target);
+	}
 }

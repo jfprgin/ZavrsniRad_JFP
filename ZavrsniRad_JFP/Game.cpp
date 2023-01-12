@@ -146,15 +146,13 @@ void Game::update()
 			this->states.top()->endState();
 			delete this->states.top();
 			this->states.pop();
-			this->dt = 0.f;
 
 			if (this->states.size() > 0)
 			{
-				this->initGraphicsSettings();
-				this->initStateData();
-				this->states.top()->resetGui();
-				//this->states.top()->resetGui(this->gfxSettings);
+				//this->initGraphicsSettings();
 				//this->initStateData();
+				this->states.top()->resetGui();
+				this->dt = 0.f;
 			}
 			
 		}

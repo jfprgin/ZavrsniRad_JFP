@@ -24,7 +24,7 @@ void PlayerGUI::initHPBar()
 	this->hpBarBack.setPosition(x, y);
 
 	this->hpBarInner.setSize(sf::Vector2f(width, height));
-	this->hpBarInner.setFillColor(sf::Color(250, 20, 20, 200));
+	this->hpBarInner.setFillColor(sf::Color(250, 20, 20, 100));
 	this->hpBarInner.setPosition(this->hpBarBack.getPosition());
 
 	this->hpBarText.setFont(this->font);
@@ -72,6 +72,19 @@ PlayerGUI::~PlayerGUI()
 {
 }
 
+//Modifiers
+void PlayerGUI::setBoostColour(bool isBoostActive)
+{
+	if (isBoostActive)
+	{
+		this->boostBarInner.setFillColor(sf::Color(255, 255, 0, 100));
+	}
+	else
+	{
+		this->boostBarInner.setFillColor(sf::Color(255, 255, 255, 100));
+	}
+}
+
 //Functions
 void PlayerGUI::updateHPBar()
 {
@@ -83,7 +96,7 @@ void PlayerGUI::updateHPBar()
 	this->hpBarText.setString(this->hpBarString);
 }
 
-void PlayerGUI::updateBoostBar()
+void PlayerGUI::updateBoostBar(const float& dt)
 {
 	float percent = static_cast<float>(this->player->getBoost()) / static_cast<float>(this->player->getBoostMax());
 
@@ -99,7 +112,7 @@ void PlayerGUI::updateScore()
 void PlayerGUI::update(const float& dt)
 {
 	this->updateHPBar();
-	this->updateBoostBar();
+	this->updateBoostBar(dt);
 	this->updateScore();
 }
 
