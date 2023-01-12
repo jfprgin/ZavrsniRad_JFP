@@ -219,7 +219,8 @@ void GameState::updatePlayerInput(const float& dt)
 		this->player->movement(dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("BOOST"))) && ((this->boostTimer >= this->boostTimerMax) || insideBoostLoop == true))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("BOOST"))) &&
+		((this->boostTimer >= this->boostTimerMax) || insideBoostLoop == true))
 	{
 		if (this->boostTimer > 1.f)
 		{
@@ -412,7 +413,8 @@ void GameState::updateCombat(const float& dt)
 					this->player->AddScore(1);
 
 					//Initializes explode animation
-					this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->enemies[i]->getPosition().x, this->enemies[i]->getPosition().y));
+					this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"],
+						this->enemies[i]->getPosition().x, this->enemies[i]->getPosition().y));
 
 					//Delete Enemy
 					delete this->enemies[i];
@@ -441,7 +443,8 @@ void GameState::updateEnemyCollision(const float& dt)
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()))
 		{
 			//Initializes explode animation
-			this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->enemies.at(counter)->getPosition().x, this->enemies.at(counter)->getPosition().y));
+			this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"],
+				this->enemies.at(counter)->getPosition().x, this->enemies.at(counter)->getPosition().y));
 
 			//Player take damage and animation
 			this->player->loseHP(this->enemies.at(counter)->getHP());
@@ -567,7 +570,8 @@ void GameState::update(const float& dt)
 		this->player->update(dt);
 
 		this->playerGUI->update(dt);
-		this->playerGUI->setBoostColour(this->insideBoostLoop || this->boostTimer >= this->boostTimerMax);
+		this->playerGUI->setBoostColour(this->insideBoostLoop ||
+			this->boostTimer >= this->boostTimerMax);
 
 		this->updatePlayerWorldCollision();
 
