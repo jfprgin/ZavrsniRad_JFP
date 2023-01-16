@@ -121,5 +121,6 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 	void resetGui();
+	bool isSettingsState();
 };
 

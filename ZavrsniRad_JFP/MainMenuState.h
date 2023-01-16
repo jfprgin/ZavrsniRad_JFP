@@ -30,6 +30,8 @@ public:
     ~MainMenuState();
 
     //Functions
+    bool isSettingsState();
+
     void updateInput(const float& dt);
     void updateButtons();
 	void updateHighScore(const float& dt);

@@ -100,13 +100,13 @@ void GameState::initPlayerGUI()
 void GameState::initPauseMenu()
 {
 	this->pMenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
-	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
+	this->pMenu->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Main Menu");
 }
 
 void GameState::initGameOver()
 {
 	this->gOver = new GameOver(this->stateData->gfxSettings->resolution, this->font, this->player->getScore());
-	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Quit");
+	this->gOver->addButton("QUIT", gui::p2py(74.f, vm), gui::p2px(13.f, vm), gui::p2py(6.f, vm), gui::calcCharSize(vm), "Main Menu");
 }
 
 /*======================================Constructorand Desturctor=====================================*/
@@ -193,8 +193,9 @@ void GameState::SetGameOver()
 {
 	if (this->player->getHP() <= 0)
 	{
-		//Initializes explode animation
-		this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"], this->player->getPosition().x, this->player->getPosition().y));
+		//Initializes player explode animation
+		this->explodeAnimation.push_back(new Explode(this->textures["EXPLODE"],
+			this->player->getPosition().x, this->player->getPosition().y));
 
 		this->player->Destroy();
 		this->gameOver = true;
@@ -482,7 +483,6 @@ void GameState::updateEnemyCollision(const float& dt)
 	}
 }
 
-//STVARA PROBLEME
 void GameState::updateExplosions(const float& dt)
 {
 	unsigned counter = 0;
@@ -678,4 +678,9 @@ void GameState::render(sf::RenderTarget* target)
 
 void GameState::resetGui()
 {
+}
+
+bool GameState::isSettingsState()
+{
+	return false;
 }

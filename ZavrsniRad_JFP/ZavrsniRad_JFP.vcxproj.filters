@@ -155,11 +155,24 @@
     <ClInclude Include="Explode.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\supported_keys.ini" />
     <None Include="Config\gamestate_keybinds.ini" />
     <None Include="Config\mainmenustate_keybinds.ini" />
     <None Include="Config\graphics.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZavrsniRad_JFP.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Images\Icon\Icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

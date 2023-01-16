@@ -23,8 +23,8 @@ private:
 	float speed;
 
 	//Timer for taking damage animation because it won't work properly
-	float takeDamage;
-	float takeDamageMax;
+	float damageAnimationTimer;
+	float damageAnimationTimerMax;
 
 	//Type of Enemy texture
 	short unsigned enemyType;
@@ -38,7 +38,7 @@ private:
 	std::map<std::string, sf::Texture> textures;
 	
 	//Initializer functions
-	void initEnemyTextures();
+	void initAnimations();
 
 public:
 	//Accessors

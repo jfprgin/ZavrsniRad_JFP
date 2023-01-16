@@ -138,8 +138,12 @@ SettingsState::~SettingsState()
 	}
 }
 
-
 //Functions
+bool SettingsState::isSettingsState()
+{
+	return true;
+}
+
 void SettingsState::updateInput(const float& dt)
 {
 

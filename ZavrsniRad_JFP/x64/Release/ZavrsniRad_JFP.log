@@ -2,7 +2,7 @@
   AnimationComponent.cpp
   Bullet.cpp
   Enemy.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(95,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(100,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Explode.cpp
   GameOver.cpp
 C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(68,1): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
@@ -27,6 +27,6 @@ C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(8
   State.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 1553 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 1557 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Release\ZavrsniRad_JFP.exe

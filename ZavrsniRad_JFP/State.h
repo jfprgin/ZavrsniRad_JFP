@@ -70,6 +70,7 @@ public:
 	void pauseState();
 	void unpauseState();
 	virtual void resetGui() = 0;
+	virtual bool isSettingsState() = 0;
 
 	virtual void updateMousePositions();
 	virtual void updateKeyTime(const float& dt);

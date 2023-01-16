@@ -34,7 +34,7 @@ void Game::initWindow()
 			sf::Style::Titlebar | sf::Style::Close,
 			this->gfxSettings.contextSettings);
 	}
-	
+
 	this->window->setFramerateLimit(this->gfxSettings.framerateLimit);
 	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
@@ -94,6 +94,38 @@ Game::~Game()
 	}
 }
 
+void Game::resetWindow()
+{
+	this->initGraphicsSettings();
+
+	/*Create SFML Window*/
+	if (this->gfxSettings.fullscreen)
+	{
+		this->windowTemp = new sf::RenderWindow(this->gfxSettings.resolution,
+			this->gfxSettings.title,
+			sf::Style::Fullscreen,
+			this->gfxSettings.contextSettings);
+	}
+	else
+	{
+		this->windowTemp = new sf::RenderWindow(this->gfxSettings.resolution,
+			this->gfxSettings.title,
+			sf::Style::Titlebar | sf::Style::Close,
+			this->gfxSettings.contextSettings);
+	}
+
+	memcpy(this->windowTemp, this->window, sizeof(this->windowTemp));
+
+	delete this->windowTemp;
+
+	this->window->setFramerateLimit(this->gfxSettings.framerateLimit);
+	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+
+
+	this->initStateData();
+	this->states.top()->resetGui();
+}
+
 //Functions
 void Game::endApplication()
 {
@@ -143,18 +175,16 @@ void Game::update()
 
 		if (this->states.top()->getQuit())
 		{
+			bool isSettingsState = this->states.top()->isSettingsState();
 			this->states.top()->endState();
 			delete this->states.top();
 			this->states.pop();
 
-			if (this->states.size() > 0)
+			if (this->states.size() > 0 && isSettingsState)
 			{
-				//this->initGraphicsSettings();
-				//this->initStateData();
-				this->states.top()->resetGui();
-				this->dt = 0.f;
+				this->resetWindow();
 			}
-			
+
 		}
 	}
 	//Application end

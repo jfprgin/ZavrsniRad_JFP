@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 //Initializer functions
-void Enemy::initEnemyTextures()
+void Enemy::initAnimations()
 {
 	this->animationComponent->addAnimation("ENEMY" + std::to_string(this->enemyType + 1) + "_" +
 		std::to_string(this->enemyColour + 1), 1.f, this->enemyType, this->enemyColour + 1,
@@ -37,7 +37,7 @@ bool Enemy::isDestoryComplete() const
 //Modifiers
 void Enemy::loseHP(const int hp, const float& dt)
 {
-	this->takeDamage = 0.f;
+	this->damageAnimationTimer = 0.f;
 
 	this->hp -= hp;
 
@@ -64,20 +64,20 @@ Enemy::Enemy(sf::Texture& texture_sheet, float pos_x, float pos_y, Player* playe
 	: hpMax(20),
 	hp(20),
 	exploding(false),
-	takeDamageMax(5.f),
-	takeDamage(5.f),
+	damageAnimationTimer(5.f),
+	damageAnimationTimerMax(5.f),
 	player(player)
 {
 	this->speed = this->rng.getFloat(200.f, 400.f);
 
-	this->enemyType = this->rng.getInt(0, 2);
-	this->enemyColour = this->rng.getInt(0, 1);
+	this->enemyType = this->rng.getInt(0, 4);
+	this->enemyColour = this->rng.getInt(0, 2);
 
 	this->createMovementComponent(this->speed, 15.f, 5.f);
 	this->createHitboxComponent(this->sprite, -16.f, -16.f, 64.f, 64.f);
 	this->createAnimationComponent(texture_sheet);
 
-	this->initEnemyTextures();
+	this->initAnimations();
 	
 	this->setPosition(pos_x, pos_y);
 }
@@ -109,15 +109,15 @@ void Enemy::follow(const float& dt)
 
 void Enemy::updateAnimations(const float& dt)
 {
-	if (this->takeDamage < takeDamageMax)
+	if (this->damageAnimationTimer < damageAnimationTimerMax)
 	{
-		this->takeDamage += 100 * dt;
+		this->damageAnimationTimer += 100 * dt;
 	}
 	else
 	{
 		//this->animationComponent->addAnimation("ENEMY" + std::to_string(enemyType + 1), 1.f, 0, enemyType, 0, 0, 100, 100);
-		this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1) + "_"
-			+ std::to_string(enemyColour + 1), dt);
+		this->animationComponent->play("ENEMY" + std::to_string(enemyType + 1) + "_" +
+			std::to_string(enemyColour + 1), dt);
 	}
 }
 	

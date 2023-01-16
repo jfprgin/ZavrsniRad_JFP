@@ -35,6 +35,7 @@ private:
 
 	//Window
 	sf::RenderWindow* window;
+	sf::RenderWindow* windowTemp;
 
 	//Private functions
 	//Initialization
@@ -52,6 +53,7 @@ public:
 	~Game();
 
 	//Functions
+	void resetWindow();
 	void endApplication();
 
 	//Update

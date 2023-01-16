@@ -132,6 +132,11 @@ MainMenuState::~MainMenuState()
 }
 
 //Functions
+bool MainMenuState::isSettingsState()
+{
+	return false;
+}
+
 void MainMenuState::updateInput(const float& dt)
 {
 	std::ifstream ifs("Config/Scores.txt");
