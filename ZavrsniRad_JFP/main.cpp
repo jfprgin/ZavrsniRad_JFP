@@ -2,7 +2,7 @@
 #include "Game.h"
 
 //Used to run the engine and initialize srand
-int main()
+int WinMain()
 {
 	srand(static_cast<unsigned>(time(0)));
 

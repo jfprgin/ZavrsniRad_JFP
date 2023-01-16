@@ -2,15 +2,14 @@
   AnimationComponent.cpp
   Bullet.cpp
   Enemy.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Enemy.cpp(100,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Explode.cpp
   GameOver.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(68,1): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\GameOver.cpp(68,1): message : destructor or deallocator has a (possibly implicit) non-throwing exception specification
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
+  c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): note: destructor or deallocator has a (possibly implicit) non-throwing exception specification
   GameState.cpp
   GraphicsSettings.cpp
   Gui.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Gui.cpp(194,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gui.cpp(194): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
   Entity.cpp
   Game.cpp
   HealthPack.cpp
@@ -22,11 +21,10 @@ C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\Gui.cpp(194,3): war
   Player.cpp
   PlayerGUI.cpp
   SettingsState.cpp
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(76,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\ZavrsniRad_JFP\SettingsState.cpp(82,3): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(76): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(82): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
   State.cpp
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 1557 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 1823 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Release\ZavrsniRad_JFP.exe
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Release\ZavrsniRad_JFP.exe

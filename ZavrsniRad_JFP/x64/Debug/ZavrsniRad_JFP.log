@@ -1,7 +1,28 @@
-﻿  Game.cpp
+﻿  stdafx.cpp
+  AnimationComponent.cpp
+  Bullet.cpp
+  Enemy.cpp
+  Explode.cpp
+  GameOver.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): warning C4297: 'GameOver::~GameOver': function assumed not to throw an exception but does
+  c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gameover.cpp(68): note: destructor or deallocator has a (possibly implicit) non-throwing exception specification
   GameState.cpp
-  MainMenuState.cpp
-  PlayerGUI.cpp
+  GraphicsSettings.cpp
+  Gui.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\gui.cpp(194): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+  Entity.cpp
+  Game.cpp
+  HealthPack.cpp
+  HitboxComponent.cpp
   main.cpp
+  MainMenuState.cpp
+  MovementComponent.cpp
+  PauseMenu.cpp
+  Player.cpp
+  PlayerGUI.cpp
+  SettingsState.cpp
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(76): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\jakov filip prgin\source\repos\zavrsnirad_jfp\zavrsnirad_jfp\settingsstate.cpp(82): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  State.cpp
   Generating Code...
-  ZavrsniRad_JFP.vcxproj -> C:\Users\Korisnik\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
+  ZavrsniRad_JFP.vcxproj -> C:\Users\Jakov Filip Prgin\source\repos\ZavrsniRad_JFP\x64\Debug\ZavrsniRad_JFP.exe
