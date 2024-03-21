@@ -3,35 +3,20 @@
 # Izrada 2D "Shoot 'em up" računalne igre / Creating a 2D "Shoot 'em up" video game
 
 ## Sadržaj / Table of contents
-***Hrvatski***<br>
-- [Opis projekta](#opis-projekta)
-- [Osnovni dizajn](#osnovni-dizajn)
-- [Korištene tehnologije](#korištene-tehnologije)
-- [Instalacija](#instalacija)
-- [Korištenje](#korištenje)
-- [Kontakt](#kontakt)
-- [Licenca](#licenca)
+
+- [Opis projekta / Project description](#opis-projekta--project-description)
+- [Osnovni dizajn / Basic design](#osnovni-dizajn--basic-design)
+- [Korištene tehnologije / Technologies used](#korištene-tehnologije--technologies-used)
+- [Instalacija / Installation](#instalacija--installation)
+- [Korištenje / Usage](#korištenje--usage)
+- [Kontakt / Contact](#kontakt--contact)
+- [Licenca / License](#licenca--license)
 - [Status](#status)
-- [Linkovi](#linkovi)
+- [Linkovi / Links](#linkovi--links)
 - [Autor](#autor)
-- [Slike](#slike)
+- [Slike / Images](#slike--images)
 - [Video](#video)
 - [Download link](#download-link)
-<br>
-
-***English***<br>
-- [Project description](#project-description)
-- [Basic design](#basic-design)
-- [Technologies used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contact](#contact)
-- [License](#license)
-- [Status](#status)
-- [Links](#links)
-- [Author](#author)
-- [Images](#images)
-- [Video](#video)
 
 ## Opis projekta / Project description
 ***Hrvatski***<br>
