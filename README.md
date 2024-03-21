@@ -56,7 +56,10 @@ Za korištenje projekta potrebno je otvoriti projekt u Microsoft Visual Studiu t
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Status
-Projekt je napravljen kao završni rad te je nadograđen u svhu kolegija "Računalna grafika". Projekt je završen, ali su moguće nadogradnje i poboljšanja u budućnosti.
+***Hrvatski***<br>
+Projekt je napravljen kao završni rad te je nadograđen u svhu kolegija "Računalna grafika". Projekt je završen, ali su moguće nadogradnje i poboljšanja u budućnosti.<br><br>
+***English***<br>
+The project was created as a final project and further developed for the "Computer Graphics" course. The project is completed, but there are possibilities for future upgrades and improvements.
 
 ## Linkovi / Links
 - [SFML](https://www.sfml-dev.org/)
