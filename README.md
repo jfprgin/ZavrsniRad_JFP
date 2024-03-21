@@ -45,7 +45,8 @@ To install the project, you need to download Microsoft Visual Studio and SFML. A
 ## Korištenje / Usage
 ***Hrvatski***<br>
 Za korištenje projekta potrebno je otvoriti projekt u Microsoft Visual Studiu te ga pokrenuti. Nakon toga, možete igrati igru. Igra se igra pomoću tipkovnice. Igrač se kreće lijevo i desno pomoću tipki lijevo i desno, te puca pomoću tipke space.<br><br>
-
+***English***<br>
+To use the project, you need to open the project in Microsoft Visual Studio and run it. After that, you can play the game. The game is played using the keyboard. The player moves left and right using the left and right arrow keys and shoots using the space key.
 
 ## Kontakt / Contact
 - [E-mail](mailto:jfprgin@gmail.com)
